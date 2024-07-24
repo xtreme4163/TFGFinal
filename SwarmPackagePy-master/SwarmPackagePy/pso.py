@@ -1,7 +1,5 @@
 import numpy as np
-
 from . import intelligence
-
 from . import misfunciones as fn
 
 import sys
@@ -11,7 +9,7 @@ V_MAX = 4
 V_MIN = -4
 
 # numero de colores de la paleta
-r = 1024
+r = 30
 
 # usar k-means del paquete sklearn.cluster
 # Clase para el PSO (hereda de intelligence)
@@ -111,8 +109,8 @@ class pso(intelligence.sw):
            # Actualizar mejor solucion global
            Gbest = Pbest[np.array([function(x,r) for x in Pbest]).argmin()] 
            
-         
-           print("Fitness --> ", function(Gbest,r) )
+           self.setMejorFitness(function(Gbest,r))
+           print("Fitness --> ",self.getMejorFitness())
 
        ##########################################################################################################
        #Guardamos la mejor solucion encontrada por el algoritmo
@@ -125,4 +123,4 @@ class pso(intelligence.sw):
         
         #Pintamos imagen
         fn.pintaImagen(reducida)
-        print("Su fitness es: ", function(Gbest,r))
+        print("Su fitness es: ", self.getMejorFitness())
