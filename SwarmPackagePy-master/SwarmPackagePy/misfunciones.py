@@ -87,4 +87,19 @@ def getMse(x,tam_paleta):
        squared_differences = np.square(differences)
        return squared_differences.mean()
 
+def getMae(x, tam_paleta):
+    # Prepara la imagen, devolviendo tanto la imagen aplanada (z) como la original (img)
+    z, img = preparaImagen()
+    
+    # Genera la imagen cuantizada
+    img_cuantizada2 = generaCuantizada(x, tam_paleta)
+    
+    # Aplanar img_cuantizada2 para que coincida con la forma de z
+    img_cuantizada2_flat = img_cuantizada2.reshape((-1, 3))
+    
+    # Calcular el MAE entre la imagen original (aplanada) y la imagen cuantizada (aplanada)
+    mae = np.mean(np.abs(z - img_cuantizada2_flat))
+    
+    return mae
+
  
