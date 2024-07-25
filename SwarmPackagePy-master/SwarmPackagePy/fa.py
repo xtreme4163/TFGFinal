@@ -5,7 +5,7 @@ from . import intelligence
 from . import misfunciones as fn
 
 # Numero de colores
-r = 48
+r = 2
 class fa(intelligence.sw):
     """
     Firefly Algorithm
@@ -105,7 +105,8 @@ class fa(intelligence.sw):
             # Actualizar mejor solucion global
             Gbest = Pbest[np.array([function(x,r) for x in Pbest]).argmin()]
             
-            print("Fitness --> ", function(Gbest,r))
+            self.setMejorFitness(function(Gbest,r))
+            print("Fitness --> ", self.getMejorFitness())
             
         Gbest = np.int_(Gbest)
         self._set_Gbest(Gbest)
@@ -113,7 +114,9 @@ class fa(intelligence.sw):
         #Generamos la imagen cuantizada para imprimirla
         reducida = fn.genera_cuantizada(Gbest,r)
         
+        print("Fitness final --> ", self.getMejorFitness())
         fn.pintaImagen(reducida)
+        
 
     # Esta funcion mueve luciernagas ...
     def __move(self, i, j, t, csi, psi, alpha, dimension, norm0, norm1):

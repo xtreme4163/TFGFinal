@@ -4,7 +4,7 @@ from . import intelligence
 from . import misfunciones as fn
 
 # numero de colores a usar
-r = 64
+r = 16
 
 class ballena(intelligence.sw):
     """
@@ -89,8 +89,8 @@ class ballena(intelligence.sw):
             #Actualizamos la mejor solucion global
             Gbest = Pbest[np.array([function(x,r) for x in Pbest]).argmin()] 
             
-            
-            print("Fitness --> ", function(Gbest,r))
+            self.setMejorFitness(function(Gbest,r))
+            print("Fitness --> ",self.getMejorFitness())
             
         Gbest= np.int_(Gbest)
         self._set_Gbest(Gbest)
@@ -98,9 +98,10 @@ class ballena(intelligence.sw):
         # Generamos la imagen cuantizada para pintarla
         reducida = fn.genera_cuantizada(Gbest,r)
         
+        print("Fitness final: ", self.getMejorFitness())
         #Pintamos la imagen
         fn.pintaImagen(reducida)
-        print("Fitness final: ", function(Gbest,r))
+        
         
 
     """
