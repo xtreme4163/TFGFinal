@@ -112,7 +112,7 @@ class fa(intelligence.sw):
         self._set_Gbest(Gbest)
         
         #Generamos la imagen cuantizada para imprimirla
-        reducida = fn.genera_cuantizada(Gbest,r)
+        reducida = fn.generaCuantizada(Gbest,r)
         
         print("Fitness final --> ", self.getMejorFitness())
         fn.pintaImagen(reducida)

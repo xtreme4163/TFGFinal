@@ -117,10 +117,9 @@ class pso(intelligence.sw):
         Gbest = np.int_(Gbest)
         self._set_Gbest(Gbest)
         # Generamos la imagen cuantizada para imprimirla con el mejor valor final global.
-        reducida = fn.genera_cuantizada(Gbest,r)
-        # Esto pinta la mejor paleta
-        #print(Gbest)
-        
+        reducida = fn.generaCuantizada(Gbest,r)
+
+        print("Su fitness es: ", self.getMejorFitness())
         #Pintamos imagen
         fn.pintaImagen(reducida)
-        print("Su fitness es: ", self.getMejorFitness())
+        

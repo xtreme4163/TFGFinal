@@ -27,8 +27,9 @@ def pintaImagen(cuantizada):
        cv2.waitKey(0) #Esperamos a pulsar una tecla
        cv2.destroyAllWindows() #Cerramos
 
-#Funcion que genera una imagen cuantizada usando KMeans
-def genera_cuantizada(x,tam_paleta):
+
+#Funcion que prepara una imagen para su posterior uso
+def preparaImagen():
        # Leemos la imagen
        img=cv2.imread('mandril.tif', cv2.IMREAD_COLOR)
 
@@ -36,8 +37,14 @@ def genera_cuantizada(x,tam_paleta):
        # Modificamos img para ir de punto en punto
        z= img.reshape((-1,3))
        z = np.float32(z)
-       
 
+       return z,img
+
+#Funcion que genera una imagen cuantizada usando KMeans
+def generaCuantizada(x,tam_paleta):
+       #Preparamos imagen
+       z,img=preparaImagen()
+       
        # Elimina los pixeles duplicados para evitar problemas con KMeans
        z_unique = np.unique(z, axis=0)
     
@@ -68,41 +75,15 @@ def genera_cuantizada(x,tam_paleta):
               x -> Paleta de colores a usar. (Posicion de particula)
               tam_paleta -> nº de colores a usar.
 """
+def getMse(x,tam_paleta):
+       z,img =preparaImagen()
+       img_cuantizada2 = generaCuantizada(x,tam_paleta)
 
-def genera_cuantizada2(x,tam_paleta):
-       # Leemos la imagen
-       img=cv2.imread('mandril.tif', cv2.IMREAD_COLOR)
-       
-       # Redimensiona la imagen a una matriz 2D de pixeles
-       z= img.reshape((-1,3))
-       z = np.float32(z)
-   
+       # Aplanar img_cuantizada2 para que coincida con la forma de z
+       img_cuantizada2_flat = img_cuantizada2.reshape((-1, 3))
 
-
-       # Eliminar píxeles duplicados
-       z_unique = np.unique(z, axis=0)
-    
-       # Ajusta el número de clusters al número de pixeles únicos si es menor que tam_paleta
-       tam_paleta = min(tam_paleta, len(z_unique))
-       
-       # Aplicar KMeans a los pixeles únicos
-       k_means = KMeans(n_clusters=tam_paleta, init=x, n_init=1, max_iter=1, algorithm="lloyd").fit(z_unique)
-       
-       # Predice los clusters para todos los pixeles en la imagen original
-       labels = k_means.predict(z)
-
-       # Obtiene los centroides de los clusters
-       paleta = k_means.cluster_centers_
-       paleta = np.uint8(paleta)
-       
-       # Reemplaza cada pixel en la imagen original por el color del cluster al que pertenece
-       img_cuantizada = paleta[labels.flatten()]
-       img_cuantizada2 = img_cuantizada.reshape((z.shape))
-       
-       #z = np.array(z)
-       #img_cuantizada2 = np.array(img_cuantizada2)
        # Calcula el error cuadrático medio entre la imagen original y la imagen cuantizada
-       differences = np.subtract(z, img_cuantizada2)
+       differences = np.subtract(z, img_cuantizada2_flat)
        squared_differences = np.square(differences)
        return squared_differences.mean()
 

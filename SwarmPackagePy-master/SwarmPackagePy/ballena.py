@@ -26,11 +26,7 @@ class ballena(intelligence.sw):
         :param iteration: numero de iteraciones
         :param ro0: intensidad de ultrasonido en la fuente de origen (default value is 2)
         :param eta: probabilidad de distorsion de mensaje a largas distancias (default value is 0.005) 
-
-	
         """
-
-
         super(ballena, self).__init__()
 
 
@@ -96,7 +92,7 @@ class ballena(intelligence.sw):
         self._set_Gbest(Gbest)
 
         # Generamos la imagen cuantizada para pintarla
-        reducida = fn.genera_cuantizada(Gbest,r)
+        reducida = fn.generaCuantizada(Gbest,r)
         
         print("Fitness final: ", self.getMejorFitness())
         #Pintamos la imagen
