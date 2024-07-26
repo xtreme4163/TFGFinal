@@ -9,9 +9,8 @@ V_MAX = 4
 V_MIN = -4
 
 # numero de colores de la paleta
-r = 30
+r = 1024
 
-# usar k-means del paquete sklearn.cluster
 # Clase para el PSO (hereda de intelligence)
 class pso(intelligence.sw):
     """

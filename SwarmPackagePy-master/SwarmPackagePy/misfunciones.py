@@ -3,6 +3,7 @@ import numpy as np
 from sklearn.cluster import KMeans
 from sklearn.metrics import mean_squared_error
 from sklearn.exceptions import ConvergenceWarning
+from skimage.metrics import structural_similarity as ssim
 import warnings
 
 # Suprime las advertencias de convergencia
@@ -87,6 +88,10 @@ def getMse(x,tam_paleta):
        squared_differences = np.square(differences)
        return squared_differences.mean()
 
+
+""" Igual que la anterior funciçon pero con el Mae (Da menor fitness)
+    ERROR ABSOLUTO MEDIO
+"""
 def getMae(x, tam_paleta):
     # Prepara la imagen, devolviendo tanto la imagen aplanada (z) como la original (img)
     z, img = preparaImagen()
@@ -102,4 +107,40 @@ def getMae(x, tam_paleta):
     
     return mae
 
- 
+"SSIM índice de similitud estructural"
+def getSsim(x, tam_paleta):
+    # Prepara la imagen, devolviendo tanto la imagen aplanada (z) como la original (img)
+    z, img = preparaImagen()
+    
+    # Genera la imagen cuantizada
+    img_cuantizada2 = generaCuantizada(x, tam_paleta)
+    
+    # Convierte las imágenes a escala de grises para calcular el SSIM
+    img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    img_cuantizada_gray = cv2.cvtColor(img_cuantizada2, cv2.COLOR_BGR2GRAY)
+    
+    # Calcular el SSIM entre la imagen original y la imagen cuantizada
+    ssim_index = ssim(img_gray, img_cuantizada_gray)
+
+    # Utiliza 1 - SSIM como fitness, donde valores más bajos son mejores
+    return 1 - ssim_index
+
+" MS-SIM- Indice de similitud multi escalar"
+# Función de fitness basada en MS-SSIM
+def getMsSsim(x, tam_paleta):
+    # Lee la imagen original
+    img = cv2.imread('mandril.tif', cv2.IMREAD_COLOR)
+    
+    # Genera la imagen cuantizada (asegúrate de que esta función esté implementada)
+    img_cuantizada2 = generaCuantizada(x, tam_paleta)
+    
+    # Asegúrate de que la ventana sea menor o igual al tamaño de la imagen más pequeña
+    win_size = min(img.shape[0], img.shape[1], 7)  # Ajuste el tamaño de la ventana según sea necesario
+    
+    # Calcular el MS-SSIM entre la imagen original y la imagen cuantizada
+    ms_ssim_index = ssim(img, img_cuantizada2, multichannel=True, gaussian_weights=True, sigma=1.5, use_sample_covariance=False, win_size=win_size, channel_axis=2)
+    
+    # Utilizar 1 - MS-SSIM como fitness, donde valores más bajos son mejores
+    fitness = 1 - ms_ssim_index
+    
+    return fitness
