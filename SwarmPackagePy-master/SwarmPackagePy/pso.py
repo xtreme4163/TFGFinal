@@ -9,7 +9,7 @@ V_MAX = 4
 V_MIN = -4
 
 # numero de colores de la paleta
-r = 1024
+r = 2
 
 # Clase para el PSO (hereda de intelligence)
 class pso(intelligence.sw):

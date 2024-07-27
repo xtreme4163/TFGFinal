@@ -77,6 +77,8 @@ Avaible test functions (in SwarmPackagePy.testFunctions)
 from SwarmPackagePy.fa import fa
 from SwarmPackagePy.pso import pso
 from SwarmPackagePy.ballena import ballena
+from SwarmPackagePy.gwo import gwo
+
 
 
 _version_ = '1.0.0'

@@ -84,9 +84,10 @@ def getMse(x,tam_paleta):
        img_cuantizada2_flat = img_cuantizada2.reshape((-1, 3))
 
        # Calcula el error cuadrático medio entre la imagen original y la imagen cuantizada
-       differences = np.subtract(z, img_cuantizada2_flat)
-       squared_differences = np.square(differences)
-       return squared_differences.mean()
+       #differences = np.subtract(z, img_cuantizada2_flat)
+       #squared_differences = np.square(differences)
+       #return squared_differences.mean()
+       return mean_squared_error(z, img_cuantizada2_flat)
 
 
 """ Igual que la anterior funciçon pero con el Mae (Da menor fitness)
@@ -107,7 +108,9 @@ def getMae(x, tam_paleta):
     
     return mae
 
-"SSIM índice de similitud estructural"
+"""    SSIM índice de similitud estructural
+       Devuelve el fitness
+"""
 def getSsim(x, tam_paleta):
     # Prepara la imagen, devolviendo tanto la imagen aplanada (z) como la original (img)
     z, img = preparaImagen()
@@ -115,30 +118,38 @@ def getSsim(x, tam_paleta):
     # Genera la imagen cuantizada
     img_cuantizada2 = generaCuantizada(x, tam_paleta)
     
-    # Convierte las imágenes a escala de grises para calcular el SSIM
-    img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    img_cuantizada_gray = cv2.cvtColor(img_cuantizada2, cv2.COLOR_BGR2GRAY)
+    # Redimensiona la imagen cuantizada a una matriz 2D de píxeles
+    img_cuantizada2_plana = img_cuantizada2.reshape((-1, 3))
+    img_cuantizada2_plana = np.float32(img_cuantizada2_plana)
     
     # Calcular el SSIM entre la imagen original y la imagen cuantizada
-    ssim_index = ssim(img_gray, img_cuantizada_gray)
+    ssim_index = ssim(z, img_cuantizada2_plana,multichannel=True,channel_axis=-1,data_range=img.max() - img.min())
 
     # Utiliza 1 - SSIM como fitness, donde valores más bajos son mejores
     return 1 - ssim_index
 
-" MS-SIM- Indice de similitud multi escalar"
+"""    MS-SIM- Indice de similitud multi escalar
+       Devuelve el fitness.
+"""
 # Función de fitness basada en MS-SSIM
 def getMsSsim(x, tam_paleta):
-    # Lee la imagen original
-    img = cv2.imread('mandril.tif', cv2.IMREAD_COLOR)
-    
-    # Genera la imagen cuantizada (asegúrate de que esta función esté implementada)
+        
+    # Prepara la imagen, devolviendo tanto la imagen aplanada (z) como la original (img)
+    z, img = preparaImagen()
+
+    # Genera la imagen cuantizada usando la paleta de colores (x)
     img_cuantizada2 = generaCuantizada(x, tam_paleta)
+
+    # Redimensiona la imagen cuantizada a una matriz 2D de píxeles
+    img_cuantizada2_flat = img_cuantizada2.reshape((-1, 3))
+    img_cuantizada2_flat = np.float32(img_cuantizada2_flat)
     
-    # Asegúrate de que la ventana sea menor o igual al tamaño de la imagen más pequeña
-    win_size = min(img.shape[0], img.shape[1], 7)  # Ajuste el tamaño de la ventana según sea necesario
+    # Ajuste del tamaño de la ventana, se asegura que el tamaño de la ventana win_size sea menor o igual al tamño de la imagen más pequeña
+    win_size = min(img.shape[0], img.shape[1], 7)
     
     # Calcular el MS-SSIM entre la imagen original y la imagen cuantizada
-    ms_ssim_index = ssim(img, img_cuantizada2, multichannel=True, gaussian_weights=True, sigma=1.5, use_sample_covariance=False, win_size=win_size, channel_axis=2)
+    ms_ssim_index = ssim(z, img_cuantizada2_flat, multichannel=True, gaussian_weights=True, sigma=1.5, use_sample_covariance=False, win_size=win_size, channel_axis=-1, data_range=img.max() - img.min())
+
     
     # Utilizar 1 - MS-SSIM como fitness, donde valores más bajos son mejores
     fitness = 1 - ms_ssim_index
