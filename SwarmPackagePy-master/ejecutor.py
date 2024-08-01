@@ -20,7 +20,7 @@ import numpy as np
 #Ballenas
 #alh = SwarmPackagePy.ballena(10, func.getMse, 0, 255, 3, 10, ro0=2, eta=0.005)
 
-#Lobos ?
-alh = SwarmPackagePy.gwo(10, func.getMse, 0, 255, 3, 10)
+#Lobos
+alh = SwarmPackagePy.gwo(30, func.getMse, 0, 255, 3, 30)
 
 

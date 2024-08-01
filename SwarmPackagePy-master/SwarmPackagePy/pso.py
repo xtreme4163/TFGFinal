@@ -70,7 +70,7 @@ class pso(intelligence.sw):
 	# Este bucle se repite hasta que nos salimos del rango iteration 
 	# Es el algoritmo PSO en sí
         for t in range(iteration):
-           print("Iteraccion ", t+1)
+           print("Iteración ", t+1)
            """
 	   ESQUEMA PSO
 	   1.1- evaluar fitness de cada particula

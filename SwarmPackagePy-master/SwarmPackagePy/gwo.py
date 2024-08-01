@@ -3,6 +3,8 @@ import numpy as np
 from . import intelligence
 from . import misfunciones as fn
 
+#Numero de colores de la paleta
+r=248
 
 class gwo(intelligence.sw):
     """
@@ -11,68 +13,96 @@ class gwo(intelligence.sw):
 
     def __init__(self, n, function, lb, ub, dimension, iteration):
         """
-        :param n: number of agents
-        :param function: test function
-        :param lb: lower limits for plot axes
-        :param ub: upper limits for plot axes
-        :param dimension: space dimension
-        :param iteration: number of iterations
+        :param n: numero de individuos
+        :param function: funcion del algoritmo
+        :param lb: limite inferior del espacio de busqueda
+        :param ub: limite superior del espacio de busqueda
+        :param dimension: dimension del espacio
+        :param iteration: numero de iteraciones
         """
 
         super(gwo, self).__init__()
 
-        self.__agents = np.random.uniform(lb, ub, (n, dimension))
+        #Inicio de la poblacion
+        self.__agents = np.random.uniform(lb, ub, (n,r, dimension))
         self._points(self.__agents)
-        alpha, beta, delta = self.__get_abd(n, function)
+        #Buscamos los mejores lobos
+        alpha, beta, delta = self.getABD(n, function)
 
         Gbest = alpha
 
+        print("GWO // Particulas: ",n, "Colores: ",r,"Iteraciones: ", iteration)
         for t in range(iteration):
-
+            print("Iteración ", t+1)
+            #Actualizo el parámetro del algoritmo (a)
             a = 2 - 2 * t / iteration
 
-            r1 = np.random.random((n, dimension))
-            r2 = np.random.random((n, dimension))
+            #Cálculo de los vectores aleatorios entre [0, 1], y de A y C para lobo alpha
+            r1 = np.random.rand(n,r,dimension)
+            r2 = np.random.rand(n,r,dimension)
             A1 = 2 * r1 * a - a
             C1 = 2 * r2
 
-            r1 = np.random.random((n, dimension))
-            r2 = np.random.random((n, dimension))
+            #Cálculo de los vectores aleatorios entre [0, 1], y de A y C para lobo beta
+            r1 = np.random.rand(n,r,dimension)
+            r2 = np.random.rand(n,r,dimension)
             A2 = 2 * r1 * a - a
             C2 = 2 * r2
 
-            r1 = np.random.random((n, dimension))
-            r2 = np.random.random((n, dimension))
+
+            #Cálculo de los vectores aleatorios entre [0, 1], y de A y C para lobo delta
+            r1 = np.random.rand(n,r,dimension)
+            r2 = np.random.rand(n,r,dimension)
             A3 = 2 * r1 * a - a
             C3 = 2 * r2
 
-            Dalpha = abs(C1 * alpha - self.__agents) # valor absoluto para las D
+            #Cálculo de D (Para los lobos alpha, beta y delta)
+            Dalpha = abs(C1 * alpha - self.__agents) 
             Dbeta = abs(C2 * beta - self.__agents)
             Ddelta = abs(C3 * delta - self.__agents)
 
+            #Cálculo de X para la nueva posicion
             X1 = alpha - A1 * Dalpha
             X2 = beta - A2 * Dbeta
             X3 = delta - A3 * Ddelta
 
+            #Nueva posicion de cada lobo
             self.__agents = (X1 + X2 + X3) / 3
 
+            #Ajuste de estas nuevas posiciones al limite del espacio
             self.__agents = np.clip(self.__agents, lb, ub)
             self._points(self.__agents)
 
-            alpha, beta, delta = self.__get_abd(n, function)
-            if function(alpha) < function(Gbest):
+            #Cálculo de los lobos alfa, beta y delta
+            alpha, beta, delta = self.getABD(n, function)
+            #Cálculo de Gbest (Mejor solucion)
+            if function(alpha, r) < function(Gbest, r):
                 Gbest = alpha
+            #Conseguimos el mejor fitness y lo mostramos en pantalla
+            self.setMejorFitness(function(Gbest, r))
+            print("Fitness --> ", self.getMejorFitness())
 
+        #Se guarda la mejor solucion encontrada
         self._set_Gbest(Gbest)
-        alpha, beta, delta = self.__get_abd(n, function)
+        alpha, beta, delta = self.getABD(n, function)
         self.__leaders = list(alpha), list(beta), list(delta)
 
-    def __get_abd(self, n, function):
+        #Generamos la cuantizada para imprimirla junto al valor final del algoritmo.
+        reducida = fn.generaCuantizada(Gbest, r)
+        print("Fitness final --> ", self.getMejorFitness())
+        fn.pintaImagen(reducida)
+
+    def getABD(self, n, function):
 
         result = []
-        fitness = [(function(self.__agents[i]), i) for i in range(n)]
+
+        # Calcula el fitness de cada agente y los guarda junto con su índice en una lista de tuplas
+        fitness = [(function(self.__agents[i], r), i) for i in range(n)]
+
+        # Ordena la lista de fitness en orden ascendente (menor fitness es mejor)
         fitness.sort()
 
+        # Selecciona los tres agentes con mejor fitness
         for i in range(3):
             result.append(self.__agents[fitness[i][1]])
 

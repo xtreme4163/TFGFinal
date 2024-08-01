@@ -64,7 +64,7 @@ class fa(intelligence.sw):
         print("Luciernagas // Particulas: ",n, "Colores: ",r,"Iteraciones: ", iteration)
         # BUCLE DEL ALGORITMO
         for t in range(iteration):
-            print("Iteraccion ", t+1)
+            print("Iteración ", t+1)
             # Esto se usa en la funcion mover para el calculo de un numero aleatorio
             alpha = alpha1 + (alpha0 - alpha1) * exp(-t)
 

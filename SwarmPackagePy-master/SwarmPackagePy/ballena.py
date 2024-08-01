@@ -48,7 +48,7 @@ class ballena(intelligence.sw):
         for t in range(iteration):
             
             
-            print("Iteracción ", t+1)
+            print("Iteración ", t+1)
             new_agents = self.__agents
             
             #Para cada particula ...
