@@ -65,7 +65,7 @@ do
 # Los resultados de la ejecución del programa se vuelcan en un fichero con un
 # nombre de la forma:
 #   salida_PSO_32.txt   salida_PSO_64.txt   salida_PSO_128.txt   o salida_PSO_256.txt , en este ejemplo
-python3 ejecutor.py ${F} 10 >> salida_${ALGO}_${C}.txt
+python3 ejecutor.py ${F} >> salida_${ALGO}_${C}.txt
 
 
 # Calculo múltiples medidas de error sobre la imagen cuantizada que acabo de generar

@@ -22,8 +22,8 @@ def pintaImagen(cuantizada,nombreImagen):
        cv2.imwrite(nombreImagen, cuantizada)
 
        # Lee la imagen original y la imagen cuantizada
-       imagenori = cv2.imread('mandril.tif', cv2.IMREAD_COLOR)
-       imagenresu = cv2.imread('mandril_cuantizado.tif', cv2.IMREAD_COLOR)
+       imagenori = cv2.imread(nombreImagen, cv2.IMREAD_COLOR)
+       imagenresu = cv2.imread(nombreSalida, cv2.IMREAD_COLOR)
 
        #Muestra la imagen original y la imagen cuantizada en ventanas separadas
        cv2.imshow('Imagen Original', imagenori)
@@ -82,7 +82,7 @@ def generaCuantizada(x,tam_paleta,nombreImagen):
 """
 def getMse(x,tam_paleta,nombreImagen):
        z,img =preparaImagen(nombreImagen)
-       img_cuantizada2 = generaCuantizada(x,tam_paleta)
+       img_cuantizada2 = generaCuantizada(x,tam_paleta,nombreImagen)
 
        # Aplanar img_cuantizada2 para que coincida con la forma de z
        img_cuantizada2_flat = img_cuantizada2.reshape((-1, 3))

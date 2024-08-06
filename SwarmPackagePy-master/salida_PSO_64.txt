@@ -1,0 +1,22 @@
+PSO // Particulas:  10 Colores:  2 Iteraciones:  10
+Iteración  1
+Fitness -->  0.0
+Iteración  2
+Fitness -->  0.0
+Iteración  3
+Fitness -->  0.0
+Iteración  4
+Fitness -->  0.0
+Iteración  5
+Fitness -->  0.0
+Iteración  6
+Fitness -->  0.0
+Iteración  7
+Fitness -->  0.0
+Iteración  8
+Fitness -->  0.0
+Iteración  9
+Fitness -->  0.0
+Iteración  10
+Fitness -->  0.0
+Su fitness es:  0.0

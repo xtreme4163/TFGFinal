@@ -1,3 +1,0 @@
-MSE PSNR MAE SSIM MS-SSIM
-adirondack_chairs.ppmastro_bodies.ppmastronaut.ppmbalinese_dancer.ppmball_caps.ppmbirthday_baloons.ppmbosnian_pine_needle.ppmbuggy.ppmMSE PSNR MAE SSIM MS-SSIM
-mandril.tif

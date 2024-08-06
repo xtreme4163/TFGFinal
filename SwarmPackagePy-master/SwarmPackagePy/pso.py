@@ -59,8 +59,8 @@ class pso(intelligence.sw):
        
         
         # Iniciamos Gbest con el valor de la particula con menor fitness 
-        Gbest = Pbest[np.array([function(x,r) for x in Pbest]).argmin()] 
-        #Gbest = Pbest[np.array([function(x,r) for x in Pbest]).argmin()]
+        Gbest = Pbest[np.array([function(x,r,imagen) for x in Pbest]).argmin()] 
+        #Gbest = Pbest[np.array([function(x,r,imagen) for x in Pbest]).argmin()]
         #print("Esto es Gbest inicial")
         #print(Gbest)
         # hasta aqui hemos inicializado el PSO
@@ -102,13 +102,13 @@ class pso(intelligence.sw):
            #Para todas las particulas ...
            for i in range(n):
               # Si el fitness de esta posicion es menor que el almacenado lo actualizamos
-              if(function(self.__agents[i],r) < function(Pbest[i],r)):
+              if(function(self.__agents[i],r,imagen) < function(Pbest[i],r,imagen)):
                  Pbest[i] = self.__agents[i]
               
            # Actualizar mejor solucion global
-           Gbest = Pbest[np.array([function(x,r) for x in Pbest]).argmin()] 
+           Gbest = Pbest[np.array([function(x,r,imagen) for x in Pbest]).argmin()] 
            
-           self.setMejorFitness(function(Gbest,r))
+           self.setMejorFitness(function(Gbest,r,imagen))
            print("Fitness --> ",self.getMejorFitness())
 
        ##########################################################################################################
@@ -116,7 +116,7 @@ class pso(intelligence.sw):
         Gbest = np.int_(Gbest)
         self._set_Gbest(Gbest)
         # Generamos la imagen cuantizada para imprimirla con el mejor valor final global.
-        reducida = fn.generaCuantizada(Gbest,r)
+        reducida = fn.generaCuantizada(Gbest,r,imagen)
 
         print("Su fitness es: ", self.getMejorFitness())
         #Pintamos imagen
