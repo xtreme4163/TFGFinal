@@ -24,7 +24,7 @@ class pso(intelligence.sw):
                     w=0.5, c1=1, c2=1)"""
     # Constructor para el pso
     def __init__(self, n, function, lb, ub, dimension, iteration, w=0.5, c1=1,
-                 c2=1):
+                 c2=1, imagen=""):
         """
         n: numero de individuos (Particulas)
         function: funcion que se aplica en el algoritmo
@@ -35,13 +35,13 @@ class pso(intelligence.sw):
         w: parametro inercia
         c1: parametro cognitivo (f1)
         c2: parametro social (f2)
+        imagen: imagen a procesar por el algoritmo
         """
 	
 	# Empezamos a inicializar la poblacion de particulas con su velocidad y posicion
 	# LLama al constructor de intelligence, así inicializa las
 	# posiciones y la mejor posicion.
         super(pso, self).__init__()
-
 
 	# generamos numeros aletaorios uniformemente distribuidos.
 	# Generamos entre lb y ub (limite inferior y limite superior)
@@ -120,5 +120,5 @@ class pso(intelligence.sw):
 
         print("Su fitness es: ", self.getMejorFitness())
         #Pintamos imagen
-        fn.pintaImagen(reducida)
+        fn.pintaImagen(reducida, imagen)
         

@@ -9,7 +9,8 @@ class sw(object):
     def __init__(self):
         self.__Positions = []  #Se inicializa una lista vacia para almacenar las posiciones de los individuos
         self.__Gbest = []      #Se inicializa una lista vacía para almacenar las mejor posicion global 
-        self.mejorFitnes = 0   #Se inicializa el mejor fitness a 0    
+        self.mejorFitnes = 0   #Se inicializa el mejor fitness a 0 
+
 
     #Función que actualiza la mejor solucion del algoritmo.
     #GBest -> Mejor solucion
@@ -35,3 +36,6 @@ class sw(object):
     
     def setMejorFitness(self, fitness):
         self.mejorFitnes=fitness
+
+
+        

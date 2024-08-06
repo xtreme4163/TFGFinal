@@ -4,15 +4,24 @@ from SwarmPackagePy import misfunciones as func
 from sklearn.cluster import KMeans
 from sklearn.metrics import mean_squared_error
 import numpy as np
+import argparse
 
+parser= argparse.ArgumentParser()
 
+#Agrego argumento de la imagen
+parser.add_argument('imagen', type=str, help="Nombre de la imagen a procesar")
+args = parser.parse_args()
 
+if not args.imagen:
+    imagenPasada="mandril.tif"
+else:   
+    imagenPasada =args.imagen
 
 
 # PARA EJECUTAR PSO, LUCIERNAGAS Y WSA, descomentar el que se quiera probar, 
 #PSO
 # Argumentos ( nº particulas, funcion, LIM_MIN, LIM_MAX, dimension, iteraciones, inercia, c1,c2)
-#alh = SwarmPackagePy.pso(10, func.getMsSsim, 0, 255, 3, 10, w=0.729, c1=2.05, c2=2.05)
+alh = SwarmPackagePy.pso(10, func.getMsSsim, 0, 255, 3, 10, w=0.729, c1=2.05, c2=2.05, imagen=imagenPasada)
                          
 #Luciernagas
 #alh = SwarmPackagePy.fa(5, func.getMae, 0, 255, 3, 10, csi=1, psi=1, alpha0=1, alpha1=0.1, norm0=0, norm1=0.1)
@@ -24,6 +33,6 @@ import numpy as np
 #alh = SwarmPackagePy.gwo(30, func.getMse, 0, 255, 3, 30)
 
 #Abejas
-alh=SwarmPackagePy.aba(30, func.getMse, 0, 255, 3, 30)
+#alh=SwarmPackagePy.aba(30, func.getMse, 0, 255, 3, 30)
 
 

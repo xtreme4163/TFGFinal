@@ -4,6 +4,7 @@ from sklearn.cluster import KMeans
 from sklearn.metrics import mean_squared_error
 from sklearn.exceptions import ConvergenceWarning
 from skimage.metrics import structural_similarity as ssim
+from . import intelligence
 import warnings
 
 # Suprime las advertencias de convergencia
@@ -13,9 +14,12 @@ warnings.filterwarnings('ignore', category=ConvergenceWarning)
 
 
 """ Funcion que pinta imagen pasada"""
-def pintaImagen(cuantizada):
+def pintaImagen(cuantizada,nombreImagen):
+
+       nombreSalida = nombreImagen.split('.')[0] + '-cuantizada.tif'
+
         # Guarda la imagen cuantizada en un archivo
-       cv2.imwrite('mandril_cuantizado.tif', cuantizada)
+       cv2.imwrite(nombreImagen, cuantizada)
 
        # Lee la imagen original y la imagen cuantizada
        imagenori = cv2.imread('mandril.tif', cv2.IMREAD_COLOR)
@@ -30,9 +34,9 @@ def pintaImagen(cuantizada):
 
 
 #Funcion que prepara una imagen para su posterior uso
-def preparaImagen():
+def preparaImagen(nombreImagen):
        # Leemos la imagen
-       img=cv2.imread('mandril.tif', cv2.IMREAD_COLOR)
+       img=cv2.imread(nombreImagen, cv2.IMREAD_COLOR)
 
        # Redimensiona la imagen a una matriz 2D de pixeles (cada fila es un pixel, cada columna es una de las componentes RGB)
        # Modificamos img para ir de punto en punto
@@ -42,9 +46,9 @@ def preparaImagen():
        return z,img
 
 #Funcion que genera una imagen cuantizada usando KMeans
-def generaCuantizada(x,tam_paleta):
+def generaCuantizada(x,tam_paleta,nombreImagen):
        #Preparamos imagen
-       z,img=preparaImagen()
+       z,img=preparaImagen(nombreImagen)
        
        # Elimina los pixeles duplicados para evitar problemas con KMeans
        z_unique = np.unique(z, axis=0)
@@ -76,8 +80,8 @@ def generaCuantizada(x,tam_paleta):
               x -> Paleta de colores a usar. (Posicion de particula)
               tam_paleta -> nº de colores a usar.
 """
-def getMse(x,tam_paleta):
-       z,img =preparaImagen()
+def getMse(x,tam_paleta,nombreImagen):
+       z,img =preparaImagen(nombreImagen)
        img_cuantizada2 = generaCuantizada(x,tam_paleta)
 
        # Aplanar img_cuantizada2 para que coincida con la forma de z
@@ -93,9 +97,9 @@ def getMse(x,tam_paleta):
 """ Igual que la anterior funciçon pero con el Mae (Da menor fitness)
     ERROR ABSOLUTO MEDIO
 """
-def getMae(x, tam_paleta):
+def getMae(x, tam_paleta,nombreImagen):
     # Prepara la imagen, devolviendo tanto la imagen aplanada (z) como la original (img)
-    z, img = preparaImagen()
+    z, img = preparaImagen(nombreImagen)
     
     # Genera la imagen cuantizada
     img_cuantizada2 = generaCuantizada(x, tam_paleta)
@@ -111,12 +115,12 @@ def getMae(x, tam_paleta):
 """    SSIM índice de similitud estructural
        Devuelve el fitness
 """
-def getSsim(x, tam_paleta):
+def getSsim(x, tam_paleta,nombreImagen):
     # Prepara la imagen, devolviendo tanto la imagen aplanada (z) como la original (img)
-    z, img = preparaImagen()
+    z, img = preparaImagen(nombreImagen)
     
     # Genera la imagen cuantizada
-    img_cuantizada2 = generaCuantizada(x, tam_paleta)
+    img_cuantizada2 = generaCuantizada(x, tam_paleta,nombreImagen)
     
     # Redimensiona la imagen cuantizada a una matriz 2D de píxeles
     img_cuantizada2_plana = img_cuantizada2.reshape((-1, 3))
@@ -132,13 +136,13 @@ def getSsim(x, tam_paleta):
        Devuelve el fitness.
 """
 # Función de fitness basada en MS-SSIM
-def getMsSsim(x, tam_paleta):
+def getMsSsim(x, tam_paleta,nombreImagen):
         
     # Prepara la imagen, devolviendo tanto la imagen aplanada (z) como la original (img)
-    z, img = preparaImagen()
+    z, img = preparaImagen(nombreImagen)
 
     # Genera la imagen cuantizada usando la paleta de colores (x)
-    img_cuantizada2 = generaCuantizada(x, tam_paleta)
+    img_cuantizada2 = generaCuantizada(x, tam_paleta,nombreImagen)
 
     # Redimensiona la imagen cuantizada a una matriz 2D de píxeles
     img_cuantizada2_flat = img_cuantizada2.reshape((-1, 3))

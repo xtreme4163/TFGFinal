@@ -1,0 +1,4 @@
+MSE PSNR MAE SSIM MS-SSIM
+mandril.tifMSE PSNR MAE SSIM MS-SSIM
+mandril.tifMSE PSNR MAE SSIM MS-SSIM
+mandril.tifmandril.tif mandril.tif 
