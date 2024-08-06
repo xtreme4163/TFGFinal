@@ -6,4 +6,5 @@ mandril.tif mandril.tif MSE PSNR MAE SSIM MS-SSIM
 mandril.tif mandril.tif MSE PSNR MAE SSIM MS-SSIM
 mandril.tif MSE PSNR MAE SSIM MS-SSIM
 mandril.tif MSE PSNR MAE SSIM MS-SSIM
-mandril.tif mandril.tif 
+mandril.tif mandril.tif MSE PSNR MAE SSIM MS-SSIM
+mandril.tif 

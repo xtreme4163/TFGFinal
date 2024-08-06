@@ -120,5 +120,5 @@ class pso(intelligence.sw):
 
         print("Su fitness es: ", self.getMejorFitness())
         #Pintamos imagen
-        fn.pintaImagen(reducida, imagen)
+        #fn.pintaImagen(reducida, imagen)
         
