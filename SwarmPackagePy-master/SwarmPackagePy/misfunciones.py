@@ -4,8 +4,9 @@ from sklearn.cluster import KMeans
 from sklearn.metrics import mean_squared_error
 from sklearn.exceptions import ConvergenceWarning
 from skimage.metrics import structural_similarity as ssim
-from . import intelligence
 import warnings
+import os
+
 
 # Suprime las advertencias de convergencia
 warnings.filterwarnings('ignore', category=UserWarning)
@@ -16,10 +17,15 @@ warnings.filterwarnings('ignore', category=ConvergenceWarning)
 """ Funcion que pinta imagen pasada"""
 def pintaImagen(cuantizada,nombreImagen):
 
-       nombreSalida = nombreImagen.split('.')[0] + '-cuantizada.tif'
+       nombreSalida = nombreImagen.split('.')[0] + '-cuantizada.ppm'
 
         # Guarda la imagen cuantizada en un archivo
-       cv2.imwrite(nombreImagen, cuantizada)
+       resultado_guardado = cv2.imwrite(nombreSalida, cuantizada)
+
+        # Verificar si la imagen se guardó correctamente
+       if not resultado_guardado:
+              print(f"Error: No se pudo guardar la imagen en '{nombreSalida}'")
+              return
 
        # Lee la imagen original y la imagen cuantizada
        imagenori = cv2.imread(nombreImagen, cv2.IMREAD_COLOR)
@@ -31,6 +37,10 @@ def pintaImagen(cuantizada,nombreImagen):
 
        cv2.waitKey(0) #Esperamos a pulsar una tecla
        cv2.destroyAllWindows() #Cerramos
+       # Eliminar la imagen cuantizada, si no baja el fitness, quitar esto, no se porque con esto no consigue bajar... libreria os ?
+       os.remove(nombreSalida)
+           
+
 
 
 #Funcion que prepara una imagen para su posterior uso

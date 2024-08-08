@@ -9,7 +9,7 @@ V_MAX = 4
 V_MIN = -4
 
 # numero de colores de la paleta
-r = 2
+r = 64
 
 # Clase para el PSO (hereda de intelligence)
 class pso(intelligence.sw):
@@ -120,5 +120,5 @@ class pso(intelligence.sw):
 
         print("Su fitness es: ", self.getMejorFitness())
         #Pintamos imagen
-        #fn.pintaImagen(reducida, imagen)
+        fn.pintaImagen(reducida, imagen)
         
