@@ -23,7 +23,7 @@ class pso(intelligence.sw):
     alh = SwarmPackagePy.pso(50, tf.easom_function, -10, 10, 3, 20,
                     w=0.5, c1=1, c2=1)"""
     # Constructor para el pso
-    def __init__(self, n, function, lb, ub, dimension, iteration, w=0.5, c1=1,
+    def __init__(self, n, function, lb, ub, dimension, iteration,numeroColores,pintor, w=0.5, c1=1,
                  c2=1, imagen=""):
         """
         n: numero de individuos (Particulas)
@@ -32,10 +32,12 @@ class pso(intelligence.sw):
         ub: limite superior del espacio de busqueda
         dimension: dimension del espacio de solucion (r)
         iteration: numero de iteraciones
+        numeroColores: numero de colores de la nueva imagen
         w: parametro inercia
         c1: parametro cognitivo (f1)
         c2: parametro social (f2)
         imagen: imagen a procesar por el algoritmo
+        pintor: booleano que se usa para saber si pintamos imagen al final o no.
         """
 	
 	# Empezamos a inicializar la poblacion de particulas con su velocidad y posicion
@@ -47,9 +49,9 @@ class pso(intelligence.sw):
 	# Generamos entre lb y ub (limite inferior y limite superior)
 	# Generamos un total de n*dimension numeros
         #self.__agents = np.random.randint(lb, ub, (n,r, dimension))
-        self.__agents = np.random.uniform(lb, ub, (n,r, dimension))
+        self.__agents = np.random.uniform(lb, ub, (n,numeroColores, dimension))
     
-        velocity = np.zeros((n,r, dimension)) #Llenamos el vector de velocidad con 0
+        velocity = np.zeros((n,numeroColores, dimension)) #Llenamos el vector de velocidad con 0
         self._points(self.__agents)
         #print(self.__agents)
         
@@ -59,14 +61,11 @@ class pso(intelligence.sw):
        
         
         # Iniciamos Gbest con el valor de la particula con menor fitness 
-        Gbest = Pbest[np.array([function(x,r,imagen) for x in Pbest]).argmin()] 
-        #Gbest = Pbest[np.array([function(x,r,imagen) for x in Pbest]).argmin()]
-        #print("Esto es Gbest inicial")
-        #print(Gbest)
+        Gbest = Pbest[np.array([function(x,numeroColores,imagen) for x in Pbest]).argmin()] 
         # hasta aqui hemos inicializado el PSO
 
 
-        print("PSO // Particulas: ",n, "Colores: ",r,"Iteraciones: ", iteration)
+        print("PSO // Particulas: ",n, "Colores: ",numeroColores,"Iteraciones: ", iteration)
 	# Este bucle se repite hasta que nos salimos del rango iteration 
 	# Es el algoritmo PSO en sí
         for t in range(iteration):
@@ -80,8 +79,8 @@ class pso(intelligence.sw):
 	   2 - Actualizar velocidad y posicion de cada particula
 	   3 - mostrar resultado al acabar bucle 
 	   """
-           r1 = np.random.rand(n,r,dimension)
-           r2 = np.random.rand(n,r,dimension)
+           r1 = np.random.rand(n,numeroColores,dimension)
+           r2 = np.random.rand(n,numeroColores,dimension)
            
            #  Calculamos la nueva velocidad
            velocity = w * velocity + c1 * r1 * (
@@ -102,13 +101,13 @@ class pso(intelligence.sw):
            #Para todas las particulas ...
            for i in range(n):
               # Si el fitness de esta posicion es menor que el almacenado lo actualizamos
-              if(function(self.__agents[i],r,imagen) < function(Pbest[i],r,imagen)):
+              if(function(self.__agents[i],numeroColores,imagen) < function(Pbest[i],numeroColores,imagen)):
                  Pbest[i] = self.__agents[i]
               
            # Actualizar mejor solucion global
-           Gbest = Pbest[np.array([function(x,r,imagen) for x in Pbest]).argmin()] 
+           Gbest = Pbest[np.array([function(x,numeroColores,imagen) for x in Pbest]).argmin()] 
            
-           self.setMejorFitness(function(Gbest,r,imagen))
+           self.setMejorFitness(function(Gbest,numeroColores,imagen))
            print("Fitness --> ",self.getMejorFitness())
 
        ##########################################################################################################
@@ -116,9 +115,11 @@ class pso(intelligence.sw):
         Gbest = np.int_(Gbest)
         self._set_Gbest(Gbest)
         # Generamos la imagen cuantizada para imprimirla con el mejor valor final global.
-        reducida = fn.generaCuantizada(Gbest,r,imagen)
+        reducida = fn.generaCuantizada(Gbest,numeroColores,imagen)
 
         print("Su fitness es: ", self.getMejorFitness())
-        #Pintamos imagen
-        fn.pintaImagen(reducida, imagen)
+        #Pintamos imagen si toca
+        if(pintor):
+           fn.pintaImagen(reducida, imagen)
+        
         

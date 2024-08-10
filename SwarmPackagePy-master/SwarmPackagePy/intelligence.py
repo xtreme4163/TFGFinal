@@ -37,5 +37,4 @@ class sw(object):
     def setMejorFitness(self, fitness):
         self.mejorFitnes=fitness
 
-
         
