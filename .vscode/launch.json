@@ -8,7 +8,7 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "args": [
-                "albss.tiff", 
+                "albss.jpg", 
                 "24",
                 "--pintaImagen", "True"]
         }

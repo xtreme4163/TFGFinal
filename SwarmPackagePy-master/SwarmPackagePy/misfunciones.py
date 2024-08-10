@@ -16,8 +16,11 @@ warnings.filterwarnings('ignore', category=ConvergenceWarning)
 
 """ Funcion que pinta imagen pasada"""
 def pintaImagen(cuantizada,nombreImagen):
-
-       nombreSalida = nombreImagen.split('.')[0] + '-cuantizada.ppm'
+       # Si la imagen es un archivo JPEG distinto nombreSalida
+       if nombreImagen.lower().endswith('.jpg') or nombreImagen.lower().endswith('.jpeg'):
+              nombreSalida = nombreImagen.split('.')[0] + '-cuantizada.jpg'
+       else:
+              nombreSalida = nombreImagen.split('.')[0] + '-cuantizada.ppm'
 
         # Guarda la imagen cuantizada en un archivo
        resultado_guardado = cv2.imwrite(nombreSalida, cuantizada)
@@ -31,6 +34,12 @@ def pintaImagen(cuantizada,nombreImagen):
        imagenori = cv2.imread(nombreImagen, cv2.IMREAD_COLOR)
        imagenresu = cv2.imread(nombreSalida, cv2.IMREAD_COLOR)
 
+        # Si la imagen es un archivo JPEG, redimensionarla
+       if nombreImagen.lower().endswith('.jpg') or nombreImagen.lower().endswith('.jpeg'):
+              imagenori = redimensionar_imagen(imagenori, 800, 800)
+              imagenresu = redimensionar_imagen(imagenresu, 800, 800)
+
+
        #Muestra la imagen original y la imagen cuantizada en ventanas separadas
        cv2.imshow('Imagen Original', imagenori)
        cv2.imshow('Nueva Imagen cuantizada', imagenresu)
@@ -39,6 +48,27 @@ def pintaImagen(cuantizada,nombreImagen):
        cv2.destroyAllWindows() #Cerramos
        # Eliminar la imagen cuantizada, si no baja el fitness, quitar esto, no se porque con esto no consigue bajar... libreria os ?
        os.remove(nombreSalida)
+
+def redimensionar_imagen(imagen, max_width, max_height):
+    # Obtener las dimensiones actuales de la imagen
+    height, width = imagen.shape[:2]
+
+    # Calcular la relación de aspecto
+    aspect_ratio = width / height
+
+    # Determinar las nuevas dimensiones manteniendo la relación de aspecto
+    if width > max_width or height > max_height:
+        if aspect_ratio > 1:
+            # Imagen más ancha que alta
+            new_width = max_width
+            new_height = int(max_width / aspect_ratio)
+        else:
+            # Imagen más alta que ancha
+            new_height = max_height
+            new_width = int(max_height * aspect_ratio)
+        # Redimensionar la imagen
+        imagen = cv2.resize(imagen, (new_width, new_height), interpolation=cv2.INTER_AREA)
+    return imagen
            
 
 
@@ -47,6 +77,10 @@ def pintaImagen(cuantizada,nombreImagen):
 def preparaImagen(nombreImagen):
        # Leemos la imagen
        img=cv2.imread(nombreImagen, cv2.IMREAD_COLOR)
+
+       # Si la imagen es un archivo JPEG, redimensionarla
+       if nombreImagen.lower().endswith('.jpg') or nombreImagen.lower().endswith('.jpeg'):
+              img = redimensionar_imagen(img, 800, 800)
 
        # Redimensiona la imagen a una matriz 2D de pixeles (cada fila es un pixel, cada columna es una de las componentes RGB)
        # Modificamos img para ir de punto en punto
