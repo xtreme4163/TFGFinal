@@ -1,0 +1,44 @@
+PSO // Particulas:  10 Colores:  256 Iteraciones:  10
+Iteración  1
+Fitness -->  77.54482
+Iteración  2
+Fitness -->  76.90899
+Iteración  3
+Fitness -->  76.90899
+Iteración  4
+Fitness -->  75.67199
+Iteración  5
+Fitness -->  75.67199
+Iteración  6
+Fitness -->  75.67199
+Iteración  7
+Fitness -->  75.67199
+Iteración  8
+Fitness -->  75.67199
+Iteración  9
+Fitness -->  75.671974
+Iteración  10
+Fitness -->  75.671974
+Su fitness es:  75.671974
+PSO // Particulas:  10 Colores:  256 Iteraciones:  10
+Iteración  1
+Fitness -->  86.06365
+Iteración  2
+Fitness -->  86.06365
+Iteración  3
+Fitness -->  86.06365
+Iteración  4
+Fitness -->  86.06365
+Iteración  5
+Fitness -->  86.06365
+Iteración  6
+Fitness -->  86.06365
+Iteración  7
+Fitness -->  86.06365
+Iteración  8
+Fitness -->  86.06365
+Iteración  9
+Fitness -->  86.06365
+Iteración  10
+Fitness -->  86.06365
+Su fitness es:  86.06365
