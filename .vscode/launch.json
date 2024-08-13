@@ -9,7 +9,7 @@
             "console": "integratedTerminal",
             "args": [
                 "albss.jpg", 
-                "24",
+                "32",
                 "--pintaImagen", "True"]
         }
     ]

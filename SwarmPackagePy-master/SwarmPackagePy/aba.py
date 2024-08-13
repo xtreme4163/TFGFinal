@@ -3,8 +3,6 @@ from random import randint, uniform
 from . import intelligence
 from . import misfunciones as fn
 
-#Numero de colores
-r=248
 
 
 class aba(intelligence.sw):
@@ -12,7 +10,7 @@ class aba(intelligence.sw):
     Artificial Bee Algorithm
     """
 
-    def __init__(self, n, function, lb, ub, dimension, iteration):
+    def __init__(self, n, function, lb, ub, dimension, iteration, numeroColores ,pintor,imagen=""):
         """
         :param n: numero de individuos
         :param function: funcion
@@ -25,11 +23,11 @@ class aba(intelligence.sw):
         super(aba, self).__init__()
 
         #Iniciamos la poblacion y la pasamos a una lista
-        self.__agents = np.random.uniform(lb, ub, (n,r, dimension))
+        self.__agents = np.random.uniform(lb, ub, (n,numeroColores, dimension))
         self._points(self.__agents)
 
         #Búsqueda de la mejor solucion personal de cada individuo, para devolver el individuo con una mejor solucion, para despues actualizar la mejor solución global
-        Pbest = self.__agents[np.array([function(x,r)
+        Pbest = self.__agents[np.array([function(x,numeroColores,imagen)
                                         for x in self.__agents]).argmin()]
         Gbest = Pbest
 
@@ -46,11 +44,11 @@ class aba(intelligence.sw):
             d = 2
             count = a, b, c, d
         
-        print("Abejas // Particulas: ",n, "Colores: ",r,"Iteraciones: ", iteration)
+        print("Abejas // Particulas: ",n, "Colores: ",numeroColores,"Iteraciones: ", iteration)
         for t in range(iteration):
             print("Iteración ", t+1)
             #Calculo del fitness de cada individuo
-            fitness = [function(x,r) for x in self.__agents]
+            fitness = [function(x,numeroColores, imagen) for x in self.__agents]
              # Ordenación de los índices basados en los valores de fitness
             sorted_indices = np.argsort(fitness)
 
@@ -71,7 +69,7 @@ class aba(intelligence.sw):
             # Comprobacion de si n - m es positivo antes de generar nuevas abejas aleatorias
             if n - m > 0:
                 #Se actualiza la poblacion de individuos y se ajustan sus posiciones a los limites de busqueda
-                additional_bees = list(np.random.uniform(lb, ub, (n - m, r, dimension)))
+                additional_bees = list(np.random.uniform(lb, ub, (n - m, numeroColores, dimension)))
                 self.__agents = newbee + additional_bees
             else:
                 #Se actualiza la poblacion de individuos
@@ -83,12 +81,12 @@ class aba(intelligence.sw):
 
             #Se actualiza la mejor solucion personal de cada individuo y luego la mejor solucion global
             Pbest = self.__agents[
-                np.array([function(x,r) for x in self.__agents]).argmin()]
-            if function(Pbest,r) < function(Gbest,r):
+                np.array([function(x,numeroColores, imagen) for x in self.__agents]).argmin()]
+            if function(Pbest,numeroColores, imagen) < function(Gbest,numeroColores, imagen):
                 Gbest = Pbest
 
             #Set del mejor fitness e impresion del fitnes de la iteracion
-            self.setMejorFitness(function(Gbest,r))
+            self.setMejorFitness(function(Gbest,numeroColores, imagen))
             print("Fitness --> ",self.getMejorFitness())
 
         ##########################################################################################################
@@ -96,11 +94,12 @@ class aba(intelligence.sw):
         Gbest = np.int_(Gbest)
         self._set_Gbest(Gbest)
         # Generamos la imagen cuantizada para imprimirla con el mejor valor final global.
-        reducida = fn.generaCuantizada(Gbest,r)
+        reducida = fn.generaCuantizada(Gbest,numeroColores, imagen)
 
         print("Su fitness es: ", self.getMejorFitness())
         #Pintamos imagen
-        fn.pintaImagen(reducida)
+        if(pintor):
+           fn.pintaImagen(reducida,imagen)
 
     #Funcion que genera nuevos individuos para cada individuo en l moviendose a posiciones vecinas
     def __new(self, l, c, lb, ub):
