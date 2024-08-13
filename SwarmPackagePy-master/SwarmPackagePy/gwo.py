@@ -3,15 +3,14 @@ import numpy as np
 from . import intelligence
 from . import misfunciones as fn
 
-#Numero de colores de la paleta
-r=248
+
 
 class gwo(intelligence.sw):
     """
     Grey Wolf Optimizer
     """
 
-    def __init__(self, n, function, lb, ub, dimension, iteration):
+    def __init__(self, n, function, lb, ub, dimension, iteration, numeroColores ,pintor,imagen=""):
         """
         :param n: numero de individuos
         :param function: funcion del algoritmo
@@ -24,35 +23,35 @@ class gwo(intelligence.sw):
         super(gwo, self).__init__()
 
         #Inicio de la poblacion
-        self.__agents = np.random.uniform(lb, ub, (n,r, dimension))
+        self.__agents = np.random.uniform(lb, ub, (n,numeroColores, dimension))
         self._points(self.__agents)
         #Buscamos los mejores lobos
-        alpha, beta, delta = self.getABD(n, function)
+        alpha, beta, delta = self.getABD(n, function, numeroColores, imagen)
 
         Gbest = alpha
 
-        print("GWO // Particulas: ",n, "Colores: ",r,"Iteraciones: ", iteration)
+        print("GWO // Particulas: ",n, "Colores: ", numeroColores,"Iteraciones: ", iteration)
         for t in range(iteration):
             print("Iteración ", t+1)
             #Actualizo el parámetro del algoritmo (a)
             a = 2 - 2 * t / iteration
 
             #Cálculo de los vectores aleatorios entre [0, 1], y de A y C para lobo alpha
-            r1 = np.random.rand(n,r,dimension)
-            r2 = np.random.rand(n,r,dimension)
+            r1 = np.random.rand(n,numeroColores,dimension)
+            r2 = np.random.rand(n,numeroColores,dimension)
             A1 = 2 * r1 * a - a
             C1 = 2 * r2
 
             #Cálculo de los vectores aleatorios entre [0, 1], y de A y C para lobo beta
-            r1 = np.random.rand(n,r,dimension)
-            r2 = np.random.rand(n,r,dimension)
+            r1 = np.random.rand(n,numeroColores,dimension)
+            r2 = np.random.rand(n,numeroColores,dimension)
             A2 = 2 * r1 * a - a
             C2 = 2 * r2
 
 
             #Cálculo de los vectores aleatorios entre [0, 1], y de A y C para lobo delta
-            r1 = np.random.rand(n,r,dimension)
-            r2 = np.random.rand(n,r,dimension)
+            r1 = np.random.rand(n,numeroColores,dimension)
+            r2 = np.random.rand(n,numeroColores,dimension)
             A3 = 2 * r1 * a - a
             C3 = 2 * r2
 
@@ -74,30 +73,31 @@ class gwo(intelligence.sw):
             self._points(self.__agents)
 
             #Cálculo de los lobos alfa, beta y delta
-            alpha, beta, delta = self.getABD(n, function)
+            alpha, beta, delta = self.getABD(n, function, numeroColores, imagen)
             #Cálculo de Gbest (Mejor solucion)
-            if function(alpha, r) < function(Gbest, r):
+            if function(alpha, numeroColores,imagen) < function(Gbest, numeroColores,imagen):
                 Gbest = alpha
             #Conseguimos el mejor fitness y lo mostramos en pantalla
-            self.setMejorFitness(function(Gbest, r))
+            self.setMejorFitness(function(Gbest,  numeroColores,imagen))
             print("Fitness --> ", self.getMejorFitness())
 
         #Se guarda la mejor solucion encontrada
         self._set_Gbest(Gbest)
-        alpha, beta, delta = self.getABD(n, function)
+        alpha, beta, delta = self.getABD(n, function, numeroColores, imagen)
         self.__leaders = list(alpha), list(beta), list(delta)
 
         #Generamos la cuantizada para imprimirla junto al valor final del algoritmo.
-        reducida = fn.generaCuantizada(Gbest, r)
+        reducida = fn.generaCuantizada(Gbest,  numeroColores,imagen)
         print("Fitness final --> ", self.getMejorFitness())
-        fn.pintaImagen(reducida)
+        if(pintor):
+           fn.pintaImagen(reducida,imagen)
 
-    def getABD(self, n, function):
+    def getABD(self, n, function, numeroColores, imagen):
 
         result = []
 
         # Calcula el fitness de cada agente y los guarda junto con su índice en una lista de tuplas
-        fitness = [(function(self.__agents[i], r), i) for i in range(n)]
+        fitness = [(function(self.__agents[i],  numeroColores,imagen), i) for i in range(n)]
 
         # Ordena la lista de fitness en orden ascendente (menor fitness es mejor)
         fitness.sort()

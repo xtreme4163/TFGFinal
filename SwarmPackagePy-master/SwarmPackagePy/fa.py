@@ -4,8 +4,7 @@ import numpy as np
 from . import intelligence
 from . import misfunciones as fn
 
-# Numero de colores
-r = 2
+
 class fa(intelligence.sw):
     """
     Firefly Algorithm
