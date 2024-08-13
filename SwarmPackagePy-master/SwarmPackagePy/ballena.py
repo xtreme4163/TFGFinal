@@ -3,8 +3,6 @@ import numpy as np
 from . import intelligence
 from . import misfunciones as fn
 
-# numero de colores a usar
-r = 16
 
 class ballena(intelligence.sw):
     """
@@ -35,19 +33,19 @@ class ballena(intelligence.sw):
 
 
         # Inicializar la poblacion de ballenas
-        self.__agents = np.random.uniform(lb, ub, (n, r, dimension))
+        self.__agents = np.random.uniform(lb, ub, (n, numeroColores, dimension))
         self._points(self.__agents)
         
         # Inicializamos el vector de las mejores posiciones de las ballenas
         Pbest = self.__agents
         
         # Vectores con el fitness actual, y el mejor fitness hallado.
-        fitActual = [function(x,r,imagen) for x in self.__agents] 
+        fitActual = [function(x,numeroColores,imagen) for x in self.__agents] 
         fitMejor = fitActual   # Fitness de la iteracion actual                         
         # Cogemos la mejor solucion global
         #Gbest = Pbest
 
-        print("WSA // Particulas: ",n, "Colores: ",r,"Iteraciones: ", iteration)
+        print("WSA // Particulas: ",n, "Colores: ",numeroColores,"Iteraciones: ", iteration)
         # Algoritmo, se repite hasta el nº de iteracciones
         for t in range(iteration):
             
@@ -74,7 +72,7 @@ class ballena(intelligence.sw):
             
             
             #Actualizamos su fitness actual
-            fitActual = [function(x,r,imagen) for x in self.__agents]
+            fitActual = [function(x,numeroColores,imagen) for x in self.__agents]
             
             #Actualizamos la mejor solucion particular
             
@@ -87,16 +85,16 @@ class ballena(intelligence.sw):
                   fitMejor[i] = fitActual[i]
             
             #Actualizamos la mejor solucion global
-            Gbest = Pbest[np.array([function(x,r,imagen) for x in Pbest]).argmin()] 
+            Gbest = Pbest[np.array([function(x,numeroColores,imagen) for x in Pbest]).argmin()] 
             
-            self.setMejorFitness(function(Gbest,r,imagen))
+            self.setMejorFitness(function(Gbest,numeroColores,imagen))
             print("Fitness --> ",self.getMejorFitness())
             
         Gbest= np.int_(Gbest)
         self._set_Gbest(Gbest)
 
         # Generamos la imagen cuantizada para pintarla
-        reducida = fn.generaCuantizada(Gbest,r,imagen)
+        reducida = fn.generaCuantizada(Gbest,numeroColores,imagen)
         
         print("Fitness final: ", self.getMejorFitness())
         #Pintamos la imagen

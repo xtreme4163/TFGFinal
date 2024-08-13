@@ -43,7 +43,7 @@ if img is None:
 alh = SwarmPackagePy.ballena(10, func.getMse, 0, 255, 3, 10,args.numeroColores,args.pintaImagen, ro0=2, eta=0.005,imagen=ruta_imagen)
 
 #Lobos
-#alh = SwarmPackagePy.gwo(30, func.getMse, 0, 255, 3, 30)
+#alh = SwarmPackagePy.gwo(30, func.getMse, 0, 255, 3, 30,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
 
 #Abejas
 #alh=SwarmPackagePy.aba(30, func.getMse, 0, 255, 3, 30)
