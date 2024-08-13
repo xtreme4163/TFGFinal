@@ -11,8 +11,8 @@ class ballena(intelligence.sw):
     Whale Swarm Algorithm
     """
 
-    def __init__(self, n, function, lb, ub, dimension, iteration, ro0=2,
-                 eta=0.005):
+    def __init__(self, n, function, lb, ub, dimension, iteration,numeroColores,pintor, ro0=2,
+                 eta=0.005,imagen=""):
         """
         Se supone que la mejor solucion candidata actual se acerca a la presa objetivo
         y otras soluciones actualizan su posicion hacia la mejor ballena
@@ -24,8 +24,12 @@ class ballena(intelligence.sw):
         :param ub: limite superior del espacio
         :param dimension: dimension del espacio
         :param iteration: numero de iteraciones
+        :param numeroColores: numero de colores de la nueva imagen
+        :param pintor: booleano que se usa para saber si pintamos imagen al final o no.
         :param ro0: intensidad de ultrasonido en la fuente de origen (default value is 2)
         :param eta: probabilidad de distorsion de mensaje a largas distancias (default value is 0.005) 
+        :param imagen: ruta de la imagen a procesar por el algoritmo
+
         """
         super(ballena, self).__init__()
 
@@ -38,7 +42,7 @@ class ballena(intelligence.sw):
         Pbest = self.__agents
         
         # Vectores con el fitness actual, y el mejor fitness hallado.
-        fitActual = [function(x,r) for x in self.__agents] 
+        fitActual = [function(x,r,imagen) for x in self.__agents] 
         fitMejor = fitActual   # Fitness de la iteracion actual                         
         # Cogemos la mejor solucion global
         #Gbest = Pbest
@@ -70,7 +74,7 @@ class ballena(intelligence.sw):
             
             
             #Actualizamos su fitness actual
-            fitActual = [function(x,r) for x in self.__agents]
+            fitActual = [function(x,r,imagen) for x in self.__agents]
             
             #Actualizamos la mejor solucion particular
             
@@ -83,20 +87,21 @@ class ballena(intelligence.sw):
                   fitMejor[i] = fitActual[i]
             
             #Actualizamos la mejor solucion global
-            Gbest = Pbest[np.array([function(x,r) for x in Pbest]).argmin()] 
+            Gbest = Pbest[np.array([function(x,r,imagen) for x in Pbest]).argmin()] 
             
-            self.setMejorFitness(function(Gbest,r))
+            self.setMejorFitness(function(Gbest,r,imagen))
             print("Fitness --> ",self.getMejorFitness())
             
         Gbest= np.int_(Gbest)
         self._set_Gbest(Gbest)
 
         # Generamos la imagen cuantizada para pintarla
-        reducida = fn.generaCuantizada(Gbest,r)
+        reducida = fn.generaCuantizada(Gbest,r,imagen)
         
         print("Fitness final: ", self.getMejorFitness())
         #Pintamos la imagen
-        fn.pintaImagen(reducida)
+        if(pintor):
+           fn.pintaImagen(reducida,imagen)
         
         
 

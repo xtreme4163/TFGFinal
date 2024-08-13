@@ -33,11 +33,12 @@ class pso(intelligence.sw):
         dimension: dimension del espacio de solucion (r)
         iteration: numero de iteraciones
         numeroColores: numero de colores de la nueva imagen
+        pintor: booleano que se usa para saber si pintamos imagen al final o no.
         w: parametro inercia
         c1: parametro cognitivo (f1)
         c2: parametro social (f2)
-        imagen: imagen a procesar por el algoritmo
-        pintor: booleano que se usa para saber si pintamos imagen al final o no.
+        imagen: ruta de la imagen a procesar por el algoritmo
+       
         """
 	
 	# Empezamos a inicializar la poblacion de particulas con su velocidad y posicion
