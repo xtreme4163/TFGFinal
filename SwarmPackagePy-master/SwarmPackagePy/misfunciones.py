@@ -146,7 +146,7 @@ def getMae(x, tam_paleta,nombreImagen):
     z, img = preparaImagen(nombreImagen)
     
     # Genera la imagen cuantizada
-    img_cuantizada2 = generaCuantizada(x, tam_paleta)
+    img_cuantizada2 = generaCuantizada(x, tam_paleta,nombreImagen)
     
     # Aplanar img_cuantizada2 para que coincida con la forma de z
     img_cuantizada2_flat = img_cuantizada2.reshape((-1, 3))
