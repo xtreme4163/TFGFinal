@@ -16,15 +16,24 @@ warnings.filterwarnings('ignore', category=ConvergenceWarning)
 
 """ Funcion que pinta imagen pasada"""
 def pintaImagen(cuantizada,nombreImagen,pintor,algoritmo,numeroColores):
+       # Obtener la ruta del directorio donde se está ejecutando el script
+       ruta_script = os.path.dirname(os.path.abspath(__file__))
+       # Subir un nivel para obtener el directorio raiz
+       ruta_prueba = os.path.dirname(ruta_script)
+       #Voy a la carpeta images
+       rutaImagen= os.path.join(ruta_prueba, 'images')
+
        # doy nombre a la imagen de salida en formato ALGORITMO_NUMCOLORES_IMAGEN
        nombreSalida = algoritmo + "_" + str(numeroColores) + "_" + os.path.basename(nombreImagen)
+       #Contruyo la ruta hacia el directorio de destino
+       rutaDestino = os.path.join(rutaImagen, nombreSalida)
        """if nombreImagen.lower().endswith('.jpg') or nombreImagen.lower().endswith('.jpeg'):
               nombreSalida = nombreImagen.split('.')[0] + '-cuantizada.jpg'
        else:
               nombreSalida = nombreImagen.split('.')[0] + '-cuantizada.ppm'
 """
         # Guarda la imagen cuantizada en un archivo
-       resultado_guardado = cv2.imwrite(nombreSalida, cuantizada)
+       resultado_guardado = cv2.imwrite(rutaDestino, cuantizada)
 
         # Verificar si la imagen se guardó correctamente
        if not resultado_guardado:
@@ -33,7 +42,7 @@ def pintaImagen(cuantizada,nombreImagen,pintor,algoritmo,numeroColores):
 
        # Lee la imagen original y la imagen cuantizada
        imagenori = cv2.imread(nombreImagen, cv2.IMREAD_COLOR)
-       imagenresu = cv2.imread(nombreSalida, cv2.IMREAD_COLOR)
+       imagenresu = cv2.imread(rutaDestino, cv2.IMREAD_COLOR)
 
         # Si la imagen es un archivo JPEG, redimensionarla
        if nombreImagen.lower().endswith('.jpg') or nombreImagen.lower().endswith('.jpeg'):
@@ -50,6 +59,8 @@ def pintaImagen(cuantizada,nombreImagen,pintor,algoritmo,numeroColores):
               # Eliminar la imagen cuantizada, si no baja el fitness, quitar esto, no se porque con esto no consigue bajar... libreria os ?
 
               os.remove(nombreSalida)
+
+      
 
 def redimensionar_imagen(imagen, max_width, max_height):
     # Obtener las dimensiones actuales de la imagen
