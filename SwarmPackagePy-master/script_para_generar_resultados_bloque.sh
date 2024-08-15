@@ -13,8 +13,13 @@
 # ---------------------------------------------------------------------
 
 # Acrónimo del algoritmo de enjambre que voy a aplicar 
-ALGO="PSO"
-
+# PSO -> PSO
+# FA -> Luciernagas
+# BA -> ballenas
+# GWO -> Lobos
+# ABA -> Abejas
+for ALGO in "PSO" "FA" "BA" "GWO" "ABA"
+do
 
 # Los errores calculados para sucesivas pruebas se guardarán en un fichero TXT cuyo nombre es de
 # la forma:
@@ -60,12 +65,13 @@ do
 # Supongamos que se llama probar_PSO.py y necesita como parámetros:
 # -- imagen a procesar
 # -- numero de colores
+# -- algoritmo a realizar
 # Como resultado de las operaciones, escribe en disco la imagen cuantizada con el nombre
 # que se ajuste al forma indicado anteriormente.
 # Los resultados de la ejecución del programa se vuelcan en un fichero con un
 # nombre de la forma:
 #   salida_PSO_32.txt   salida_PSO_64.txt   salida_PSO_128.txt   o salida_PSO_256.txt , en este ejemplo
-python3 ejecutor.py ${F} ${C} >> salida_${ALGO}_${C}.txt
+python3 ejecutor.py ${F} ${C} ${ALGO}>> salida_${ALGO}_${C}.txt
 
 
 # Calculo múltiples medidas de error sobre la imagen cuantizada que acabo de generar
@@ -86,6 +92,7 @@ rm ${ALGO}_${C}_${F}
 done #tests sucesivos
 done  # colores de la paleta cuantizada
 done  #imagen original
+done # ALgoritmo
 
 
 

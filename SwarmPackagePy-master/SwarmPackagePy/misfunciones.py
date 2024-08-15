@@ -15,7 +15,7 @@ warnings.filterwarnings('ignore', category=ConvergenceWarning)
 
 
 """ Funcion que pinta imagen pasada"""
-def pintaImagen(cuantizada,nombreImagen):
+def pintaImagen(cuantizada,nombreImagen,pintor):
        # Si la imagen es un archivo JPEG distinto nombreSalida
        if nombreImagen.lower().endswith('.jpg') or nombreImagen.lower().endswith('.jpeg'):
               nombreSalida = nombreImagen.split('.')[0] + '-cuantizada.jpg'
@@ -39,15 +39,16 @@ def pintaImagen(cuantizada,nombreImagen):
               imagenori = redimensionar_imagen(imagenori, 800, 800)
               imagenresu = redimensionar_imagen(imagenresu, 800, 800)
 
+       if(pintor):
+              #Muestra la imagen original y la imagen cuantizada en ventanas separadas
+              cv2.imshow('Imagen Original', imagenori)
+              cv2.imshow('Nueva Imagen cuantizada', imagenresu)
 
-       #Muestra la imagen original y la imagen cuantizada en ventanas separadas
-       cv2.imshow('Imagen Original', imagenori)
-       cv2.imshow('Nueva Imagen cuantizada', imagenresu)
+              cv2.waitKey(0) #Esperamos a pulsar una tecla
+              cv2.destroyAllWindows() #Cerramos
+              # Eliminar la imagen cuantizada, si no baja el fitness, quitar esto, no se porque con esto no consigue bajar... libreria os ?
 
-       cv2.waitKey(0) #Esperamos a pulsar una tecla
-       cv2.destroyAllWindows() #Cerramos
-       # Eliminar la imagen cuantizada, si no baja el fitness, quitar esto, no se porque con esto no consigue bajar... libreria os ?
-       os.remove(nombreSalida)
+              os.remove(nombreSalida)
 
 def redimensionar_imagen(imagen, max_width, max_height):
     # Obtener las dimensiones actuales de la imagen

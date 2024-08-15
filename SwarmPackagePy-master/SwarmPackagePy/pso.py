@@ -1,3 +1,4 @@
+import os
 import numpy as np
 from . import intelligence
 from . import misfunciones as fn
@@ -66,7 +67,7 @@ class pso(intelligence.sw):
         # hasta aqui hemos inicializado el PSO
 
 
-        print("PSO // Particulas: ",n, "Colores: ",numeroColores,"Iteraciones: ", iteration)
+        print("PSO // Particulas: ",n, "Colores: ",numeroColores,"Iteraciones: ", iteration, "Imagen: ", os.path.basename(imagen))
 	# Este bucle se repite hasta que nos salimos del rango iteration 
 	# Es el algoritmo PSO en sí
         for t in range(iteration):
@@ -119,8 +120,7 @@ class pso(intelligence.sw):
         reducida = fn.generaCuantizada(Gbest,numeroColores,imagen)
 
         print("Su fitness es: ", self.getMejorFitness())
-        #Pintamos imagen si toca
-        if(pintor):
-           fn.pintaImagen(reducida, imagen)
+        #Pintamos imagen
+        fn.pintaImagen(reducida, imagen,pintor)
         
         

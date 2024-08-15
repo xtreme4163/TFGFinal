@@ -1,3 +1,4 @@
+import os
 import numpy as np
 
 from . import intelligence
@@ -45,7 +46,7 @@ class ballena(intelligence.sw):
         # Cogemos la mejor solucion global
         #Gbest = Pbest
 
-        print("WSA // Particulas: ",n, "Colores: ",numeroColores,"Iteraciones: ", iteration)
+        print("WSA // Particulas: ",n, "Colores: ",numeroColores,"Iteraciones: ", iteration, "Imagen: ", os.path.basename(imagen))
         # Algoritmo, se repite hasta el nº de iteracciones
         for t in range(iteration):
             
@@ -98,8 +99,8 @@ class ballena(intelligence.sw):
         
         print("Fitness final: ", self.getMejorFitness())
         #Pintamos la imagen
-        if(pintor):
-           fn.pintaImagen(reducida,imagen)
+        fn.pintaImagen(reducida, imagen,pintor)
+
         
         
 

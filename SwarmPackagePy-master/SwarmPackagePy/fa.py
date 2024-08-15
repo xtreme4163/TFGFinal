@@ -1,4 +1,5 @@
 from math import exp
+import os
 import numpy as np
 
 from . import intelligence
@@ -63,7 +64,7 @@ class fa(intelligence.sw):
         fitnessP = [function(x,numeroColores,imagen) for x in self.__agents]
         fitnessA = fitnessP # Lo igualamos al de la posicion ACTUAL
    
-        print("Luciernagas // Particulas: ",n, "Colores: ",numeroColores,"Iteraciones: ", iteration)
+        print("Luciernagas // Particulas: ",n, "Colores: ",numeroColores,"Iteraciones: ", iteration, "Imagen: ", os.path.basename(imagen))
         # BUCLE DEL ALGORITMO
         for t in range(iteration):
             print("Iteración ", t+1)
@@ -117,8 +118,8 @@ class fa(intelligence.sw):
         reducida = fn.generaCuantizada(Gbest,numeroColores,imagen)
         
         print("Fitness final --> ", self.getMejorFitness())
-        if(pintor):
-           fn.pintaImagen(reducida,imagen)
+        fn.pintaImagen(reducida, imagen,pintor)
+
         
 
     # Esta funcion mueve luciernagas ...

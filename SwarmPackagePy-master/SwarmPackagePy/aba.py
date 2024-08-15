@@ -1,3 +1,4 @@
+import os
 import numpy as np
 from random import randint, uniform
 from . import intelligence
@@ -44,7 +45,7 @@ class aba(intelligence.sw):
             d = 2
             count = a, b, c, d
         
-        print("Abejas // Particulas: ",n, "Colores: ",numeroColores,"Iteraciones: ", iteration)
+        print("Abejas // Particulas: ",n, "Colores: ",numeroColores,"Iteraciones: ", iteration, "Imagen: ", os.path.basename(imagen))
         for t in range(iteration):
             print("Iteración ", t+1)
             #Calculo del fitness de cada individuo
@@ -98,8 +99,8 @@ class aba(intelligence.sw):
 
         print("Su fitness es: ", self.getMejorFitness())
         #Pintamos imagen
-        if(pintor):
-           fn.pintaImagen(reducida,imagen)
+        fn.pintaImagen(reducida, imagen,pintor)
+
 
     #Funcion que genera nuevos individuos para cada individuo en l moviendose a posiciones vecinas
     def __new(self, l, c, lb, ub):

@@ -1,3 +1,4 @@
+import os
 import numpy as np
 
 from . import intelligence
@@ -30,7 +31,7 @@ class gwo(intelligence.sw):
 
         Gbest = alpha
 
-        print("GWO // Particulas: ",n, "Colores: ", numeroColores,"Iteraciones: ", iteration)
+        print("GWO // Particulas: ",n, "Colores: ", numeroColores,"Iteraciones: ", iteration, "Imagen: ", os.path.basename(imagen))
         for t in range(iteration):
             print("Iteración ", t+1)
             #Actualizo el parámetro del algoritmo (a)
@@ -89,8 +90,8 @@ class gwo(intelligence.sw):
         #Generamos la cuantizada para imprimirla junto al valor final del algoritmo.
         reducida = fn.generaCuantizada(Gbest,  numeroColores,imagen)
         print("Fitness final --> ", self.getMejorFitness())
-        if(pintor):
-           fn.pintaImagen(reducida,imagen)
+        fn.pintaImagen(reducida, imagen,pintor)
+
 
     def getABD(self, n, function, numeroColores, imagen):
 
