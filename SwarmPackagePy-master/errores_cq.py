@@ -22,6 +22,7 @@
 # #####################################################################
 
 
+import os
 import cv2
 import numpy as np
 
@@ -271,10 +272,15 @@ if len(sys.argv) == 3:
    #print("procesando las imagenes: |"+ figura1 + "| y |"+ figura2 + "|")
    #print(figura1 + " "+ figura2) #NOMBRES DE LOS DOS FICHEROS
    print(figura1, end=" " )
- 
+   ruta_imagen1 = os.path.join(os.path.dirname(__file__), 'images',figura1)
+   ruta_imagen2 = os.path.join(os.path.dirname(__file__), 'images',figura2)
+
    # se leen ambas imágenes (son imágenes en color)
-   FIG1 = cv2.imread(figura1,cv2.IMREAD_COLOR)  
-   FIG2 = cv2.imread(figura2,cv2.IMREAD_COLOR)    
+   FIG1 = cv2.imread(ruta_imagen1,cv2.IMREAD_COLOR)  
+   FIG2 = cv2.imread(ruta_imagen2,cv2.IMREAD_COLOR)    
+
+
+
 
    #pongo aqui la comprobación de imagenes del mismo tamaño
    # que aparecía en casi todas las funcione de calculo de los errores.
