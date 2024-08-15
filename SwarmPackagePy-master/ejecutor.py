@@ -31,8 +31,8 @@ if img is None:
     quit()
 
 
-individuos=10
-iteraciones=10
+individuos=1
+iteraciones=1
 
 
 match args.algoritmo:

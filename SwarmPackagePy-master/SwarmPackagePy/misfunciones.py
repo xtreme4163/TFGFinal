@@ -17,7 +17,7 @@ warnings.filterwarnings('ignore', category=ConvergenceWarning)
 """ Funcion que pinta imagen pasada"""
 def pintaImagen(cuantizada,nombreImagen,pintor,algoritmo,numeroColores):
        # doy nombre a la imagen de salida en formato ALGORITMO_NUMCOLORES_IMAGEN
-       nombreSalida = algoritmo + numeroColores + nombreImagen
+       nombreSalida = algoritmo + "_" + str(numeroColores) + "_" + os.path.basename(nombreImagen)
        """if nombreImagen.lower().endswith('.jpg') or nombreImagen.lower().endswith('.jpeg'):
               nombreSalida = nombreImagen.split('.')[0] + '-cuantizada.jpg'
        else:
