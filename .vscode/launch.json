@@ -10,9 +10,8 @@
             "args": [
                 "albss.jpg", 
                 "32",
-                "PSO"
-            ]
-
+                "PSO",
+                "--pintaImagen", "True"]
         }
     ]
 }
