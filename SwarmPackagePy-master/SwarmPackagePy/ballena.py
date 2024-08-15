@@ -99,7 +99,7 @@ class ballena(intelligence.sw):
         
         print("Fitness final: ", self.getMejorFitness())
         #Pintamos la imagen
-        fn.pintaImagen(reducida, imagen,pintor)
+        fn.pintaImagen(reducida, imagen,pintor,"BA",numeroColores)
 
         
         

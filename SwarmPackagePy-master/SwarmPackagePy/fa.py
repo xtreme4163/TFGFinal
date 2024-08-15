@@ -118,7 +118,7 @@ class fa(intelligence.sw):
         reducida = fn.generaCuantizada(Gbest,numeroColores,imagen)
         
         print("Fitness final --> ", self.getMejorFitness())
-        fn.pintaImagen(reducida, imagen,pintor)
+        fn.pintaImagen(reducida, imagen,pintor, "FA", numeroColores)
 
         
 

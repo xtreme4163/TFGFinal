@@ -90,7 +90,7 @@ class gwo(intelligence.sw):
         #Generamos la cuantizada para imprimirla junto al valor final del algoritmo.
         reducida = fn.generaCuantizada(Gbest,  numeroColores,imagen)
         print("Fitness final --> ", self.getMejorFitness())
-        fn.pintaImagen(reducida, imagen,pintor)
+        fn.pintaImagen(reducida, imagen,pintor,"GWO",numeroColores)
 
 
     def getABD(self, n, function, numeroColores, imagen):

@@ -99,7 +99,7 @@ class aba(intelligence.sw):
 
         print("Su fitness es: ", self.getMejorFitness())
         #Pintamos imagen
-        fn.pintaImagen(reducida, imagen,pintor)
+        fn.pintaImagen(reducida, imagen,pintor,"ABA",numeroColores)
 
 
     #Funcion que genera nuevos individuos para cada individuo en l moviendose a posiciones vecinas

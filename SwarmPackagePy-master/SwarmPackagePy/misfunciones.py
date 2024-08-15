@@ -15,13 +15,14 @@ warnings.filterwarnings('ignore', category=ConvergenceWarning)
 
 
 """ Funcion que pinta imagen pasada"""
-def pintaImagen(cuantizada,nombreImagen,pintor):
-       # Si la imagen es un archivo JPEG distinto nombreSalida
-       if nombreImagen.lower().endswith('.jpg') or nombreImagen.lower().endswith('.jpeg'):
+def pintaImagen(cuantizada,nombreImagen,pintor,algoritmo,numeroColores):
+       # doy nombre a la imagen de salida en formato ALGORITMO_NUMCOLORES_IMAGEN
+       nombreSalida = algoritmo + numeroColores + nombreImagen
+       """if nombreImagen.lower().endswith('.jpg') or nombreImagen.lower().endswith('.jpeg'):
               nombreSalida = nombreImagen.split('.')[0] + '-cuantizada.jpg'
        else:
               nombreSalida = nombreImagen.split('.')[0] + '-cuantizada.ppm'
-
+"""
         # Guarda la imagen cuantizada en un archivo
        resultado_guardado = cv2.imwrite(nombreSalida, cuantizada)
 
