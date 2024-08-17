@@ -57,8 +57,8 @@ def pintaImagen(cuantizada,nombreImagen,pintor,algoritmo,numeroColores):
               cv2.waitKey(0) #Esperamos a pulsar una tecla
               cv2.destroyAllWindows() #Cerramos
               # Eliminar la imagen cuantizada, si no baja el fitness, quitar esto, no se porque con esto no consigue bajar... libreria os ?
-
-              os.remove(nombreSalida)
+              # Esta linea no hace falta ya que el propio script elimina la imagen
+              #os.remove(nombreSalida)
 
       
 

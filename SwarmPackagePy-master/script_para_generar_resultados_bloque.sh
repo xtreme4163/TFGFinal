@@ -18,6 +18,7 @@
 # BA -> ballenas
 # GWO -> Lobos
 # ABA -> Abejas
+#"FA" "BA" "GWO" "ABA"
 for ALGO in "PSO" "FA" "BA" "GWO" "ABA"
 do
 
@@ -87,7 +88,9 @@ python3 errores_cq.py ${F} ${ALGO}_${C}_${F} >> IQI_${ALGO}_${C}.txt
 
 # Borro la imagen cuantizada, que ya no necesito (guardarlas todas me ocupa
 # mucho disco duro)  
+cd images
 rm ${ALGO}_${C}_${F}
+cd ..
   
 done #tests sucesivos
 done  # colores de la paleta cuantizada

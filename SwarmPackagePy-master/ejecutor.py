@@ -31,8 +31,8 @@ if img is None:
     quit()
 
 
-individuos=1
-iteraciones=1
+individuos=10
+iteraciones=10
 
 
 match args.algoritmo:
@@ -42,12 +42,18 @@ match args.algoritmo:
     case "FA":
         #Luciernagas
         alh = SwarmPackagePy.fa(individuos, func.getMae, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen, csi=1, psi=1, alpha0=1, alpha1=0.1, norm0=0, norm1=0.1,imagen=ruta_imagen)
+        
     case "BA":
         #Ballenas
         alh = SwarmPackagePy.ballena(individuos, func.getMse, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen, ro0=2, eta=0.005,imagen=ruta_imagen)
+        
     case "GWO":
         #Lobos
         alh = SwarmPackagePy.gwo(individuos, func.getMse, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
+        
     case "ABA":
         #Abejas
         alh=SwarmPackagePy.aba(individuos, func.getMse, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
+        #print("en proceso")
+    case _:
+            print("Algoritmo no reconocido")

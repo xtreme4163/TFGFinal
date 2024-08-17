@@ -1,5 +1,0 @@
-MSE PSNR MAE SSIM MS-SSIM
-albss.jpgMSE PSNR MAE SSIM MS-SSIM
-albss.jpgMSE PSNR MAE SSIM MS-SSIM
-albss.jpgMSE PSNR MAE SSIM MS-SSIM
-adirondack_chairs.ppmadirondack_chairs.ppm adirondack_chairs.ppm 
