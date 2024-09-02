@@ -45,7 +45,7 @@ echo "algoritmo->$ALGO"
 # Separo los resultados de cada tamaño de paleta en un fichero diferente
 for C in 32 64 128 256; # para cada tamaño de paleta cuantizada
 do 
-echo "MSE PSNR MAE SSIM MS-SSIM" >> IQI_${ALGO}_${C}.txt
+echo "MSE PSNR MAE SSIM MS-SSIM" >> IQI_${ALGO}_${FUNC}_${C}.txt
 done
 
 
@@ -57,7 +57,7 @@ for F in adirondack_chairs.ppm
 do
 
 #Escribo el nombre de la imagen original como rótulo del bloque de pruebas consecutivas
-echo  -n "$F" >> IQI_${ALGO}_${C}.txt
+echo  -n "$F" >> IQI_${ALGO}_${FUNC}_${C}.txt
 
 
 
