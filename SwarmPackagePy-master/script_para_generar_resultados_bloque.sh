@@ -22,6 +22,13 @@
 for ALGO in "PSO" "FA" "BA" "GWO" "ABA"
 do
 
+
+# Bucle para recorrer todas las funciones que acepta el programa
+# MSE, MAE, SSIM, MSSIM
+for FUNC in "MSE" "MAE" "SSIM" "MSSIM" 
+do
+
+
 # Los errores calculados para sucesivas pruebas se guardarán en un fichero TXT cuyo nombre es de
 # la forma:
 #   IQI_PSO_32.txt   -> errores para el método PSO que usa una paleta de 32 colores
@@ -67,16 +74,17 @@ do
 # -- imagen a procesar
 # -- numero de colores
 # -- algoritmo a realizar
+# -- funcion a procesar
 # Como resultado de las operaciones, escribe en disco la imagen cuantizada con el nombre
 # que se ajuste al forma indicado anteriormente.
 # Los resultados de la ejecución del programa se vuelcan en un fichero con un
 # nombre de la forma:
 #   salida_PSO_32.txt   salida_PSO_64.txt   salida_PSO_128.txt   o salida_PSO_256.txt , en este ejemplo
-python3 ejecutor.py ${F} ${C} ${ALGO}>> salida_${ALGO}_${C}.txt
+python3 ejecutor.py ${F} ${C} ${ALGO} ${FUNC}>> salida_${ALGO}_${FUNC}_${C}.txt
 
 
 # Calculo múltiples medidas de error sobre la imagen cuantizada que acabo de generar
-python3 errores_cq.py ${F} ${ALGO}_${C}_${F} >> IQI_${ALGO}_${C}.txt
+python3 errores_cq.py ${F} ${ALGO}_${C}_${F} >> IQI_${ALGO}_${FUNC}_${C}.txt
 
 
 # NOTA: aquí tendrías que ver la información que se vuelca a los TXT desde cada programa,
@@ -95,6 +103,7 @@ cd ..
 done #tests sucesivos
 done  # colores de la paleta cuantizada
 done  #imagen original
+done # Funcion
 done # ALgoritmo
 
 
