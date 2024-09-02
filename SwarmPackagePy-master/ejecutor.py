@@ -50,46 +50,46 @@ def matchFuncionPso(args, ruta_imagen, individuos, iteraciones):
 def matchFuncionFa(args, ruta_imagen, individuos, iteraciones):
     match(args.funcion):
         case "MSE":
-            alh = SwarmPackagePy.fa(individuos, func.getMse, 0, 255, 3, iteraciones, args.numeroColores,args.pintaImagen,w=0.729, c1=2.05, c2=2.05, imagen=ruta_imagen)
+             alh = SwarmPackagePy.fa(individuos, func.getMse, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen, csi=1, psi=1, alpha0=1, alpha1=0.1, norm0=0, norm1=0.1,imagen=ruta_imagen)
         case "MAE":
-            alh = SwarmPackagePy.fa(individuos, func.getMae, 0, 255, 3, iteraciones, args.numeroColores,args.pintaImagen,w=0.729, c1=2.05, c2=2.05, imagen=ruta_imagen)
+             alh = SwarmPackagePy.fa(individuos, func.getMae, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen, csi=1, psi=1, alpha0=1, alpha1=0.1, norm0=0, norm1=0.1,imagen=ruta_imagen)
         case "SSIM":
-            alh = SwarmPackagePy.fa(individuos, func.getSsim, 0, 255, 3, iteraciones, args.numeroColores,args.pintaImagen,w=0.729, c1=2.05, c2=2.05, imagen=ruta_imagen)
+             alh = SwarmPackagePy.fa(individuos, func.getSsim, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen, csi=1, psi=1, alpha0=1, alpha1=0.1, norm0=0, norm1=0.1,imagen=ruta_imagen)
         case "MSSIM":
-            alh = SwarmPackagePy.fa(individuos, func.getMsSsim, 0, 255, 3, iteraciones, args.numeroColores,args.pintaImagen,w=0.729, c1=2.05, c2=2.05, imagen=ruta_imagen)
+             alh = SwarmPackagePy.fa(individuos, func.getMsSsim, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen, csi=1, psi=1, alpha0=1, alpha1=0.1, norm0=0, norm1=0.1,imagen=ruta_imagen)
 
 def matchFuncionBa(args, ruta_imagen, individuos, iteraciones):
     match(args.funcion):
         case "MSE":
-            alh = SwarmPackagePy.ballena(individuos, func.getMse, 0, 255, 3, iteraciones, args.numeroColores,args.pintaImagen,w=0.729, c1=2.05, c2=2.05, imagen=ruta_imagen)
+            alh = SwarmPackagePy.ballena(individuos, func.getMse, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen, ro0=2, eta=0.005,imagen=ruta_imagen)
         case "MAE":
-            alh = SwarmPackagePy.ballena(individuos, func.getMae, 0, 255, 3, iteraciones, args.numeroColores,args.pintaImagen,w=0.729, c1=2.05, c2=2.05, imagen=ruta_imagen)
+            alh = SwarmPackagePy.ballena(individuos, func.getMae, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen, ro0=2, eta=0.005,imagen=ruta_imagen)
         case "SSIM":
-            alh = SwarmPackagePy.ballena(individuos, func.getSsim, 0, 255, 3, iteraciones, args.numeroColores,args.pintaImagen,w=0.729, c1=2.05, c2=2.05, imagen=ruta_imagen)
+            alh = SwarmPackagePy.ballena(individuos, func.getSsim, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen, ro0=2, eta=0.005,imagen=ruta_imagen)
         case "MSSIM":
-            alh = SwarmPackagePy.ballena(individuos, func.getMsSsim, 0, 255, 3, iteraciones, args.numeroColores,args.pintaImagen,w=0.729, c1=2.05, c2=2.05, imagen=ruta_imagen)
+            alh = SwarmPackagePy.ballena(individuos, func.getMsSsim, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen, ro0=2, eta=0.005,imagen=ruta_imagen)
 
 def matchFuncionGwo(args, ruta_imagen, individuos, iteraciones):
     match(args.funcion):
         case "MSE":
-            alh = SwarmPackagePy.gwo(individuos, func.getMse, 0, 255, 3, iteraciones, args.numeroColores,args.pintaImagen,w=0.729, c1=2.05, c2=2.05, imagen=ruta_imagen)
+            alh = SwarmPackagePy.gwo(individuos, func.getMse, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
         case "MAE":
-            alh = SwarmPackagePy.gwo(individuos, func.getMae, 0, 255, 3, iteraciones, args.numeroColores,args.pintaImagen,w=0.729, c1=2.05, c2=2.05, imagen=ruta_imagen)
+            alh = SwarmPackagePy.gwo(individuos, func.getMae, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
         case "SSIM":
-            alh = SwarmPackagePy.gwo(individuos, func.getSsim, 0, 255, 3, iteraciones, args.numeroColores,args.pintaImagen,w=0.729, c1=2.05, c2=2.05, imagen=ruta_imagen)
+            alh = SwarmPackagePy.gwo(individuos, func.getSsim, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
         case "MSSIM":
-            alh = SwarmPackagePy.gwo(individuos, func.getMsSsim, 0, 255, 3, iteraciones, args.numeroColores,args.pintaImagen,w=0.729, c1=2.05, c2=2.05, imagen=ruta_imagen)
+            alh = SwarmPackagePy.gwo(individuos, func.getMsSsim, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
 
 def matchFuncionAba(args, ruta_imagen, individuos, iteraciones):
     match(args.funcion):
         case "MSE":
-            alh = SwarmPackagePy.aba(individuos, func.getMse, 0, 255, 3, iteraciones, args.numeroColores,args.pintaImagen,w=0.729, c1=2.05, c2=2.05, imagen=ruta_imagen)
+            alh=SwarmPackagePy.aba(individuos, func.getMse, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
         case "MAE":
-            alh = SwarmPackagePy.aba(individuos, func.getMae, 0, 255, 3, iteraciones, args.numeroColores,args.pintaImagen,w=0.729, c1=2.05, c2=2.05, imagen=ruta_imagen)
+            alh=SwarmPackagePy.aba(individuos, func.getMae, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
         case "SSIM":
-            alh = SwarmPackagePy.aba(individuos, func.getSsim, 0, 255, 3, iteraciones, args.numeroColores,args.pintaImagen,w=0.729, c1=2.05, c2=2.05, imagen=ruta_imagen)
+            alh=SwarmPackagePy.aba(individuos, func.getSsim, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
         case "MSSIM":
-            alh = SwarmPackagePy.aba(individuos, func.getMsSsim, 0, 255, 3, iteraciones, args.numeroColores,args.pintaImagen,w=0.729, c1=2.05, c2=2.05, imagen=ruta_imagen)
+            alh=SwarmPackagePy.aba(individuos, func.getMsSsim, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
 
 
 
