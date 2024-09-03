@@ -1,0 +1,528 @@
+PSO // Particulas:  15 Colores:  32 Iteraciones:  10 Imagen:  adirondack_chairs.ppm
+Iteración  1
+Fitness -->  340.53482
+Iteración  2
+Fitness -->  340.53482
+Iteración  3
+Fitness -->  334.22794
+Iteración  4
+Fitness -->  324.69043
+Iteración  5
+Fitness -->  322.61523
+Iteración  6
+Fitness -->  322.61523
+Iteración  7
+Fitness -->  322.61523
+Iteración  8
+Fitness -->  317.5813
+Iteración  9
+Fitness -->  317.5813
+Iteración  10
+Fitness -->  316.8233
+Su fitness es:  316.8233
+PSO // Particulas:  15 Colores:  32 Iteraciones:  10 Imagen:  adirondack_chairs.ppm
+Iteración  1
+Fitness -->  335.39508
+Iteración  2
+Fitness -->  335.39508
+Iteración  3
+Fitness -->  335.39508
+Iteración  4
+Fitness -->  332.94107
+Iteración  5
+Fitness -->  332.94107
+Iteración  6
+Fitness -->  330.6538
+Iteración  7
+Fitness -->  330.6538
+Iteración  8
+Fitness -->  330.6538
+Iteración  9
+Fitness -->  330.6538
+Iteración  10
+Fitness -->  330.6538
+Su fitness es:  330.6538
+PSO // Particulas:  15 Colores:  32 Iteraciones:  10 Imagen:  astro_bodies.ppm
+Iteración  1
+Fitness -->  185.94542
+Iteración  2
+Fitness -->  162.1816
+Iteración  3
+Fitness -->  160.30774
+Iteración  4
+Fitness -->  160.30774
+Iteración  5
+Fitness -->  160.30774
+Iteración  6
+Fitness -->  160.02054
+Iteración  7
+Fitness -->  160.02054
+Iteración  8
+Fitness -->  160.02054
+Iteración  9
+Fitness -->  160.02054
+Iteración  10
+Fitness -->  159.37067
+Su fitness es:  159.37067
+PSO // Particulas:  15 Colores:  32 Iteraciones:  10 Imagen:  astro_bodies.ppm
+Iteración  1
+Fitness -->  167.10677
+Iteración  2
+Fitness -->  167.10677
+Iteración  3
+Fitness -->  164.7824
+Iteración  4
+Fitness -->  162.70699
+Iteración  5
+Fitness -->  159.86751
+Iteración  6
+Fitness -->  151.44368
+Iteración  7
+Fitness -->  151.44368
+Iteración  8
+Fitness -->  151.44368
+Iteración  9
+Fitness -->  151.44368
+Iteración  10
+Fitness -->  151.44368
+Su fitness es:  151.44368
+PSO // Particulas:  15 Colores:  32 Iteraciones:  10 Imagen:  astronaut.ppm
+Iteración  1
+Fitness -->  128.35565
+Iteración  2
+Fitness -->  128.35565
+Iteración  3
+Fitness -->  128.35565
+Iteración  4
+Fitness -->  127.977745
+Iteración  5
+Fitness -->  127.52444
+Iteración  6
+Fitness -->  124.576866
+Iteración  7
+Fitness -->  124.576866
+Iteración  8
+Fitness -->  122.11151
+Iteración  9
+Fitness -->  122.11151
+Iteración  10
+Fitness -->  122.11151
+Su fitness es:  122.11151
+PSO // Particulas:  15 Colores:  32 Iteraciones:  10 Imagen:  astronaut.ppm
+Iteración  1
+Fitness -->  141.6034
+Iteración  2
+Fitness -->  135.70607
+Iteración  3
+Fitness -->  119.18295
+Iteración  4
+Fitness -->  109.808235
+Iteración  5
+Fitness -->  108.09609
+Iteración  6
+Fitness -->  108.09609
+Iteración  7
+Fitness -->  108.09609
+Iteración  8
+Fitness -->  108.09609
+Iteración  9
+Fitness -->  108.09609
+Iteración  10
+Fitness -->  108.09609
+Su fitness es:  108.09609
+PSO // Particulas:  15 Colores:  32 Iteraciones:  10 Imagen:  balinese_dancer.ppm
+Iteración  1
+Fitness -->  145.55325
+Iteración  2
+Fitness -->  145.55325
+Iteración  3
+Fitness -->  125.95892
+Iteración  4
+Fitness -->  125.95892
+Iteración  5
+Fitness -->  125.95892
+Iteración  6
+Fitness -->  125.95892
+Iteración  7
+Fitness -->  125.477516
+Iteración  8
+Fitness -->  120.05259
+Iteración  9
+Fitness -->  118.896065
+Iteración  10
+Fitness -->  118.896065
+Su fitness es:  118.896065
+PSO // Particulas:  15 Colores:  32 Iteraciones:  10 Imagen:  balinese_dancer.ppm
+Iteración  1
+Fitness -->  159.14073
+Iteración  2
+Fitness -->  149.9709
+Iteración  3
+Fitness -->  149.9709
+Iteración  4
+Fitness -->  149.9709
+Iteración  5
+Fitness -->  145.41266
+Iteración  6
+Fitness -->  145.41266
+Iteración  7
+Fitness -->  144.70491
+Iteración  8
+Fitness -->  137.51764
+Iteración  9
+Fitness -->  137.51764
+Iteración  10
+Fitness -->  136.38246
+Su fitness es:  136.38246
+PSO // Particulas:  15 Colores:  32 Iteraciones:  10 Imagen:  ball_caps.ppm
+Iteración  1
+Fitness -->  178.66628
+Iteración  2
+Fitness -->  176.14098
+Iteración  3
+Fitness -->  170.95685
+Iteración  4
+Fitness -->  162.59108
+Iteración  5
+Fitness -->  162.59108
+Iteración  6
+Fitness -->  162.59108
+Iteración  7
+Fitness -->  153.07634
+Iteración  8
+Fitness -->  145.2122
+Iteración  9
+Fitness -->  145.2122
+Iteración  10
+Fitness -->  145.2122
+Su fitness es:  145.2122
+PSO // Particulas:  15 Colores:  32 Iteraciones:  10 Imagen:  ball_caps.ppm
+Iteración  1
+Fitness -->  182.70142
+Iteración  2
+Fitness -->  182.70142
+Iteración  3
+Fitness -->  180.99956
+Iteración  4
+Fitness -->  171.44868
+Iteración  5
+Fitness -->  171.44868
+Iteración  6
+Fitness -->  171.44868
+Iteración  7
+Fitness -->  171.44868
+Iteración  8
+Fitness -->  171.44868
+Iteración  9
+Fitness -->  162.68237
+Iteración  10
+Fitness -->  152.45863
+Su fitness es:  152.45863
+PSO // Particulas:  15 Colores:  32 Iteraciones:  10 Imagen:  birthday_baloons.ppm
+Iteración  1
+Fitness -->  344.88147
+Iteración  2
+Fitness -->  344.88147
+Iteración  3
+Fitness -->  279.7959
+Iteración  4
+Fitness -->  279.7959
+Iteración  5
+Fitness -->  275.10507
+Iteración  6
+Fitness -->  266.91495
+Iteración  7
+Fitness -->  260.6212
+Iteración  8
+Fitness -->  258.5912
+Iteración  9
+Fitness -->  255.50635
+Iteración  10
+Fitness -->  254.47668
+Su fitness es:  254.47668
+PSO // Particulas:  15 Colores:  32 Iteraciones:  10 Imagen:  birthday_baloons.ppm
+Iteración  1
+Fitness -->  245.23473
+Iteración  2
+Fitness -->  214.63934
+Iteración  3
+Fitness -->  214.63934
+Iteración  4
+Fitness -->  214.63934
+Iteración  5
+Fitness -->  210.51453
+Iteración  6
+Fitness -->  210.51453
+Iteración  7
+Fitness -->  209.8619
+Iteración  8
+Fitness -->  209.8619
+Iteración  9
+Fitness -->  209.8619
+Iteración  10
+Fitness -->  208.42741
+Su fitness es:  208.42741
+PSO // Particulas:  15 Colores:  32 Iteraciones:  10 Imagen:  bosnian_pine_needle.ppm
+Iteración  1
+Fitness -->  186.85936
+Iteración  2
+Fitness -->  186.85936
+Iteración  3
+Fitness -->  186.85936
+Iteración  4
+Fitness -->  186.85936
+Iteración  5
+Fitness -->  186.85936
+Iteración  6
+Fitness -->  185.9602
+Iteración  7
+Fitness -->  183.9059
+Iteración  8
+Fitness -->  183.3125
+Iteración  9
+Fitness -->  177.95058
+Iteración  10
+Fitness -->  177.95058
+Su fitness es:  177.95058
+PSO // Particulas:  15 Colores:  32 Iteraciones:  10 Imagen:  bosnian_pine_needle.ppm
+Iteración  1
+Fitness -->  148.39626
+Iteración  2
+Fitness -->  148.39626
+Iteración  3
+Fitness -->  148.39626
+Iteración  4
+Fitness -->  148.39626
+Iteración  5
+Fitness -->  148.39626
+Iteración  6
+Fitness -->  148.39626
+Iteración  7
+Fitness -->  148.39626
+Iteración  8
+Fitness -->  148.39626
+Iteración  9
+Fitness -->  148.39626
+Iteración  10
+Fitness -->  148.39626
+Su fitness es:  148.39626
+PSO // Particulas:  15 Colores:  32 Iteraciones:  10 Imagen:  buggy.ppm
+Iteración  1
+Fitness -->  148.03102
+Iteración  2
+Fitness -->  136.0951
+Iteración  3
+Fitness -->  127.3891
+Iteración  4
+Fitness -->  122.75819
+Iteración  5
+Fitness -->  122.75819
+Iteración  6
+Fitness -->  122.75819
+Iteración  7
+Fitness -->  119.71
+Iteración  8
+Fitness -->  117.32178
+Iteración  9
+Fitness -->  115.48141
+Iteración  10
+Fitness -->  115.48141
+Su fitness es:  115.48141
+PSO // Particulas:  15 Colores:  32 Iteraciones:  10 Imagen:  buggy.ppm
+Iteración  1
+Fitness -->  134.56639
+Iteración  2
+Fitness -->  130.30783
+Iteración  3
+Fitness -->  128.30693
+Iteración  4
+Fitness -->  128.30693
+Iteración  5
+Fitness -->  128.30693
+Iteración  6
+Fitness -->  126.63456
+Iteración  7
+Fitness -->  125.29475
+Iteración  8
+Fitness -->  113.86127
+Iteración  9
+Fitness -->  113.86127
+Iteración  10
+Fitness -->  113.86127
+Su fitness es:  113.86127
+PSO // Particulas:  15 Colores:  32 Iteraciones:  10 Imagen:  calaveras.ppm
+Iteración  1
+Fitness -->  521.76385
+Iteración  2
+Fitness -->  521.76385
+Iteración  3
+Fitness -->  521.76385
+Iteración  4
+Fitness -->  521.76385
+Iteración  5
+Fitness -->  521.76385
+Iteración  6
+Fitness -->  521.76385
+Iteración  7
+Fitness -->  521.76385
+Iteración  8
+Fitness -->  521.76385
+Iteración  9
+Fitness -->  521.76385
+Iteración  10
+Fitness -->  521.76385
+Su fitness es:  521.76385
+PSO // Particulas:  15 Colores:  32 Iteraciones:  10 Imagen:  calaveras.ppm
+Iteración  1
+Fitness -->  483.53415
+Iteración  2
+Fitness -->  483.53415
+Iteración  3
+Fitness -->  483.53415
+Iteración  4
+Fitness -->  483.53415
+Iteración  5
+Fitness -->  483.53415
+Iteración  6
+Fitness -->  483.53415
+Iteración  7
+Fitness -->  483.53415
+Iteración  8
+Fitness -->  483.53415
+Iteración  9
+Fitness -->  483.53415
+Iteración  10
+Fitness -->  483.53415
+Su fitness es:  483.53415
+PSO // Particulas:  15 Colores:  32 Iteraciones:  10 Imagen:  carrots.ppm
+Iteración  1
+Fitness -->  238.61066
+Iteración  2
+Fitness -->  198.87335
+Iteración  3
+Fitness -->  198.87335
+Iteración  4
+Fitness -->  198.87335
+Iteración  5
+Fitness -->  198.87335
+Iteración  6
+Fitness -->  198.87335
+Iteración  7
+Fitness -->  197.88817
+Iteración  8
+Fitness -->  197.88817
+Iteración  9
+Fitness -->  197.88817
+Iteración  10
+Fitness -->  197.88817
+Su fitness es:  197.88817
+PSO // Particulas:  15 Colores:  32 Iteraciones:  10 Imagen:  carrots.ppm
+Iteración  1
+Fitness -->  220.94824
+Iteración  2
+Fitness -->  220.94824
+Iteración  3
+Fitness -->  219.73116
+Iteración  4
+Fitness -->  216.13283
+Iteración  5
+Fitness -->  210.63245
+Iteración  6
+Fitness -->  210.26775
+Iteración  7
+Fitness -->  210.26775
+Iteración  8
+Fitness -->  210.26775
+Iteración  9
+Fitness -->  208.98323
+Iteración  10
+Fitness -->  208.98323
+Su fitness es:  208.98323
+PSO // Particulas:  15 Colores:  32 Iteraciones:  10 Imagen:  chalk_pastels.ppm
+Iteración  1
+Fitness -->  184.85896
+Iteración  2
+Fitness -->  181.34666
+Iteración  3
+Fitness -->  170.82771
+Iteración  4
+Fitness -->  166.5954
+Iteración  5
+Fitness -->  162.43645
+Iteración  6
+Fitness -->  162.43645
+Iteración  7
+Fitness -->  162.43645
+Iteración  8
+Fitness -->  162.43645
+Iteración  9
+Fitness -->  162.43645
+Iteración  10
+Fitness -->  160.92706
+Su fitness es:  160.92706
+PSO // Particulas:  15 Colores:  32 Iteraciones:  10 Imagen:  chalk_pastels.ppm
+Iteración  1
+Fitness -->  190.36528
+Iteración  2
+Fitness -->  188.58553
+Iteración  3
+Fitness -->  186.56035
+Iteración  4
+Fitness -->  186.56035
+Iteración  5
+Fitness -->  186.56035
+Iteración  6
+Fitness -->  182.79854
+Iteración  7
+Fitness -->  179.27339
+Iteración  8
+Fitness -->  167.15788
+Iteración  9
+Fitness -->  163.75322
+Iteración  10
+Fitness -->  163.75322
+Su fitness es:  163.75322
+PSO // Particulas:  15 Colores:  32 Iteraciones:  10 Imagen:  chicken_dish.ppm
+Iteración  1
+Fitness -->  292.95596
+Iteración  2
+Fitness -->  292.5579
+Iteración  3
+Fitness -->  279.31882
+Iteración  4
+Fitness -->  279.31882
+Iteración  5
+Fitness -->  279.31882
+Iteración  6
+Fitness -->  279.31882
+Iteración  7
+Fitness -->  279.31882
+Iteración  8
+Fitness -->  279.31882
+Iteración  9
+Fitness -->  278.34048
+Iteración  10
+Fitness -->  278.34048
+Su fitness es:  278.34048
+PSO // Particulas:  15 Colores:  32 Iteraciones:  10 Imagen:  chicken_dish.ppm
+Iteración  1
+Fitness -->  261.07053
+Iteración  2
+Fitness -->  261.07053
+Iteración  3
+Fitness -->  261.07053
+Iteración  4
+Fitness -->  261.07053
+Iteración  5
+Fitness -->  261.07053
+Iteración  6
+Fitness -->  261.07053
+Iteración  7
+Fitness -->  261.07053
+Iteración  8
+Fitness -->  261.07053
+Iteración  9
+Fitness -->  261.07053
+Iteración  10
+Fitness -->  261.07053
+Su fitness es:  261.07053
