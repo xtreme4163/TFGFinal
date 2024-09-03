@@ -7,6 +7,9 @@ import numpy as np
 import argparse
 import os
 
+
+#Para instalar librerias -> pip install -r requirements.txt
+
 parser= argparse.ArgumentParser()
 
 #Agrego argumento de la imagen
