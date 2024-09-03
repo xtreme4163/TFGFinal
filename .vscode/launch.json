@@ -12,6 +12,7 @@
                 "32",
                 "PSO",
                 "MSE",
+                "15",
                 "--pintaImagen", "True"]
         }
     ]

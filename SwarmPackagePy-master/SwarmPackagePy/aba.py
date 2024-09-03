@@ -45,9 +45,9 @@ class aba(intelligence.sw):
             d = 2
             count = a, b, c, d
         
-        print("Abejas // Particulas: ",n, "Colores: ",numeroColores,"Iteraciones: ", iteration, "Imagen: ", os.path.basename(imagen))
+        #print("Abejas // Particulas: ",n, "Colores: ",numeroColores,"Iteraciones: ", iteration, "Imagen: ", os.path.basename(imagen))
         for t in range(iteration):
-            print("Iteración ", t+1)
+            #print("Iteración ", t+1)
             #Calculo del fitness de cada individuo
             fitness = [function(x,numeroColores, imagen) for x in self.__agents]
              # Ordenación de los índices basados en los valores de fitness
@@ -88,7 +88,7 @@ class aba(intelligence.sw):
 
             #Set del mejor fitness e impresion del fitnes de la iteracion
             self.setMejorFitness(function(Gbest,numeroColores, imagen))
-            print("Fitness --> ",self.getMejorFitness())
+            print(self.getMejorFitness(), end= ' ')
 
         ##########################################################################################################
         #Guardamos la mejor solucion encontrada por el algoritmo
@@ -97,7 +97,7 @@ class aba(intelligence.sw):
         # Generamos la imagen cuantizada para imprimirla con el mejor valor final global.
         reducida = fn.generaCuantizada(Gbest,numeroColores, imagen)
 
-        print("Su fitness es: ", self.getMejorFitness())
+        #print("Su fitness es: ", self.getMejorFitness())
         #Pintamos imagen
         fn.pintaImagen(reducida, imagen,pintor,"ABA",numeroColores)
 

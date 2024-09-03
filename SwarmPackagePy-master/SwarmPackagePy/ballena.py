@@ -46,12 +46,12 @@ class ballena(intelligence.sw):
         # Cogemos la mejor solucion global
         #Gbest = Pbest
 
-        print("WSA // Particulas: ",n, "Colores: ",numeroColores,"Iteraciones: ", iteration, "Imagen: ", os.path.basename(imagen))
+        #print("WSA // Particulas: ",n, "Colores: ",numeroColores,"Iteraciones: ", iteration, "Imagen: ", os.path.basename(imagen))
         # Algoritmo, se repite hasta el nº de iteracciones
         for t in range(iteration):
             
             
-            print("Iteración ", t+1)
+            #print("Iteración ", t+1)
             new_agents = self.__agents
             
             #Para cada particula ...
@@ -89,7 +89,7 @@ class ballena(intelligence.sw):
             Gbest = Pbest[np.array([function(x,numeroColores,imagen) for x in Pbest]).argmin()] 
             
             self.setMejorFitness(function(Gbest,numeroColores,imagen))
-            print("Fitness --> ",self.getMejorFitness())
+            print(self.getMejorFitness(), end= ' ')
             
         Gbest= np.int_(Gbest)
         self._set_Gbest(Gbest)
@@ -97,7 +97,7 @@ class ballena(intelligence.sw):
         # Generamos la imagen cuantizada para pintarla
         reducida = fn.generaCuantizada(Gbest,numeroColores,imagen)
         
-        print("Fitness final: ", self.getMejorFitness())
+        #print("Fitness final: ", self.getMejorFitness())
         #Pintamos la imagen
         fn.pintaImagen(reducida, imagen,pintor,"BA",numeroColores)
 

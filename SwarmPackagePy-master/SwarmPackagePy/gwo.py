@@ -31,9 +31,9 @@ class gwo(intelligence.sw):
 
         Gbest = alpha
 
-        print("GWO // Particulas: ",n, "Colores: ", numeroColores,"Iteraciones: ", iteration, "Imagen: ", os.path.basename(imagen))
+        #print("GWO // Particulas: ",n, "Colores: ", numeroColores,"Iteraciones: ", iteration, "Imagen: ", os.path.basename(imagen))
         for t in range(iteration):
-            print("Iteración ", t+1)
+            #print("Iteración ", t+1)
             #Actualizo el parámetro del algoritmo (a)
             a = 2 - 2 * t / iteration
 
@@ -80,7 +80,7 @@ class gwo(intelligence.sw):
                 Gbest = alpha
             #Conseguimos el mejor fitness y lo mostramos en pantalla
             self.setMejorFitness(function(Gbest,  numeroColores,imagen))
-            print("Fitness --> ", self.getMejorFitness())
+            print(self.getMejorFitness(), end= ' ')
 
         #Se guarda la mejor solucion encontrada
         self._set_Gbest(Gbest)
@@ -89,7 +89,7 @@ class gwo(intelligence.sw):
 
         #Generamos la cuantizada para imprimirla junto al valor final del algoritmo.
         reducida = fn.generaCuantizada(Gbest,  numeroColores,imagen)
-        print("Fitness final --> ", self.getMejorFitness())
+        #print("Fitness final --> ", self.getMejorFitness())
         fn.pintaImagen(reducida, imagen,pintor,"GWO",numeroColores)
 
 

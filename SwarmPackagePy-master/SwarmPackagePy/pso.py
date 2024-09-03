@@ -67,11 +67,11 @@ class pso(intelligence.sw):
         # hasta aqui hemos inicializado el PSO
 
 
-        print("PSO // Particulas: ",n, "Colores: ",numeroColores,"Iteraciones: ", iteration, "Imagen: ", os.path.basename(imagen))
+        #print("PSO // Particulas: ",n, "Colores: ",numeroColores,"Iteraciones: ", iteration, "Imagen: ", os.path.basename(imagen))
 	# Este bucle se repite hasta que nos salimos del rango iteration 
 	# Es el algoritmo PSO en sí
         for t in range(iteration):
-           print("Iteración ", t+1)
+           #print("Iteración ", t+1)
            """
 	   ESQUEMA PSO
 	   1.1- evaluar fitness de cada particula
@@ -110,7 +110,7 @@ class pso(intelligence.sw):
            Gbest = Pbest[np.array([function(x,numeroColores,imagen) for x in Pbest]).argmin()] 
            
            self.setMejorFitness(function(Gbest,numeroColores,imagen))
-           print("Fitness --> ",self.getMejorFitness())
+           print(self.getMejorFitness(), end= ' ')
 
        ##########################################################################################################
        #Guardamos la mejor solucion encontrada por el algoritmo
@@ -119,7 +119,7 @@ class pso(intelligence.sw):
         # Generamos la imagen cuantizada para imprimirla con el mejor valor final global.
         reducida = fn.generaCuantizada(Gbest,numeroColores,imagen)
 
-        print("Su fitness es: ", self.getMejorFitness())
+        #print("Su fitness es: ", self.getMejorFitness())
         #Pintamos imagen
         fn.pintaImagen(reducida, imagen,pintor,"PSO", numeroColores)
         

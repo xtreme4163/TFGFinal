@@ -64,10 +64,10 @@ class fa(intelligence.sw):
         fitnessP = [function(x,numeroColores,imagen) for x in self.__agents]
         fitnessA = fitnessP # Lo igualamos al de la posicion ACTUAL
    
-        print("Luciernagas // Particulas: ",n, "Colores: ",numeroColores,"Iteraciones: ", iteration, "Imagen: ", os.path.basename(imagen))
+        #print("Luciernagas // Particulas: ",n, "Colores: ",numeroColores,"Iteraciones: ", iteration, "Imagen: ", os.path.basename(imagen))
         # BUCLE DEL ALGORITMO
         for t in range(iteration):
-            print("Iteración ", t+1)
+            #print("Iteración ", t+1)
             # Esto se usa en la funcion mover para el calculo de un numero aleatorio
             alpha = alpha1 + (alpha0 - alpha1) * exp(-t)
 
@@ -109,7 +109,7 @@ class fa(intelligence.sw):
             Gbest = Pbest[np.array([function(x,numeroColores,imagen) for x in Pbest]).argmin()]
             
             self.setMejorFitness(function(Gbest,numeroColores,imagen))
-            print("Fitness --> ", self.getMejorFitness())
+            print(self.getMejorFitness(), end= ' ')
             
         Gbest = np.int_(Gbest)
         self._set_Gbest(Gbest)
@@ -117,7 +117,7 @@ class fa(intelligence.sw):
         #Generamos la imagen cuantizada para imprimirla
         reducida = fn.generaCuantizada(Gbest,numeroColores,imagen)
         
-        print("Fitness final --> ", self.getMejorFitness())
+        #print("Fitness final --> ", self.getMejorFitness())
         fn.pintaImagen(reducida, imagen,pintor, "FA", numeroColores)
 
         

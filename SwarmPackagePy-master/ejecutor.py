@@ -17,6 +17,8 @@ parser.add_argument('imagen', type=str, help="Nombre de la imagen a procesar")
 parser.add_argument('numeroColores', type=int, help="Numero de colores de la nueva imagen")
 parser.add_argument('algoritmo', type=str, help="Algoritmo a procesar")
 parser.add_argument('funcion', type=str, help="Funcion a usar por algoritmo (ej. MSE)")
+parser.add_argument('iteraciones', type=int, help="Numero de iteraciones que realizara el algoritmo")
+parser.add_argument('individuos', type=int, help="Numero de individuos del algoritmo")
 parser.add_argument('--pintaImagen', type=bool, default=False,help="Argumento para saber si pinta imagen al final del algoritmo (depuracion); Si viene se pinta.")
 args = parser.parse_args()
 
@@ -35,8 +37,8 @@ if img is None:
     quit()
 
 
-individuos=15
-iteraciones=10
+#individuos=15
+#iteraciones=10
 
 
 def matchFuncionPso(args, ruta_imagen, individuos, iteraciones):
@@ -99,19 +101,19 @@ def matchFuncionAba(args, ruta_imagen, individuos, iteraciones):
 match args.algoritmo:
     case "PSO":
         #PSO
-        matchFuncionPso(args, ruta_imagen, individuos, iteraciones)
+        matchFuncionPso(args, ruta_imagen, args.individuos, args.iteraciones)
     case "FA":
         #Luciernagas
-        matchFuncionFa(args, ruta_imagen, individuos, iteraciones)
+        matchFuncionFa(args, ruta_imagen, args.individuos, args.iteraciones)
     case "BA":
         #Ballenas
-        matchFuncionBa(args, ruta_imagen, individuos, iteraciones)
+        matchFuncionBa(args, ruta_imagen, args.individuos, args.iteraciones)
     case "GWO":
         #Lobos
-        matchFuncionGwo(args, ruta_imagen, individuos, iteraciones)       
+        matchFuncionGwo(args, ruta_imagen, args.individuos, args.iteraciones)       
     case "ABA":
         #Abejas
-        matchFuncionAba(args, ruta_imagen, individuos, iteraciones)       
+        matchFuncionAba(args, ruta_imagen, args.individuos, args.iteraciones)       
     case _:
             print("Algoritmo no reconocido")
 
