@@ -93,7 +93,6 @@ class ballena(intelligence.sw):
             
         Gbest= np.int_(Gbest)
         self._set_Gbest(Gbest)
-
         # Generamos la imagen cuantizada para pintarla
         reducida = fn.generaCuantizada(Gbest,numeroColores,imagen)
         

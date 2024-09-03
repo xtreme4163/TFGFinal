@@ -113,7 +113,6 @@ class fa(intelligence.sw):
             
         Gbest = np.int_(Gbest)
         self._set_Gbest(Gbest)
-        
         #Generamos la imagen cuantizada para imprimirla
         reducida = fn.generaCuantizada(Gbest,numeroColores,imagen)
         
