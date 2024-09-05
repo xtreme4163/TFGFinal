@@ -19,10 +19,6 @@ class pso(intelligence.sw):
     
     """
 
-
-    """Para llamar al pso desde example.py
-    alh = SwarmPackagePy.pso(50, tf.easom_function, -10, 10, 3, 20,
-                    w=0.5, c1=1, c2=1)"""
     # Constructor para el pso
     def __init__(self, n, function, lb, ub, dimension, iteration,numeroColores,pintor, w=0.5, c1=1,
                  c2=1, imagen=""):
@@ -50,12 +46,10 @@ class pso(intelligence.sw):
 	# generamos numeros aletaorios uniformemente distribuidos.
 	# Generamos entre lb y ub (limite inferior y limite superior)
 	# Generamos un total de n*dimension numeros
-        #self.__agents = np.random.randint(lb, ub, (n,r, dimension))
         self.__agents = np.random.uniform(lb, ub, (n,numeroColores, dimension))
     
         velocity = np.zeros((n,numeroColores, dimension)) #Llenamos el vector de velocidad con 0
         self._points(self.__agents)
-        #print(self.__agents)
         
         # Inicializar Pbest, es decir, inicialmente las mejores posiciones de las particulas son las
         # primeras halladas.
@@ -119,7 +113,6 @@ class pso(intelligence.sw):
         # Generamos la imagen cuantizada para imprimirla con el mejor valor final global.
         reducida = fn.generaCuantizada(Gbest,numeroColores,imagen)
 
-        #print("Su fitness es: ", self.getMejorFitness())
         #Pintamos imagen
         fn.pintaImagen(reducida, imagen,pintor,"PSO", numeroColores)
         

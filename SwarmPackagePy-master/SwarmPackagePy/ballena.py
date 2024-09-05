@@ -12,6 +12,7 @@ class ballena(intelligence.sw):
 
     def __init__(self, n, function, lb, ub, dimension, iteration,numeroColores,pintor, ro0=2,
                  eta=0.005,imagen=""):
+        
         """
         Se supone que la mejor solucion candidata actual se acerca a la presa objetivo
         y otras soluciones actualizan su posicion hacia la mejor ballena

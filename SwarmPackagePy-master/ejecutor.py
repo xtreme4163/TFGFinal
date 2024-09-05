@@ -37,9 +37,6 @@ if img is None:
     quit()
 
 
-#individuos=15
-#iteraciones=10
-
 
 def matchFuncionPso(args, ruta_imagen, individuos, iteraciones):
     match(args.funcion):

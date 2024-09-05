@@ -56,7 +56,6 @@ def pintaImagen(cuantizada,nombreImagen,pintor,algoritmo,numeroColores):
 
               cv2.waitKey(0) #Esperamos a pulsar una tecla
               cv2.destroyAllWindows() #Cerramos
-              # Eliminar la imagen cuantizada, si no baja el fitness, quitar esto, no se porque con esto no consigue bajar... libreria os ?
               # Esta linea no hace falta ya que el propio script elimina la imagen
               #os.remove(nombreSalida)
 
@@ -145,9 +144,6 @@ def getMse(x,tam_paleta,nombreImagen):
        img_cuantizada2_flat = img_cuantizada2.reshape((-1, 3))
 
        # Calcula el error cuadrático medio entre la imagen original y la imagen cuantizada
-       #differences = np.subtract(z, img_cuantizada2_flat)
-       #squared_differences = np.square(differences)
-       #return squared_differences.mean()
        return mean_squared_error(z, img_cuantizada2_flat)
 
 

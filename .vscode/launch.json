@@ -8,11 +8,12 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "args": [
-                "albss.jpg", 
+                "textile_market.ppm", 
                 "32",
                 "PSO",
                 "MSE",
                 "15",
+                "10",
                 "--pintaImagen", "True"]
         }
     ]

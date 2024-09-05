@@ -73,13 +73,12 @@ class fa(intelligence.sw):
 
             for i in range(n):
                 # PARA CADA LUCIERNAGA...
-                
                 for j in range(n):
-                # Para cada particula ...
+                # Para cada luciernaga ...
                     if fitnessA[i] > fitnessA[j]:
                     # Si el fitness de la particula i es mayor que la de la j
                     # entonces la movemos hacia la más brillante
-                        self.__move(i, j, t, csi, psi, alpha, dimension,
+                        self.moverLuciernaga(i, j, t, csi, psi, alpha, dimension,
                                     norm0, norm1)
                     else:
                     # Si es menor entonces la movemos al azar, le sumamos un numero aleatorio
@@ -122,7 +121,7 @@ class fa(intelligence.sw):
         
 
     # Esta funcion mueve luciernagas ...
-    def __move(self, i, j, t, csi, psi, alpha, dimension, norm0, norm1):
+    def moverLuciernaga(self, i, j, t, csi, psi, alpha, dimension, norm0, norm1):
 
         # Calculo de la distancia entre dos luciernagas
         r = np.linalg.norm(self.__agents[i] - self.__agents[j]) 
@@ -132,7 +131,7 @@ class fa(intelligence.sw):
         beta = csi / (1 + psi * r ** 2) # atractivo de la luciernaga i sobre k
 
 
-	# Calculamos la nueva posicion aplicando esta formula (distinta a la de las transparencias)
+	# Calculamos la nueva posicion aplicando esta formula 
 	# fi(t+1) = fj(t) + beta(rik) * (fi(t) - fj(t)) + alpha * exp(-t) * aleatorio
 	# el aleatorio se calcula usando una distribucion normal Gaussiana, entre los limites propuestos y con la 
 	# dimension dicha
