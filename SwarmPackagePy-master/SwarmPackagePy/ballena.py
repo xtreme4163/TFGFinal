@@ -87,6 +87,7 @@ class ballena(intelligence.sw):
             #Actualizamos la mejor solucion global
             Gbest=Pbest[np.array([fitMejor]).argmin()]
             
+            #Imprimir fitness
             self.setMejorFitness(function(Gbest,numeroColores,imagen))
             print(self.getMejorFitness(), end= ' ')
             
