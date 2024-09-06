@@ -25,10 +25,13 @@ class gwo(intelligence.sw):
 
         #Inicio de la poblacion
         self.__agents = np.random.uniform(lb, ub, (n,numeroColores, dimension))
-        self._points(self.__agents)
-        #Buscamos los mejores lobos
-        alpha, beta, delta = self.getABD(n, function, numeroColores, imagen)
 
+        #Calculo de los valores de fitness de los individuos
+        fitnessA= [function(x,numeroColores,imagen) for x in self.__agents]
+        #Buscamos los mejores lobos
+        alpha, beta, delta, fitActual = self.getABD(n, fitnessA)
+        #Seteamos el valor del mejor fitnes con el valor de fitActual (valor del fitness del lobo alpha)
+        fitMejor = fitActual
         Gbest = alpha
 
         #print("GWO // Particulas: ",n, "Colores: ", numeroColores,"Iteraciones: ", iteration, "Imagen: ", os.path.basename(imagen))
@@ -71,42 +74,42 @@ class gwo(intelligence.sw):
 
             #Ajuste de estas nuevas posiciones al limite del espacio
             self.__agents = np.clip(self.__agents, lb, ub)
-            self._points(self.__agents)
 
+            
+            #Se calcula el fitness actual de cada individuo
+            fitnessA= [function(x,numeroColores,imagen) for x in self.__agents]
             #Cálculo de los lobos alfa, beta y delta
-            alpha, beta, delta = self.getABD(n, function, numeroColores, imagen)
-            #Cálculo de Gbest (Mejor solucion)
-            if function(alpha, numeroColores,imagen) < function(Gbest, numeroColores,imagen):
+            alpha, beta, delta, fitActual = self.getABD(n, fitnessA)
+
+            #Cálculo de Gbest (Mejor solucion) y actualizacion del valor del mejor fitness
+            if fitActual < fitMejor:
                 Gbest = alpha
+                fitMejor = fitActual
+                
             #Conseguimos el mejor fitness y lo mostramos en pantalla
-            self.setMejorFitness(function(Gbest,  numeroColores,imagen))
+            self.setMejorFitness(fitMejor)
             print(self.getMejorFitness(), end= ' ')
 
-        #Se guarda la mejor solucion encontrada
-        self._set_Gbest(Gbest)
-        alpha, beta, delta = self.getABD(n, function, numeroColores, imagen)
-        self.__leaders = list(alpha), list(beta), list(delta)
-
-        #Generamos la cuantizada para imprimirla junto al valor final del algoritmo.
-        reducida = fn.generaCuantizada(Gbest,  numeroColores,imagen)
-        #print("Fitness final --> ", self.getMejorFitness())
-        fn.pintaImagen(reducida, imagen,pintor,"GWO",numeroColores)
+  
+        if(pintor):
+            #Generamos la cuantizada para imprimirla junto al valor final del algoritmo.
+            reducida = fn.generaCuantizada(Gbest,  numeroColores,imagen)
+            #print("Fitness final --> ", self.getMejorFitness())
+            fn.pintaImagen(reducida, imagen,pintor,"GWO",numeroColores)
 
 
-    def getABD(self, n, function, numeroColores, imagen):
+    """ Funcion que devuelve los lobos alfa beta y delta y el fitnes del mejor lobo"""
+    def getABD(self, n,fitnessA):
 
         result = []
-
         # Calcula el fitness de cada agente y los guarda junto con su índice en una lista de tuplas
-        fitness = [(function(self.__agents[i],  numeroColores,imagen), i) for i in range(n)]
-
+        fitness = [(fitnessA[i], i) for i in range(n)]
         # Ordena la lista de fitness en orden ascendente (menor fitness es mejor)
         fitness.sort()
-
         # Selecciona los tres agentes con mejor fitness
         for i in range(3):
             result.append(self.__agents[fitness[i][1]])
-
+        result.append(fitness[0][0])
         return result
 
     def get_leaders(self):

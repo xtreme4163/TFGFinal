@@ -25,11 +25,13 @@ class aba(intelligence.sw):
 
         #Iniciamos la poblacion y la pasamos a una lista
         self.__agents = np.random.uniform(lb, ub, (n,numeroColores, dimension))
-        self._points(self.__agents)
 
+        # Calcula el fitness de cada individuo y se coge el mejor de ellos
+        fitActual = [function(x,numeroColores,imagen) for x in self.__agents]
+        #Se inicia el mejor fitness con los valores iniciales de fitness
+        fitMejor = fitActual 
         #Búsqueda de la mejor solucion personal de cada individuo, para devolver el individuo con una mejor solucion, para despues actualizar la mejor solución global
-        Pbest = self.__agents[np.array([function(x,numeroColores,imagen)
-                                        for x in self.__agents]).argmin()]
+        Pbest = self.__agents[np.array(fitMejor).argmin()]
         Gbest = Pbest
 
         #Division de los individuos por grupos basandose en el numero de individuos presentes en el algoritmo
@@ -76,30 +78,32 @@ class aba(intelligence.sw):
                 #Se actualiza la poblacion de individuos
                 self.__agents = newbee[:n]
 
-
+            #Se ajustan las posiciones de los individuos a los limites permitidos del espacio de busqueda
             self.__agents = np.clip(self.__agents, lb, ub)
-            self._points(self.__agents)
 
+            #Se calcula el fitnes actual de cada individuo y se guarda en una lista de tuplas junto con su indice
+            fitActual = [function(x,numeroColores,imagen) for x in self.__agents]
             #Se actualiza la mejor solucion personal de cada individuo y luego la mejor solucion global
-            Pbest = self.__agents[
-                np.array([function(x,numeroColores, imagen) for x in self.__agents]).argmin()]
-            if function(Pbest,numeroColores, imagen) < function(Gbest,numeroColores, imagen):
-                Gbest = Pbest
+            Pbest = self.__agents[np.array(fitActual).argmin()]
+            #Para cada individuo...
+            for i in range(n):
+                #Se comprueba si el fitness que tiene asociado es mejor que el mejor fitness guardado
+                if fitActual[i] < fitMejor[i]:
+                    Gbest = Pbest
+                    fitMejor[i] = fitActual[i]
 
             #Set del mejor fitness e impresion del fitnes de la iteracion
-            self.setMejorFitness(function(Gbest,numeroColores, imagen))
+            self.setMejorFitness(min(fitMejor))
             print(self.getMejorFitness(), end= ' ')
 
         ##########################################################################################################
-        #Guardamos la mejor solucion encontrada por el algoritmo
-        Gbest = np.int_(Gbest)
-        self._set_Gbest(Gbest)
-        # Generamos la imagen cuantizada para imprimirla con el mejor valor final global.
-        reducida = fn.generaCuantizada(Gbest,numeroColores, imagen)
+        if(pintor):
+            # Generamos la imagen cuantizada para imprimirla con el mejor valor final global.
+            reducida = fn.generaCuantizada(Gbest,numeroColores, imagen)
 
-        #print("Su fitness es: ", self.getMejorFitness())
-        #Pintamos imagen
-        fn.pintaImagen(reducida, imagen,pintor,"ABA",numeroColores)
+            #print("Su fitness es: ", self.getMejorFitness())
+            #Pintamos imagen
+            fn.pintaImagen(reducida, imagen,pintor,"ABA",numeroColores)
 
 
     #Funcion que genera nuevos individuos para cada individuo en l moviendose a posiciones vecinas

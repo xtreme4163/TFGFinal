@@ -36,7 +36,6 @@ class ballena(intelligence.sw):
 
         # Inicializar la poblacion de ballenas
         self.__agents = np.random.uniform(lb, ub, (n, numeroColores, dimension))
-        self._points(self.__agents)
         
         # Inicializamos el vector de las mejores posiciones de las ballenas
         Pbest = self.__agents
@@ -45,7 +44,7 @@ class ballena(intelligence.sw):
         fitActual = [function(x,numeroColores,imagen) for x in self.__agents] 
         fitMejor = fitActual   # Fitness de la iteracion actual                         
         # Cogemos la mejor solucion global
-        #Gbest = Pbest
+        Gbest = Pbest
 
         #print("WSA // Particulas: ",n, "Colores: ",numeroColores,"Iteraciones: ", iteration, "Imagen: ", os.path.basename(imagen))
         # Algoritmo, se repite hasta el nº de iteracciones
@@ -70,7 +69,6 @@ class ballena(intelligence.sw):
             self.__agents = new_agents
             # Acotamos al espacio de solucion
             self.__agents = np.clip(self.__agents, lb, ub)
-            self._points(self.__agents)
             
             
             #Actualizamos su fitness actual
@@ -87,19 +85,19 @@ class ballena(intelligence.sw):
                   fitMejor[i] = fitActual[i]
             
             #Actualizamos la mejor solucion global
-            Gbest = Pbest[np.array([function(x,numeroColores,imagen) for x in Pbest]).argmin()] 
+            Gbest=Pbest[np.array([fitMejor]).argmin()]
             
             self.setMejorFitness(function(Gbest,numeroColores,imagen))
             print(self.getMejorFitness(), end= ' ')
             
-        Gbest= np.int_(Gbest)
-        self._set_Gbest(Gbest)
-        # Generamos la imagen cuantizada para pintarla
-        reducida = fn.generaCuantizada(Gbest,numeroColores,imagen)
-        
-        #print("Fitness final: ", self.getMejorFitness())
-        #Pintamos la imagen
-        fn.pintaImagen(reducida, imagen,pintor,"BA",numeroColores)
+        if(pintor):
+            Gbest= np.int_(Gbest)
+            # Generamos la imagen cuantizada para pintarla
+            reducida = fn.generaCuantizada(Gbest,numeroColores,imagen)
+            
+            #print("Fitness final: ", self.getMejorFitness())
+            #Pintamos la imagen
+            fn.pintaImagen(reducida, imagen,pintor,"BA",numeroColores)
 
         
         

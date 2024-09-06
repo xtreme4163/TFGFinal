@@ -7,6 +7,7 @@ import numpy as np
 import argparse
 import os
 
+import time
 
 #Para instalar librerias -> pip install -r requirements.txt
 
@@ -107,10 +108,10 @@ match args.algoritmo:
         matchFuncionBa(args, ruta_imagen, args.individuos, args.iteraciones)
     case "GWO":
         #Lobos
-        matchFuncionGwo(args, ruta_imagen, args.individuos, args.iteraciones)       
+        matchFuncionGwo(args, ruta_imagen, args.individuos, args.iteraciones)    
     case "ABA":
         #Abejas
-        matchFuncionAba(args, ruta_imagen, args.individuos, args.iteraciones)       
+        matchFuncionAba(args, ruta_imagen, args.individuos, args.iteraciones) 
     case _:
             print("Algoritmo no reconocido")
 

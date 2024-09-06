@@ -18,7 +18,7 @@ class sw(object):
         self.__Gbest = Gbest
 
     
-    #Convierte a las particulas pasadas (posiciones) en una lista
+    #Guarda en una lista en __Position las posiciones de los individuos que se le pasen en agents
     def _points(self, agents):
         self.__Positions.append([list(i) for i in agents])
 
