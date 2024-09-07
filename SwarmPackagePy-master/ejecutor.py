@@ -86,13 +86,13 @@ def matchFuncionGwo(args, ruta_imagen, individuos, iteraciones):
 def matchFuncionAba(args, ruta_imagen, individuos, iteraciones):
     match(args.funcion):
         case "MSE":
-            alh=SwarmPackagePy.aba(individuos, func.getMse, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
+            alh=SwarmPackagePy.abejas(individuos, func.getMse, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
         case "MAE":
-            alh=SwarmPackagePy.aba(individuos, func.getMae, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
+            alh=SwarmPackagePy.abejas(individuos, func.getMae, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
         case "SSIM":
-            alh=SwarmPackagePy.aba(individuos, func.getSsim, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
+            alh=SwarmPackagePy.abejas(individuos, func.getSsim, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
         case "MSSIM":
-            alh=SwarmPackagePy.aba(individuos, func.getMsSsim, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
+            alh=SwarmPackagePy.abejas(individuos, func.getMsSsim, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
 
 
 

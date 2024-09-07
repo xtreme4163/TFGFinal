@@ -2,7 +2,6 @@ import os
 import numpy as np
 from . import intelligence
 from . import misfunciones as fn
-import sys
 
 # Limites para la velocidad de la particula
 V_MAX = 4
