@@ -97,13 +97,12 @@ class aba(intelligence.sw):
             print(self.getMejorFitness(), end= ' ')
 
         ##########################################################################################################
-        if(pintor):
-            # Generamos la imagen cuantizada para imprimirla con el mejor valor final global.
-            reducida = fn.generaCuantizada(Gbest,numeroColores, imagen)
+        # Generamos la imagen cuantizada para imprimirla con el mejor valor final global.
+        reducida = fn.generaCuantizada(Gbest,numeroColores, imagen)
 
-            #print("Su fitness es: ", self.getMejorFitness())
-            #Pintamos imagen
-            fn.pintaImagen(reducida, imagen,pintor,"ABA",numeroColores)
+        #print("Su fitness es: ", self.getMejorFitness())
+        #Pintamos imagen
+        fn.pintaImagen(reducida, imagen,pintor,"ABA",numeroColores)
 
 
     #Funcion que genera nuevos individuos para cada individuo en l moviendose a posiciones vecinas

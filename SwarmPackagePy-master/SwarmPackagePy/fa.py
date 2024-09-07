@@ -108,13 +108,12 @@ class fa(intelligence.sw):
             self.setMejorFitness(fitnessP[np.array([fitnessP]).argmin()])
             print(self.getMejorFitness(), end= ' ')
             
-        if(pintor):
-            Gbest = np.int_(Gbest)
-            #Generamos la imagen cuantizada para imprimirla
-            reducida = fn.generaCuantizada(Gbest,numeroColores,imagen)
-            
-            #print("Fitness final --> ", self.getMejorFitness())
-            fn.pintaImagen(reducida, imagen,pintor, "FA", numeroColores)
+        Gbest = np.int_(Gbest)
+        #Generamos la imagen cuantizada para imprimirla
+        reducida = fn.generaCuantizada(Gbest,numeroColores,imagen)
+        
+        #print("Fitness final --> ", self.getMejorFitness())
+        fn.pintaImagen(reducida, imagen,pintor, "FA", numeroColores)
 
         
 

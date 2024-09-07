@@ -108,13 +108,13 @@ class pso(intelligence.sw):
 
        ##########################################################################################################
 
-        if(pintor):
-                #Si se tiene que pintar la imagen generamos una cuantizada para su impresion.
-                Gbest = np.int_(Gbest)
-                # Generamos la imagen cuantizada para imprimirla con el mejor valor final global.
-                reducida = fn.generaCuantizada(Gbest,numeroColores,imagen)
 
-                #Pintamos imagen
-                fn.pintaImagen(reducida, imagen,pintor,"PSO", numeroColores)
+        #Si se tiene que pintar la imagen generamos una cuantizada para su impresion.
+        Gbest = np.int_(Gbest)
+        # Generamos la imagen cuantizada para imprimirla con el mejor valor final global.
+        reducida = fn.generaCuantizada(Gbest,numeroColores,imagen)
+
+        #Pintamos imagen
+        fn.pintaImagen(reducida, imagen,pintor,"PSO", numeroColores)
         
         

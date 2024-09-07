@@ -91,11 +91,10 @@ class gwo(intelligence.sw):
             print(self.getMejorFitness(), end= ' ')
 
   
-        if(pintor):
-            #Generamos la cuantizada para imprimirla junto al valor final del algoritmo.
-            reducida = fn.generaCuantizada(Gbest,  numeroColores,imagen)
-            #print("Fitness final --> ", self.getMejorFitness())
-            fn.pintaImagen(reducida, imagen,pintor,"GWO",numeroColores)
+        #Generamos la cuantizada para imprimirla junto al valor final del algoritmo.
+        reducida = fn.generaCuantizada(Gbest,  numeroColores,imagen)
+        #print("Fitness final --> ", self.getMejorFitness())
+        fn.pintaImagen(reducida, imagen,pintor,"GWO",numeroColores)
 
 
     """ Funcion que devuelve los lobos alfa beta y delta y el fitnes del mejor lobo"""

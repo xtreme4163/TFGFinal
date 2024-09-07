@@ -25,17 +25,28 @@ individuos=20
 for ALGO in "PSO" "FA" "BA" "GWO" "ABA"
 do
 
-
 # Bucle para recorrer todas las funciones que acepta el programa
 # MSE, MAE, SSIM, MSSIM
 for FUNC in "MSE" "MAE" "SSIM" "MSSIM" 
 do
 
-
+        
 #ESCRIBO RÓTULOS UNA SOLA VEZ EN LOS FICHEROS QUE ALMACENARÁN LOS ERRORES.
 # Separo los resultados de cada tamaño de paleta en un fichero diferente
 for C in 32 64 128 256; # para cada tamaño de paleta cuantizada
 do 
+
+            # Si el algoritmo es PSO y la función es MSE, MAE o SSIM, saltamos
+            if [[ "$ALGO" == "PSO" && ("$FUNC" == "MSE" || "$FUNC" == "MAE" || "$FUNC" == "SSIM") ]]; then
+                echo "Saltando $ALGO con $FUNC"
+                continue
+            fi
+            
+            # Si el algoritmo es PSO, la función es MSSIM, y el tamaño de la paleta es 32, 64, o 128, saltamos
+            if [[ "$ALGO" == "PSO" && "$FUNC" == "MSSIM" && ("$C" == "32" || "$C" == "64" || "$C" == "128") ]]; then
+                echo "Saltando $ALGO con $FUNC y paleta de tamaño $C"
+                continue
+            fi
 echo "MSE PSNR MAE SSIM MS-SSIM" >> IQI_${ALGO}_${FUNC}_${C}.txt
  
 
@@ -49,12 +60,12 @@ echo "Tiempo" >> salida_${ALGO}_${FUNC}_${C}.txt
 echo >> salida_${ALGO}_${FUNC}_${C}.txt # Añade un salto de linea
 
 # Para cada imagen del conjunto de 100 CQ-100 
-#for F in adirondack_chairs.ppm astro_bodies.ppm astronaut.ppm balinese_dancer.ppm ball_caps.ppm birthday_baloons.ppm bosnian_pine_needle.ppm buggy.ppm calaveras.ppm carrots.ppm chalk_pastels.ppm chicken_dish.ppm chili_peppers.ppm clownfish.ppm color_chart.ppm  color_checker.ppm coloring_pencils.ppm columbia_crew.ppm common_jezebel.ppm common_lantanas.ppm  cosmic_vista.ppm  craft_cards.ppm crepe_paper.ppm cruise_ship.ppm curler.ppm daisy_bouquet.ppm daisy_poster.ppm  easter_egg_basket.ppm  easter_eggs.ppm eastern_rosella.ppm felt_ball_trivet.ppm fishing_nets.ppm floating_market.ppm fruit_dessert.ppm fruit_stand.ppm  fruits.ppm fruits_veggies.ppm german_hot_air_balloon.ppm girl.ppm gourds.ppm grilled_food.ppm  hard_candy.ppm italian_hot_air_balloon.ppm jacksons_chameleon.ppm king_penguin.ppm king_vulture.ppm  kingfisher.ppm korean_dancer.ppm lights.ppm macarons.ppm;
+for F in adirondack_chairs.ppm astro_bodies.ppm astronaut.ppm balinese_dancer.ppm ball_caps.ppm birthday_baloons.ppm bosnian_pine_needle.ppm buggy.ppm calaveras.ppm carrots.ppm chalk_pastels.ppm chicken_dish.ppm chili_peppers.ppm clownfish.ppm color_chart.ppm  color_checker.ppm coloring_pencils.ppm columbia_crew.ppm common_jezebel.ppm common_lantanas.ppm  cosmic_vista.ppm  craft_cards.ppm crepe_paper.ppm cruise_ship.ppm curler.ppm daisy_bouquet.ppm daisy_poster.ppm  easter_egg_basket.ppm  easter_eggs.ppm eastern_rosella.ppm felt_ball_trivet.ppm fishing_nets.ppm floating_market.ppm fruit_dessert.ppm fruit_stand.ppm  fruits.ppm fruits_veggies.ppm german_hot_air_balloon.ppm girl.ppm gourds.ppm grilled_food.ppm  hard_candy.ppm italian_hot_air_balloon.ppm jacksons_chameleon.ppm king_penguin.ppm king_vulture.ppm  kingfisher.ppm korean_dancer.ppm lights.ppm macarons.ppm;
 # macaws.ppm malayan_banded_pitta.ppm  mandarin_ducks.ppm mandarinfish.ppm mangoes.ppm marrakech_museum.ppm maya_beach.ppm  medicine_packets.ppm moroccan_babouches.ppm motocross.ppm motorcycle.ppm mural.ppm  nylon_cords.ppm paper_clips.ppm peacock.ppm pencils.ppm pigments.ppm  pink_mosque.ppm plushies.ppm prickly_pears.ppm puffin.ppm race_car.ppm  red_eyed_tree_frog.ppm red_knobbed_starfish.ppm rescue_helicopter.ppm rose_bouquet.ppm sagami_temple.ppm salad_bowl.ppm schoolgirls.ppm seattle_great_wheel.ppm shawls.ppm shopping_bags.ppm  siberian_tiger.ppm skiers.ppm spices.ppm sports_bicycles.ppm sun_parakeet.ppm tablet.ppm  textile_market.ppm trade_fair_tower.ppm traffic.ppm tulip_field.ppm umbrellas.ppm  veggie_pizza.ppm veggies.ppm venetian_lagoon.ppm vintage_cars.ppm wooden_toys.ppm  wool_carder_bee.ppm yasaka_pagoda.ppm ;
-#do 
+do 
 
-for F in adirondack_chairs.ppm
-do
+#for F in adirondack_chairs.ppm
+#do
 
 # mensaje para el terminal (método que voy a probar)
 echo "algoritmo->$ALGO Cuantizada->$C Funcion-> $FUNC Imagen -> $F"

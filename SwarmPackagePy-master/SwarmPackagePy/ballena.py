@@ -84,21 +84,20 @@ class ballena(intelligence.sw):
                   Pbest[i] = self.__agents[i]
                   fitMejor[i] = fitActual[i]
             
-            #Actualizamos la mejor solucion global
-            Gbest=Pbest[np.array([fitMejor]).argmin()]
-            
-            #Imprimir fitness
-            self.setMejorFitness(function(Gbest,numeroColores,imagen))
-            print(self.getMejorFitness(), end= ' ')
-            
-        if(pintor):
-            Gbest= np.int_(Gbest)
-            # Generamos la imagen cuantizada para pintarla
-            reducida = fn.generaCuantizada(Gbest,numeroColores,imagen)
-            
-            #print("Fitness final: ", self.getMejorFitness())
-            #Pintamos la imagen
-            fn.pintaImagen(reducida, imagen,pintor,"BA",numeroColores)
+        #Actualizamos la mejor solucion global
+        Gbest=Pbest[np.array([fitMejor]).argmin()]
+        
+        #Imprimir fitness
+        self.setMejorFitness(function(Gbest,numeroColores,imagen))
+        print(self.getMejorFitness(), end= ' ')
+        
+        Gbest= np.int_(Gbest)
+        # Generamos la imagen cuantizada para pintarla
+        reducida = fn.generaCuantizada(Gbest,numeroColores,imagen)
+        
+        #print("Fitness final: ", self.getMejorFitness())
+        #Pintamos la imagen
+        fn.pintaImagen(reducida, imagen,pintor,"BA",numeroColores)
 
         
         
