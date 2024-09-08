@@ -37,82 +37,40 @@ if img is None:
     print(f"Error: No se puede abrir o leer el archivo '{ruta_imagen}'")
     quit()
 
+#DICCIONARIOS FUNCIONES ALGORITMOS
+#En este punto se pueden añadir nuevas funciones y algoritmos. En los algoritmos solo hace falta definir los argumentos que se le pasan
+# Definir funciones disponibles para el algoritmo
+funcionesObjetivo = {
+    "MSE": func.getMse,
+    "MAE": func.getMae,
+    "SSIM": func.getSsim,
+    "MSSIM": func.getMsSsim
+}
+
+# Definir los algoritmos disponibles
+algoritmos = {
+    "PSO": lambda indiv, func, col, img, it: SwarmPackagePy.pso(indiv, func, 0, 255, 3, it, col, args.pintaImagen, w=0.729, c1=2.05, c2=2.05, imagen=img),
+    "FA": lambda indiv, func, col, img, it: SwarmPackagePy.fa(indiv, func, 0, 255, 3, it, col, args.pintaImagen, csi=1, psi=1, alpha0=1, alpha1=0.1, norm0=0, norm1=0.1, imagen=img),
+    "BA": lambda indiv, func, col, img, it: SwarmPackagePy.ballena(indiv, func, 0, 255, 3, it, col, args.pintaImagen, ro0=2, eta=0.005, imagen=img),
+    "GWO": lambda indiv, func, col, img, it: SwarmPackagePy.gwo(indiv, func, 0, 255, 3, it, col, args.pintaImagen, imagen=img),
+    "ABA": lambda indiv, func, col, img, it: SwarmPackagePy.abejas(indiv, func, 0, 255, 3, it, col, args.pintaImagen, imagen=img)
+}
 
 
-def matchFuncionPso(args, ruta_imagen, individuos, iteraciones):
-    match(args.funcion):
-        case "MSE":
-            alh = SwarmPackagePy.pso(individuos, func.getMse, 0, 255, 3, iteraciones, args.numeroColores,args.pintaImagen,w=0.729, c1=2.05, c2=2.05, imagen=ruta_imagen)
-        case "MAE":
-            alh = SwarmPackagePy.pso(individuos, func.getMae, 0, 255, 3, iteraciones, args.numeroColores,args.pintaImagen,w=0.729, c1=2.05, c2=2.05, imagen=ruta_imagen)
-        case "SSIM":
-            alh = SwarmPackagePy.pso(individuos, func.getSsim, 0, 255, 3, iteraciones, args.numeroColores,args.pintaImagen,w=0.729, c1=2.05, c2=2.05, imagen=ruta_imagen)
-        case "MSSIM":
-            alh = SwarmPackagePy.pso(individuos, func.getMsSsim, 0, 255, 3, iteraciones, args.numeroColores,args.pintaImagen,w=0.729, c1=2.05, c2=2.05, imagen=ruta_imagen)
+# Función que ejecuta el algoritmo correspondiente
+def ejecutar_algoritmo(algoritmo, funcion, individuos, iteraciones, numero_colores, imagen):
+    if algoritmo not in algoritmos:
+        print(f"Error: Algoritmo '{algoritmo}' no reconocido")
+        quit()
 
-def matchFuncionFa(args, ruta_imagen, individuos, iteraciones):
-    match(args.funcion):
-        case "MSE":
-             alh = SwarmPackagePy.fa(individuos, func.getMse, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen, csi=1, psi=1, alpha0=1, alpha1=0.1, norm0=0, norm1=0.1,imagen=ruta_imagen)
-        case "MAE":
-             alh = SwarmPackagePy.fa(individuos, func.getMae, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen, csi=1, psi=1, alpha0=1, alpha1=0.1, norm0=0, norm1=0.1,imagen=ruta_imagen)
-        case "SSIM":
-             alh = SwarmPackagePy.fa(individuos, func.getSsim, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen, csi=1, psi=1, alpha0=1, alpha1=0.1, norm0=0, norm1=0.1,imagen=ruta_imagen)
-        case "MSSIM":
-             alh = SwarmPackagePy.fa(individuos, func.getMsSsim, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen, csi=1, psi=1, alpha0=1, alpha1=0.1, norm0=0, norm1=0.1,imagen=ruta_imagen)
+    if funcion not in funcionesObjetivo:
+        print(f"Error: Funcion '{funcion}' no reconocida")
+        quit()
 
-def matchFuncionBa(args, ruta_imagen, individuos, iteraciones):
-    match(args.funcion):
-        case "MSE":
-            alh = SwarmPackagePy.ballena(individuos, func.getMse, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen, ro0=2, eta=0.005,imagen=ruta_imagen)
-        case "MAE":
-            alh = SwarmPackagePy.ballena(individuos, func.getMae, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen, ro0=2, eta=0.005,imagen=ruta_imagen)
-        case "SSIM":
-            alh = SwarmPackagePy.ballena(individuos, func.getSsim, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen, ro0=2, eta=0.005,imagen=ruta_imagen)
-        case "MSSIM":
-            alh = SwarmPackagePy.ballena(individuos, func.getMsSsim, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen, ro0=2, eta=0.005,imagen=ruta_imagen)
+    # Ejecutar el algoritmo
+    alg_func = algoritmos[algoritmo]
+    func_fitness = funcionesObjetivo[funcion]
+    alg_func(individuos, func_fitness, numero_colores, imagen, iteraciones)
 
-def matchFuncionGwo(args, ruta_imagen, individuos, iteraciones):
-    match(args.funcion):
-        case "MSE":
-            alh = SwarmPackagePy.gwo(individuos, func.getMse, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
-        case "MAE":
-            alh = SwarmPackagePy.gwo(individuos, func.getMae, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
-        case "SSIM":
-            alh = SwarmPackagePy.gwo(individuos, func.getSsim, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
-        case "MSSIM":
-            alh = SwarmPackagePy.gwo(individuos, func.getMsSsim, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
-
-def matchFuncionAba(args, ruta_imagen, individuos, iteraciones):
-    match(args.funcion):
-        case "MSE":
-            alh=SwarmPackagePy.abejas(individuos, func.getMse, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
-        case "MAE":
-            alh=SwarmPackagePy.abejas(individuos, func.getMae, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
-        case "SSIM":
-            alh=SwarmPackagePy.abejas(individuos, func.getSsim, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
-        case "MSSIM":
-            alh=SwarmPackagePy.abejas(individuos, func.getMsSsim, 0, 255, 3, iteraciones,args.numeroColores,args.pintaImagen,imagen=ruta_imagen)
-
-
-
-match args.algoritmo:
-    case "PSO":
-        #PSO
-        matchFuncionPso(args, ruta_imagen, args.individuos, args.iteraciones)
-    case "FA":
-        #Luciernagas
-        matchFuncionFa(args, ruta_imagen, args.individuos, args.iteraciones)
-    case "BA":
-        #Ballenas
-        matchFuncionBa(args, ruta_imagen, args.individuos, args.iteraciones)
-    case "GWO":
-        #Lobos
-        matchFuncionGwo(args, ruta_imagen, args.individuos, args.iteraciones)    
-    case "ABA":
-        #Abejas
-        matchFuncionAba(args, ruta_imagen, args.individuos, args.iteraciones) 
-    case _:
-            print("Algoritmo no reconocido")
-
-
+# Ejecutar el algoritmo solicitado
+ejecutar_algoritmo(args.algoritmo, args.funcion, args.individuos, args.iteraciones, args.numeroColores, ruta_imagen)
