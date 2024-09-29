@@ -4,6 +4,8 @@ from SwarmPackagePy.ballena import ballena
 from SwarmPackagePy.gwo import gwo
 from SwarmPackagePy.aba import aba
 from SwarmPackagePy.abejas import abejas
+from SwarmPackagePy.woa import woa
+
 
 
 

@@ -11,6 +11,23 @@ import time
 
 #Para instalar librerias -> pip install -r requirements.txt
 
+
+# Función que ejecuta el algoritmo correspondiente
+def ejecutar_algoritmo(algoritmo, funcion, individuos, iteraciones, numero_colores, imagen):
+    if algoritmo not in algoritmos:
+        print(f"Error: Algoritmo '{algoritmo}' no reconocido")
+        quit()
+
+    if funcion not in funcionesObjetivo:
+        print(f"Error: Funcion '{funcion}' no reconocida")
+        quit()
+
+    # Ejecutar el algoritmo
+    alg_func = algoritmos[algoritmo]
+    func_fitness = funcionesObjetivo[funcion]
+    alg_func(individuos, func_fitness, numero_colores, imagen, iteraciones)
+
+
 parser= argparse.ArgumentParser()
 
 #Agrego argumento de la imagen
@@ -53,24 +70,9 @@ algoritmos = {
     "FA": lambda indiv, func, col, img, it: SwarmPackagePy.fa(indiv, func, 0, 255, 3, it, col, args.pintaImagen, csi=1, psi=1, alpha0=1, alpha1=0.1, norm0=0, norm1=0.1, imagen=img),
     "BA": lambda indiv, func, col, img, it: SwarmPackagePy.ballena(indiv, func, 0, 255, 3, it, col, args.pintaImagen, ro0=2, eta=0.005, imagen=img),
     "GWO": lambda indiv, func, col, img, it: SwarmPackagePy.gwo(indiv, func, 0, 255, 3, it, col, args.pintaImagen, imagen=img),
-    "ABA": lambda indiv, func, col, img, it: SwarmPackagePy.abejas(indiv, func, 0, 255, 3, it, col, args.pintaImagen, imagen=img)
+    "ABA": lambda indiv, func, col, img, it: SwarmPackagePy.abejas(indiv, func, 0, 255, 3, it, col, args.pintaImagen, imagen=img),
+    "WOA": lambda indiv, func, col, img, it: SwarmPackagePy.abejas(indiv, func, 0, 255, 3, it, col, args.pintaImagen, imagen=img)
 }
-
-
-# Función que ejecuta el algoritmo correspondiente
-def ejecutar_algoritmo(algoritmo, funcion, individuos, iteraciones, numero_colores, imagen):
-    if algoritmo not in algoritmos:
-        print(f"Error: Algoritmo '{algoritmo}' no reconocido")
-        quit()
-
-    if funcion not in funcionesObjetivo:
-        print(f"Error: Funcion '{funcion}' no reconocida")
-        quit()
-
-    # Ejecutar el algoritmo
-    alg_func = algoritmos[algoritmo]
-    func_fitness = funcionesObjetivo[funcion]
-    alg_func(individuos, func_fitness, numero_colores, imagen, iteraciones)
 
 # Ejecutar el algoritmo solicitado
 ejecutar_algoritmo(args.algoritmo, args.funcion, args.individuos, args.iteraciones, args.numeroColores, ruta_imagen)
