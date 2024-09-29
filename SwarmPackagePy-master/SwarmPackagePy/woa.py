@@ -28,14 +28,14 @@ class woa(intelligence.sw):
         
         # Inicializar la mejor solución encontrada
         self.Gbest = self.__agents[0]
-        self.best_fitness = float("inf")
+        self.mejorFitness = float("inf")
         
         # Evaluar el fitness inicial de cada ballena
         self.fitness = [function(x, numeroColores, imagen) for x in self.__agents]
         for i in range(n):
-            if self.fitness[i] < self.best_fitness:
+            if self.fitness[i] < self.mejorFitness:
                 self.Gbest = self.__agents[i]
-                self.best_fitness = self.fitness[i]
+                self.mejorFitness = self.fitness[i]
         
         # Parámetros del WOA
         a = 2  # Inicializamos a
@@ -58,9 +58,9 @@ class woa(intelligence.sw):
                         self.__agents[i] = self.Gbest - A * D
                     else:
                         # Exploración: seleccionamos una ballena aleatoria
-                        rand_ballena = self.__agents[np.random.randint(0, n)]
-                        D = np.abs(C * rand_ballena - self.__agents[i])
-                        self.__agents[i] = rand_ballena - A * D
+                        ballenaAleatoria = self.__agents[np.random.randint(0, n)]
+                        D = np.abs(C * ballenaAleatoria - self.__agents[i])
+                        self.__agents[i] = ballenaAleatoria - A * D
                 else:
                     # Movimiento en espiral
                     D = np.abs(self.Gbest - self.__agents[i])
@@ -71,15 +71,15 @@ class woa(intelligence.sw):
                 self.__agents[i] = np.clip(self.__agents[i], lb, ub)
 
                 # Calcular el fitness de la nueva posición
-                new_fitness = function(self.__agents[i], numeroColores, imagen)
-                if new_fitness < self.fitness[i]:
-                    self.fitness[i] = new_fitness
-                    if new_fitness < self.best_fitness:
+                fitnessNuevo = function(self.__agents[i], numeroColores, imagen)
+                if fitnessNuevo < self.fitness[i]:
+                    self.fitness[i] = fitnessNuevo
+                    if fitnessNuevo < self.mejorFitness:
                         self.Gbest = self.__agents[i]
-                        self.best_fitness = new_fitness
+                        self.mejorFitness = fitnessNuevo
 
             # Mostrar el mejor fitness de la iteración
-            self.setMejorFitness(self.best_fitness)
+            self.setMejorFitness(self.mejorFitness)
             print(self.getMejorFitness(), end=' ')
 
         # Guardamos la mejor solución encontrada y generamos la imagen cuantizada
