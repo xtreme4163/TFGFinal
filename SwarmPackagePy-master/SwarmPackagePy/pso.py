@@ -7,9 +7,6 @@ from . import misfunciones as fn
 V_MAX = 4
 V_MIN = -4
 
-# numero de colores de la paleta
-r = 64
-
 # Clase para el PSO (hereda de intelligence)
 class pso(intelligence.sw):
     """
@@ -62,7 +59,6 @@ class pso(intelligence.sw):
 
 
 	# Este bucle se repite hasta que nos salimos del rango iteration 
-	# Es el algoritmo PSO en sí
         for t in range(iteration):
            """
 	   ESQUEMA PSO
@@ -73,15 +69,8 @@ class pso(intelligence.sw):
 	   2 - Actualizar velocidad y posicion de cada particula
 	   3 - mostrar resultado al acabar bucle 
 	   """
-           r1 = np.random.rand(n,numeroColores,dimension)
-           r2 = np.random.rand(n,numeroColores,dimension)
-           
-           #  Calculamos la nueva velocidad
-           velocity = w * velocity + c1 * r1 * (
-                Pbest - self.__agents) + c2 * r2 * (
-                Gbest - self.__agents)
-           # Ajustamos la velocidad para que no se salga de los limites. 
-           velocity= np.clip(velocity, V_MIN, V_MAX)
+           # Cálculo de la nueva velocidad
+           velocity = self.calcularNuevaVelocidad(n, dimension, numeroColores, w, c1, c2, velocity, Pbest, Gbest)
            
            #Ajustamos la posicion de las particulas sumando la velocidad
            self.__agents += velocity
@@ -115,5 +104,17 @@ class pso(intelligence.sw):
 
         #Pintamos imagen
         fn.pintaImagen(reducida, imagen,pintor,"PSO", numeroColores)
+
+    def calcularNuevaVelocidad(self, n, dimension, numeroColores, w, c1, c2, velocity, Pbest, Gbest):
+        r1 = np.random.rand(n,numeroColores,dimension)
+        r2 = np.random.rand(n,numeroColores,dimension)
+           
+           #  Calculamos la nueva velocidad
+        velocity = w * velocity + c1 * r1 * (
+                Pbest - self.__agents) + c2 * r2 * (
+                Gbest - self.__agents)
+           # Ajustamos la velocidad para que no se salga de los limites. 
+        velocity= np.clip(velocity, V_MIN, V_MAX)
+        return velocity
         
         
