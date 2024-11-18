@@ -37,17 +37,20 @@ do
 for C in 32 64 128 256; # para cada tamaño de paleta cuantizada
 do 
 
-            # Si el algoritmo es PSO y la función es MSE, MAE o SSIM, saltamos
-            if [[ "$ALGO" == "PSO" && ("$FUNC" == "MSE" || "$FUNC" == "MAE" || "$FUNC" == "SSIM") ]]; then
-                echo "Saltando $ALGO con $FUNC"
-                continue
-            fi
-            
-            # Si el algoritmo es PSO, la función es MSSIM, y el tamaño de la paleta es 32, 64, o 128, saltamos
-            if [[ "$ALGO" == "PSO" && "$FUNC" == "MSSIM" && ("$C" == "32" || "$C" == "64" || "$C" == "128") ]]; then
-                echo "Saltando $ALGO con $FUNC y paleta de tamaño $C"
-                continue
-            fi
+ # Si el algoritmo es PSO y la función es MSE, MAE , saltamos
+if [[ "$ALGO" == "PSO" && ("$FUNC" == "MSE" || "$FUNC" == "MAE" ) ]]; then
+    echo "Saltando $ALGO con $FUNC"
+    continue
+fi
+
+# Si el algoritmo es PSO, la función es SSIM, y el tamaño de la paleta es 32 saltamos
+if [[ "$ALGO" == "PSO" && "$FUNC" == "MSSIM" && ("$C" == "32" ) ]]; then
+    echo "Saltando $ALGO con $FUNC y paleta de tamaño $C"
+    continue
+fi
+
+
+
 echo "MSE PSNR MAE SSIM MS-SSIM" >> IQI_${ALGO}_${FUNC}_${C}.txt
  
 
