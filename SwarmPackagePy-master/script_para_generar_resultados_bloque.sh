@@ -22,7 +22,7 @@
 iteraciones=15
 individuos=20
 
-#for ALGO in "PSO" "FA" "BA" "GWO" "ABA"
+#for ALGO in "PSO" "FA" "WOA" "GWO" "ABA"
 for ALGO in "PSO"
 do
 
@@ -38,13 +38,13 @@ for C in 32 64 128 256; # para cada tamaño de paleta cuantizada
 do 
 
  # Si el algoritmo es PSO y la función es MSE, MAE , saltamos
-if [[ "$ALGO" == "PSO" && ("$FUNC" == "MSE" || "$FUNC" == "MAE" ) ]]; then
+if [[ "$ALGO" == "PSO" && ("$FUNC" == "MSE" || "$FUNC" == "MAE" || "$FUNC" == "SSIM") ]]; then
     echo "Saltando $ALGO con $FUNC"
     continue
 fi
 
-# Si el algoritmo es PSO, la función es SSIM, y el tamaño de la paleta es 32 saltamos
-if [[ "$ALGO" == "PSO" && "$FUNC" == "MSSIM" && ("$C" == "32" ) ]]; then
+# Si el algoritmo es PSO, la función es MSSSIM, y el tamaño de la paleta es 32  o 64 saltamos
+if [[ "$ALGO" == "PSO" && "$FUNC" == "MSSIM" && ("$C" == "32"  || "$C" == "64") ]]; then
     echo "Saltando $ALGO con $FUNC y paleta de tamaño $C"
     continue
 fi

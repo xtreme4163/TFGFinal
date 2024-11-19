@@ -71,7 +71,7 @@ algoritmos = {
     "BA": lambda indiv, func, col, img, it: SwarmPackagePy.ballena(indiv, func, 0, 255, 3, it, col, args.pintaImagen, ro0=2, eta=0.005, imagen=img),
     "GWO": lambda indiv, func, col, img, it: SwarmPackagePy.gwo(indiv, func, 0, 255, 3, it, col, args.pintaImagen, imagen=img),
     "ABA": lambda indiv, func, col, img, it: SwarmPackagePy.abejas(indiv, func, 0, 255, 3, it, col, args.pintaImagen, imagen=img),
-    "WOA": lambda indiv, func, col, img, it: SwarmPackagePy.abejas(indiv, func, 0, 255, 3, it, col, args.pintaImagen, imagen=img)
+    "WOA": lambda indiv, func, col, img, it: SwarmPackagePy.woa(indiv, func, 0, 255, 3, it, col, args.pintaImagen, imagen=img)
 }
 
 # Ejecutar el algoritmo solicitado
