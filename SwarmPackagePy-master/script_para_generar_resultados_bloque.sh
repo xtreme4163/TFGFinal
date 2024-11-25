@@ -134,7 +134,7 @@ python3 errores_cq.py ${F} ${ALGO}_${C}_${F} >> IQI_${ALGO}_${FUNC}_${C}.txt
 
 # Borro la imagen cuantizada, que ya no necesito (guardarlas todas me ocupa
 # mucho disco duro)  
-cd imagenesCuantizada
+cd imagenesCuantizadas
 rm ${ALGO}_${C}_${F}
 cd ..
   
