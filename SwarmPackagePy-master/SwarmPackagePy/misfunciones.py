@@ -4,6 +4,8 @@ from sklearn.cluster import KMeans
 from sklearn.metrics import mean_squared_error
 from sklearn.exceptions import ConvergenceWarning
 from skimage.metrics import structural_similarity as ssim
+from sklearn.metrics import pairwise_distances_argmin
+import copy
 import warnings
 import os
 
@@ -102,32 +104,24 @@ def preparaImagen(nombreImagen):
        return z,img
 
 #Funcion que genera una imagen cuantizada usando KMeans
-def generaCuantizada(x,tam_paleta,nombreImagen):
+def generaCuantizada(gbest,tam_paleta,nombreImagen):
        #Preparamos imagen
        z,img=preparaImagen(nombreImagen)
        
-       # Elimina los pixeles duplicados para evitar problemas con KMeans
-       z_unique = np.unique(z, axis=0)
-    
-       # Ajusta el número de clusters al número de pixeles únicos si es menor que tam_paleta
-       tam_paleta = min(tam_paleta, len(z_unique))
-
-       # Aplica KMeans a los pixeles únicos para encontrar los clusters (colores representativos)
-       k_means = KMeans(n_clusters=tam_paleta,init=x, n_init=1,max_iter=1,algorithm="lloyd").fit(z_unique)
-   
        # Guardamos el valor de los centroides y de las etiquetas de cada pixel
-       labels = k_means.predict(z)
+       label = pairwise_distances_argmin(gbest, z, axis=0) 
 
        # Obtiene los centroides de los clusters (los colores representativos)
-       paleta = k_means.cluster_centers_
+       paleta = copy.deepcopy(gbest)		
        # con np.uint8 los convertimos a enteros de 8 bits
        paleta = np.uint8(paleta)
+               
+       # se generan los pixels de la imagen cuantizada
+       res = paleta[label.flatten()]   
 
-       # Reemplaza cada pixel en la imagen original por el color del cluster al que pertenece
-       img_cuantizada = paleta[labels.flatten()]
-       img_cuantizada2 = img_cuantizada.reshape((img.shape))
-   
-       return img_cuantizada2
+       #Se redimensiona el array de pixzeles para que coincida con la imagen original
+       res2 = res.reshape((img.shape))
+       return res2
 
 """
        Funcion que calcula el fitness de una posicion dada. Aplicado a imagenes, lee una imagen, extrae
