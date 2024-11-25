@@ -37,6 +37,8 @@ do
 for C in 32 64 128 256; # para cada tamaño de paleta cuantizada
 do 
 
+if false; then
+# TODO ESTO ESTA COMENTADO
  # Si el algoritmo es PSO y la función es MSE, MAE , saltamos
 if [[ "$ALGO" == "PSO" && ("$FUNC" == "MSE" || "$FUNC" == "MAE" || "$FUNC" == "SSIM") ]]; then
     echo "Saltando $ALGO con $FUNC"
@@ -48,7 +50,8 @@ if [[ "$ALGO" == "PSO" && "$FUNC" == "MSSIM" && ("$C" == "32"  || "$C" == "64") 
     echo "Saltando $ALGO con $FUNC y paleta de tamaño $C"
     continue
 fi
-
+# TODO ESTO ESTA COMENTADO
+fi
 
 
 echo "MSE PSNR MAE SSIM MS-SSIM" >> IQI_${ALGO}_${FUNC}_${C}.txt
