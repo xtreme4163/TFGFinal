@@ -62,7 +62,7 @@ algoritmos = {
 
 
 # Obtener la ruta completa de la imagen
-ruta_imagen = os.path.join(os.path.dirname(__file__), 'images', args.imagen)
+ruta_imagen = os.path.join(os.path.dirname(__file__), 'imagenes', args.imagen)
 
 
 # Verificar si el archivo existe

@@ -22,19 +22,17 @@ def pintaImagen(cuantizada,nombreImagen,pintor,algoritmo,numeroColores):
        ruta_script = os.path.dirname(os.path.abspath(__file__))
        # Subir un nivel para obtener el directorio raiz
        ruta_prueba = os.path.dirname(ruta_script)
-       #Voy a la carpeta images
-       rutaImagen= os.path.join(ruta_prueba, 'images')
+
+       #Acceso al directorio de volcado de imagenes cuantizadas
+       rutaImagenesCuantizadas = os.path.join(ruta_prueba, 'imagenesCuantizadas')
+
 
        # doy nombre a la imagen de salida en formato ALGORITMO_NUMCOLORES_IMAGEN
        nombreSalida = algoritmo + "_" + str(numeroColores) + "_" + os.path.basename(nombreImagen)
        #Contruyo la ruta hacia el directorio de destino
-       rutaDestino = os.path.join(rutaImagen, nombreSalida)
-       """if nombreImagen.lower().endswith('.jpg') or nombreImagen.lower().endswith('.jpeg'):
-              nombreSalida = nombreImagen.split('.')[0] + '-cuantizada.jpg'
-       else:
-              nombreSalida = nombreImagen.split('.')[0] + '-cuantizada.ppm'
-"""
-        # Guarda la imagen cuantizada en un archivo
+       rutaDestino = os.path.join(rutaImagenesCuantizadas, nombreSalida)
+
+       # Guarda la imagen cuantizada en un archivo
        resultado_guardado = cv2.imwrite(rutaDestino, cuantizada)
 
         # Verificar si la imagen se guardó correctamente
