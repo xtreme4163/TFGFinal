@@ -10,8 +10,6 @@ class fa(intelligence.sw):
     """
     Firefly Algorithm
     
-    Poner formula matemática en mover luciernaga
-    
     Se considera un conjunto de N luciernagas (aqui n), aqui el fitness es el brillo 
     (solucion al problema).
     Las luciernagas se atraen unas a otras, el atractivo de cada luciernada es proporcional a su brillo
@@ -30,15 +28,15 @@ class fa(intelligence.sw):
     
     """
 
-    def __init__(self, n, function, lb, ub, dimension, iteration,numeroColores,pintor, csi=1, psi=1,
+    def __init__(self, n, funcion, lb, ub, dimension, iteraciones,numeroColores,pintor, csi=1, psi=1,
                  alpha0=1, alpha1=0.1, norm0=0, norm1=0.1,imagen=""):
         """
         :param n: numero de particulas
-        :param function: funcion a optimizar
+        :param funcion: funcion a optimizar
         :param lb: limite inferior del espacio (0 para imagenes)
         :param ub: limite superior del espacio (255 para imagenes)
         :param dimension: dimensiones del espacio
-        :param iteration: numero de iteraciones
+        :param iteraciones: numero de iteraciones
         :param numeroColores: numero de colores de la nueva imagen
         :param pintor: booleano que se usa para saber si pintamos imagen al final o no.
         :param csi: atraccion mutua (Valor por defecto es 1)
@@ -60,12 +58,12 @@ class fa(intelligence.sw):
         Pbest = self.__agents
         
         # Calculamos el fitness de las mejores posiciones encontradas por las luciernagas
-        fitnessP = [function(x,numeroColores,imagen) for x in self.__agents]
+        fitnessP = [funcion(x,numeroColores,imagen) for x in self.__agents]
         fitnessA = fitnessP # Lo igualamos al de la posicion ACTUAL
    
         #print("Luciernagas // Particulas: ",n, "Colores: ",numeroColores,"Iteraciones: ", iteration, "Imagen: ", os.path.basename(imagen))
         # BUCLE DEL ALGORITMO
-        for t in range(iteration):
+        for t in range(iteraciones):
             #print("Iteración ", t+1)
             # Esto se usa en la funcion mover para el calculo de un numero aleatorio
             alpha = alpha1 + (alpha0 - alpha1) * exp(-t)
@@ -87,7 +85,7 @@ class fa(intelligence.sw):
             self.__agents = np.clip(self.__agents, lb, ub)
             # Luciernagas movidas hasta aqui
             #Calculamos el fitness actual de cada luciernaga
-            fitnessA = [function(x,numeroColores,imagen) for x in self.__agents]
+            fitnessA = [funcion(x,numeroColores,imagen) for x in self.__agents]
             
             
             

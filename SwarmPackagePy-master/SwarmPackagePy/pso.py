@@ -13,23 +13,23 @@ class pso(intelligence.sw):
     """
 
     # Constructor para el pso
-    def __init__(self, n, funcion, lb, ub, dimension, iteration,numeroColores,pintor,vMin, vMax, w=0.5, c1=1,
+    def __init__(self, n, funcion, lb, ub, dimension, iteraciones,numeroColores,pintor,vMin, vMax, w=0.5, c1=1,
                  c2=1, imagen=""):
         """
-        n: numero de individuos (Particulas)
-        funcion: funcion objetivo que se aplica en el algoritmo
-        lb: limite inferior del espacio de busqueda
-        ub: limite superior del espacio de busqueda
-        dimension: dimension del espacio de solucion (r)
-        iteration: numero de iteraciones
-        numeroColores: numero de colores de la nueva imagen
-        pintor: booleano que se usa para saber si pintamos imagen al final o no.
-        vMin: velocidad mínima del individuo
-        vMax: velocidad máxima del individuo
-        w: parametro inercia
-        c1: parametro cognitivo (f1)
-        c2: parametro social (f2)
-        imagen: ruta de la imagen a procesar por el algoritmo
+        :param n: numero de individuos (Particulas)
+        :param funcion: funcion objetivo que se aplica en el algoritmo
+        :param lb: limite inferior del espacio de busqueda
+        :param ub: limite superior del espacio de busqueda
+        :param dimension: dimension del espacio de solucion (r)
+        :param iteraciones: numero de iteraciones
+        :param numeroColores: numero de colores de la nueva imagen
+        :param pintor: booleano que se usa para saber si pintamos imagen al final o no.
+        :param vMin: velocidad mínima del individuo
+        :param vMax: velocidad máxima del individuo
+        :param w: parametro inercia
+        :param c1: parametro cognitivo (f1)
+        :param c2: parametro social (f2)
+        :param imagen: ruta de la imagen a procesar por el algoritmo
        
         """
 	
@@ -58,8 +58,8 @@ class pso(intelligence.sw):
         # hasta aqui hemos inicializado el PSO
 
 
-	# Este bucle se repite hasta que nos salimos del rango iteration 
-        for t in range(iteration):
+	# Este bucle se repite hasta que nos salimos del rango iteraciones 
+        for t in range(iteraciones):
            """
 	   ESQUEMA PSO
 	   1.1- evaluar fitness de cada particula

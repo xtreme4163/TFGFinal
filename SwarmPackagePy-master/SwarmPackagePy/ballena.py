@@ -7,7 +7,7 @@ from . import misfunciones as fn
 
 class ballena(intelligence.sw):
     """
-    Whale Swarm Algorithm
+    Whale Swarm Algorithm. Este es el malo
     """
 
     def __init__(self, n, function, lb, ub, dimension, iteration,numeroColores,pintor, ro0=2,

@@ -5,17 +5,17 @@ from . import misfunciones as fn
 # Clase para abejas (hereda de intelligence)
 class abejas(intelligence.sw):
 
-        def __init__(self, n, function, lb, ub, dimension, iteration,numeroColores,pintor, imagen=""):
+        def __init__(self, n, funcion, lb, ub, dimension, iteraciones,numeroColores,pintor, imagen=""):
             """ 
-                n (int): Número de abejas (fuentes de alimento) en la población.
-                function: Función objetivo que queremos optimizar.
-                lb (list): Límite inferior del espacio de búsqueda para cada dimensión.
-                ub (list): Límite superior del espacio de búsqueda para cada dimensión.
-                dimension (int): Dimensiones del espacio de búsqueda.
-                iteration (int): Número de iteraciones que debe ejecutar el algoritmo.
-                numeroColores (int): Número de colores en la imagen.
-                pintor (bool): Control booleano para pintar o no la imagen al final.
-                imagen (str): Ruta a la imagen que debe procesarse.
+                :param n (int): Número de abejas (fuentes de alimento) en la población.
+                :param funcion: Función objetivo que queremos optimizar.
+                :param lb (list): Límite inferior del espacio de búsqueda para cada dimensión.
+                :param ub (list): Límite superior del espacio de búsqueda para cada dimensión.
+                :param dimension (int): Dimensiones del espacio de búsqueda.
+                :param iteraciones (int): Número de iteraciones que debe ejecutar el algoritmo.
+                :param numeroColores (int): Número de colores en la imagen.
+                :param pintor (bool): Control booleano para pintar o no la imagen al final.
+                :param imagen (str): Ruta a la imagen que debe procesarse.
 
                 PSEUDOCODIGO
                 Inicializar el conjunto de fuentes de alimento
@@ -36,11 +36,11 @@ class abejas(intelligence.sw):
 
             # Parámetros básicos
             self.n = n  # número de fuentes de alimento (abejas)
-            self.function = function  # función de fitness a optimizar
+            self.function = funcion  # función de fitness a optimizar
             self.lb = lb  # límite inferior del espacio de búsqueda
             self.ub = ub  # límite superior del espacio de búsqueda
             self.dimension = dimension  # número de dimensiones de cada solución
-            self.iteration = iteration  # número de ciclos de optimización
+            self.iteration = iteraciones  # número de ciclos de optimización
             self.numeroColores = numeroColores  # colores para la cuantificación
             self.pintor = pintor  # bandera para pintar la imagen al final
             self.imagen = imagen  # ruta de la imagen a procesar
@@ -60,7 +60,7 @@ class abejas(intelligence.sw):
             Pbest = self.__agents
             self.Pbest = Pbest
             #Calculamos el fitness actual y lo guardamos
-            fitActual = [function(x,numeroColores,imagen) for x in self.__agents]
+            fitActual = [funcion(x,numeroColores,imagen) for x in self.__agents]
             fitMejor = fitActual # Lo igualamos al de la posicion ACTUAL
             self.fitActual = fitActual
 
@@ -70,7 +70,7 @@ class abejas(intelligence.sw):
 
 
             #Bucle del algoritmo
-            for t in range(iteration):
+            for t in range(iteraciones):
                 for i in range(n):
                     #Para cada fuente aplicamos las operaciones de las abejas empleadas
                     self.abejaEmpleada(i)

@@ -11,14 +11,18 @@ class gwo(intelligence.sw):
     Grey Wolf Optimizer
     """
 
-    def __init__(self, n, function, lb, ub, dimension, iteration, numeroColores ,pintor,imagen=""):
+    def __init__(self, n, funcion, lb, ub, dimension, iteraciones, numeroColores ,pintor,imagen=""):
         """
         :param n: numero de individuos
         :param function: funcion del algoritmo
         :param lb: limite inferior del espacio de busqueda
         :param ub: limite superior del espacio de busqueda
         :param dimension: dimension del espacio
-        :param iteration: numero de iteraciones
+        :param iteraciones: numero de iteraciones
+        :param iteraciones (int): Número de iteraciones que debe ejecutar el algoritmo.
+        :param numeroColores (int): Número de colores en la imagen.
+        :param pintor (bool): Control booleano para pintar o no la imagen al final.
+        :param imagen (str): Ruta a la imagen que debe procesarse.
         """
 
         super(gwo, self).__init__()
@@ -27,7 +31,7 @@ class gwo(intelligence.sw):
         self.__agents = np.random.uniform(lb, ub, (n,numeroColores, dimension))
 
         #Calculo de los valores de fitness de los individuos
-        fitnessA= [function(x,numeroColores,imagen) for x in self.__agents]
+        fitnessA= [funcion(x,numeroColores,imagen) for x in self.__agents]
         #Buscamos los mejores lobos
         alpha, beta, delta, fitActual = self.getABD(n, fitnessA)
         #Seteamos el valor del mejor fitnes con el valor de fitActual (valor del fitness del lobo alpha)
@@ -35,10 +39,10 @@ class gwo(intelligence.sw):
         Gbest = alpha
 
         #print("GWO // Particulas: ",n, "Colores: ", numeroColores,"Iteraciones: ", iteration, "Imagen: ", os.path.basename(imagen))
-        for t in range(iteration):
+        for t in range(iteraciones):
             #print("Iteración ", t+1)
             #Actualizo el parámetro del algoritmo (a)
-            a = 2 - 2 * t / iteration
+            a = 2 - 2 * t / iteraciones
 
             #Cálculo de los vectores aleatorios entre [0, 1], y de A y C para lobo alpha
             r1 = np.random.rand(n,numeroColores,dimension)
@@ -77,7 +81,7 @@ class gwo(intelligence.sw):
 
             
             #Se calcula el fitness actual de cada individuo
-            fitnessA= [function(x,numeroColores,imagen) for x in self.__agents]
+            fitnessA= [funcion(x,numeroColores,imagen) for x in self.__agents]
             #Cálculo de los lobos alfa, beta y delta
             alpha, beta, delta, fitActual = self.getABD(n, fitnessA)
 

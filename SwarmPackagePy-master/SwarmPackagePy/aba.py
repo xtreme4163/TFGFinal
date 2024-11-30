@@ -8,7 +8,7 @@ from . import misfunciones as fn
 
 class aba(intelligence.sw):
     """
-    Artificial Bee Algorithm
+    Artificial Bee Algorithm. Este es el malo
     """
 
     def __init__(self, n, function, lb, ub, dimension, iteration, numeroColores ,pintor,imagen=""):

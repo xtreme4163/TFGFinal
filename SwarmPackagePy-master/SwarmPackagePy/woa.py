@@ -19,7 +19,20 @@ class woa(intelligence.sw):
     11. Actualizar la mejor solución global si se encuentra una mejor."""
 
 
-    def __init__(self, n, function, lb, ub, dimension, iteration,numeroColores,pintor, imagen=""):
+    def __init__(self, n, funcion, lb, ub, dimension, iteraciones,numeroColores,pintor, imagen=""):
+
+        """     
+        :param n: numero de individuos (Particulas)
+        :param funcion: funcion objetivo que se aplica en el algoritmo
+        :param lb: limite inferior del espacio de busqueda
+        :param ub: limite superior del espacio de busqueda
+        :param dimension: dimension del espacio de solucion (r)
+        :param iteraciones: numero de iteraciones
+        :param numeroColores: numero de colores de la nueva imagen
+        :param pintor: booleano que se usa para saber si pintamos imagen al final o no.
+        
+        """
+         
         # Empezamos a inicializar la poblacion de individuos
         super(woa, self).__init__()
 
@@ -31,7 +44,7 @@ class woa(intelligence.sw):
         self.mejorFitness = float("inf")
         
         # Evaluar el fitness inicial de cada ballena
-        self.fitness = [function(x, numeroColores, imagen) for x in self.__agents]
+        self.fitness = [funcion(x, numeroColores, imagen) for x in self.__agents]
         for i in range(n):
             if self.fitness[i] < self.mejorFitness:
                 self.Gbest = self.__agents[i]
@@ -42,8 +55,8 @@ class woa(intelligence.sw):
         b = 1  # Parámetro para el movimiento en espiral
         
         # Iteraciones del algoritmo
-        for t in range(iteration):
-            a = 2 - t * (2 / iteration)  # Decrecimiento lineal de "a"
+        for t in range(iteraciones):
+            a = 2 - t * (2 / iteraciones)  # Decrecimiento lineal de "a"
             
             # Para cada ballena
             for i in range(n):
@@ -71,7 +84,7 @@ class woa(intelligence.sw):
                 self.__agents[i] = np.clip(self.__agents[i], lb, ub)
 
                 # Calcular el fitness de la nueva posición
-                fitnessNuevo = function(self.__agents[i], numeroColores, imagen)
+                fitnessNuevo = funcion(self.__agents[i], numeroColores, imagen)
                 if fitnessNuevo < self.fitness[i]:
                     self.fitness[i] = fitnessNuevo
                     if fitnessNuevo < self.mejorFitness:
