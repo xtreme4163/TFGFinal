@@ -9,8 +9,8 @@
             "console": "integratedTerminal",
             "args": [
                 "maya_beach.ppm", 
-                "128",
-                "PSO",
+                "32",
+                "FA",
                 "MSE",
                 "15",
                 "10",

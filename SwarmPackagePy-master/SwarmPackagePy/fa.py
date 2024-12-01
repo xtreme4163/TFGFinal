@@ -1,6 +1,8 @@
 from math import exp
 import os
 import numpy as np
+import copy
+
 
 from . import intelligence
 from . import misfunciones as fn
@@ -10,6 +12,9 @@ class fa(intelligence.sw):
     """
     Firefly Algorithm
     
+    OBSERVACION:
+    Este algoritmo puede dar un mayor valor de fitness en una iteracion, haciendolo peor, creo que es debido a que la primera luciernaga se meuve libremente y no he limitado ese movimiento
+
     Se considera un conjunto de N luciernagas (aqui n), aqui el fitness es el brillo 
     (solucion al problema).
     Las luciernagas se atraen unas a otras, el atractivo de cada luciernada es proporcional a su brillo
@@ -28,8 +33,7 @@ class fa(intelligence.sw):
     
     """
 
-    def __init__(self, n, funcion, lb, ub, dimension, iteraciones,numeroColores,pintor, csi=1, psi=1,
-                 alpha0=1, alpha1=0.1, norm0=0, norm1=0.1,imagen=""):
+    def __init__(self, n, funcion, lb, ub, dimension, iteraciones,numeroColores,pintor, beta0=1, gamma=1, norm0=0, norm1=0.1,imagen=""):
         """
         :param n: numero de particulas
         :param funcion: funcion a optimizar
@@ -39,10 +43,8 @@ class fa(intelligence.sw):
         :param iteraciones: numero de iteraciones
         :param numeroColores: numero de colores de la nueva imagen
         :param pintor: booleano que se usa para saber si pintamos imagen al final o no.
-        :param csi: atraccion mutua (Valor por defecto es 1)
-        :param psi: Coeficiente de absorcion de la luz del medio (valor por defecto 1)
-        :param alpha0: valor inicial del parametro aleatorio alpha (valor por defecto 1) 
-        :param alpha1: valor final del parametro aleatorio alpha (valor por defecto 0.1)
+        :param beta0: atraccion mutua (Valor por defecto es 1)
+        :param gamma: Coeficiente de absorcion de la luz del medio (valor por defecto 1)
         :param norm0: primer parametro para una distribucion normal (Gaussiana) (Valor por defecto 0)
         :param norm1: segundo parametro para una distribucion normal (Gaussiana) (Valor por defecto 0.1)
         :param imagen: ruta de la imagen a procesar por el algoritmo
@@ -53,85 +55,77 @@ class fa(intelligence.sw):
         
         # Inicia la poblacion de luciernagas
         self.__agents = np.random.uniform(lb, ub, (n,numeroColores, dimension))
-
-        # Iniciamos las mejores posiciones de cada particula con las calculadas antes
-        Pbest = self.__agents
         
         # Calculamos el fitness de las mejores posiciones encontradas por las luciernagas
-        fitnessP = [funcion(x,numeroColores,imagen) for x in self.__agents]
-        fitnessA = fitnessP # Lo igualamos al de la posicion ACTUAL
-   
-        #print("Luciernagas // Particulas: ",n, "Colores: ",numeroColores,"Iteraciones: ", iteration, "Imagen: ", os.path.basename(imagen))
+        fitnessActual = [funcion(x,numeroColores,imagen) for x in self.__agents]
+
+        # Ordenar las luciérnagas por su fitness antes de empezar las iteraciones
+        indicesOrdenados = np.argsort(fitnessActual)
+        self.__agents = self.__agents[indicesOrdenados]
+        fitnessActual = [fitnessActual[i] for i in indicesOrdenados]
+
+
         # BUCLE DEL ALGORITMO
         for t in range(iteraciones):
-            #print("Iteración ", t+1)
-            # Esto se usa en la funcion mover para el calculo de un numero aleatorio
-            alpha = alpha1 + (alpha0 - alpha1) * exp(-t)
 
-            for i in range(n):
+            # Mover la luciérnaga más brillante al azar
+            self.__agents[0] += np.random.normal(norm0, norm1, (numeroColores, dimension))
+            self.__agents[0] = np.clip(self.__agents[0], lb, ub)
+
+            # Recalcular fitness para la luciérnaga que se movió al azar
+            fitnessActual[0] = funcion(self.__agents[0], numeroColores, imagen)
+
+            for i in range(1, n):
                 # PARA CADA LUCIERNAGA...
-                for j in range(n):
+                for j in range(0, i): #Se tienen en cuenta solo los individuos mas brillantes que i
                 # Para cada luciernaga ...
-                    if fitnessA[i] > fitnessA[j]:
-                    # Si el fitness de la particula i es mayor que la de la j
-                    # entonces la movemos hacia la más brillante
-                        self.moverLuciernaga(i, j, t, csi, psi, alpha, dimension,
-                                    norm0, norm1)
-                    else:
-                    # Si es menor entonces la movemos al azar, le sumamos un numero aleatorio
-                        self.__agents[i] += np.random.normal(norm0, norm1,
-                                                             dimension)
-            # Acotamos la posicion a nuestro rango permitido
-            self.__agents = np.clip(self.__agents, lb, ub)
+                    if(i != j): #Comprobacion para que ningun individuo se mueva hacia si mismo
+                        if fitnessActual[j] < fitnessActual[i]:
+                        #Si el individuo j es mas brillante (menor fitness) que el i, se mueve i hacia j
+                            self.moverLuciernaga(i, j, beta0, gamma, dimension,
+                                        norm0, norm1, numeroColores)
+                            self.__agents[i] = np.clip(self.__agents[i], lb, ub) #Acotar posiciones
+
             # Luciernagas movidas hasta aqui
+
+
             #Calculamos el fitness actual de cada luciernaga
-            fitnessA = [funcion(x,numeroColores,imagen) for x in self.__agents]
+            fitnessActual = [funcion(x,numeroColores,imagen) for x in self.__agents]
+
+
+            # Ordenar las luciérnagas por su nuevo fitness
+            indicesOrdenados = np.argsort(fitnessActual)
+            self.__agents = copy.deepcopy(self.__agents[indicesOrdenados])
+            fitnessActual = [fitnessActual[i] for i in indicesOrdenados]
             
-            
-            
-            # Actualizar la mejor solucion particular
-            # Si el fitness de la posicion actual es menor (mejor) que el mejor guardado ...
-            for i in range(n):
-            #Para cada luciernaga
-              if(fitnessA[i] < fitnessP[i]):
-              # Actualizamos su posicion y su mejor fitness
-                  Pbest[i] = self.__agents[i] # posicion
-                  fitnessP[i] = fitnessA[i] # fitness
-                  
-              
-            
+
             # Actualizar mejor solucion global
-            Gbest=Pbest[np.array([fitnessP]).argmin()]
+            Gbest=copy.deepcopy(self.__agents[0]) #La primera posicion contiene la mejor solucion
             
-            self.setMejorFitness(fitnessP[np.array([fitnessP]).argmin()])
+            self.setMejorFitness(fitnessActual[0])
             print(self.getMejorFitness(), end= ' ')
             
         Gbest = np.int_(Gbest)
         #Generamos la imagen cuantizada para imprimirla
         reducida = fn.generaCuantizada(Gbest,numeroColores,imagen)
         
-        #print("Fitness final --> ", self.getMejorFitness())
         fn.pintaImagen(reducida, imagen,pintor, "FA", numeroColores)
 
         
 
     # Esta funcion mueve luciernagas ...
-    def moverLuciernaga(self, i, j, t, csi, psi, alpha, dimension, norm0, norm1):
+    def moverLuciernaga(self, i, j, beta0, gamma, dimension, norm0, norm1, numeroColores):
 
         # Calculo de la distancia entre dos luciernagas
         r = np.linalg.norm(self.__agents[i] - self.__agents[j]) 
         # Calculamos el ATRACTIVO de la luciernga
-        # beta = atraccion mutua / 
-                # (1 + coeficiente de absorcion de la luz del medio * distancia luciernagas al cuadrado)
-        beta = csi / (1 + psi * r ** 2) # atractivo de la luciernaga i sobre k
-
-
-	# Calculamos la nueva posicion aplicando esta formula 
-	# fi(t+1) = fj(t) + beta(rik) * (fi(t) - fj(t)) + alpha * exp(-t) * aleatorio
-	# el aleatorio se calcula usando una distribucion normal Gaussiana, entre los limites propuestos y con la 
-	# dimension dicha
-        self.__agents[i] = self.__agents[j] + beta * (
-            self.__agents[i] - self.__agents[j]) + alpha * exp(-t) * \
-                                                   np.random.normal(norm0,
-                                                                    norm1,
-                                                                    dimension)
+        # beta = atraccion mutua * exp( - coeficiente de absorcion de la luz del medio * distancia luciernagas al cuadrado)
+        beta = beta0 * np.exp(-gamma * r**2)  # atractivo de la luciernaga i sobre k
+        
+        # Calculamos la nueva posicion aplicando esta formula 
+        # fi(t+1) = fi(t) + beta(rik) * (fj(t) - fi(t)) +  aleatorio
+        #Donde beta(rik) es la atraccion mutua calculada antes
+        # el aleatorio se calcula usando una distribucion normal Gaussiana, entre los limites propuestos y con la 
+        # dimension dicha
+        self.__agents[i] = self.__agents[i] + beta * (
+            self.__agents[j] - self.__agents[i]) + np.random.normal(norm0, norm1, (numeroColores, dimension))
