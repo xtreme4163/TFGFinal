@@ -58,11 +58,16 @@ class fa(intelligence.sw):
         
         # Calculamos el fitness de las mejores posiciones encontradas por las luciernagas
         fitnessActual = [funcion(x,numeroColores,imagen) for x in self.__agents]
+        
 
         # Ordenar las luciérnagas por su fitness antes de empezar las iteraciones
         indicesOrdenados = np.argsort(fitnessActual)
         self.__agents = self.__agents[indicesOrdenados]
         fitnessActual = [fitnessActual[i] for i in indicesOrdenados]
+
+        #Calculo del mejor fitness de cada iteracion y de la mejor posicion encontrada.
+        fitnessMejor = funcion(self.__agents[0], numeroColores, imagen)
+        Gbest =  copy.deepcopy(self.__agents[0])
 
 
         # BUCLE DEL ALGORITMO
@@ -100,9 +105,12 @@ class fa(intelligence.sw):
             
 
             # Actualizar mejor solucion global
-            Gbest=copy.deepcopy(self.__agents[0]) #La primera posicion contiene la mejor solucion
-            
-            self.setMejorFitness(fitnessActual[0])
+            if(fitnessActual[0] < fitnessMejor):
+                fitnessMejor = fitnessActual[0]
+                Gbest = copy.deepcopy(self.__agents[0])
+
+           
+            self.setMejorFitness(fitnessMejor)
             print(self.getMejorFitness(), end= ' ')
             
         Gbest = np.int_(Gbest)

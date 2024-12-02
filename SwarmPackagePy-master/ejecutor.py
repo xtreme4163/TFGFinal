@@ -32,11 +32,11 @@ parser= argparse.ArgumentParser()
 
 #Agrego argumento de la imagen
 parser.add_argument('imagen', type=str, help="Nombre de la imagen a procesar. Debe estar dentro de la carpeta images en el proyecto.")
-parser.add_argument('numeroColores', type=int, help="Numero de colores de la imagen cuantizada. No puede ser menor que 1. Por ejemplo 32")
+parser.add_argument('numeroColores', type=int, help="Numero de colores de la imagen cuantizada. No puede ser menor que 1. Ej. 32")
 parser.add_argument('algoritmo', type=str, help="Algoritmo a procesar. Opciones: PSO,FA,BA,GWO,ABA,WOA")
 parser.add_argument('funcion', type=str, help="Funcion a usar por algoritmo. Opciones: MSE,MAE,SSIM,MSSIM")
 parser.add_argument('iteraciones', type=int, help="Numero de iteraciones que realizara el algoritmo. Debe ser mayor que 0.")
-parser.add_argument('individuos', type=int, help="Numero de individuos del algoritmo. Por ejemplo 5 o 10.")
+parser.add_argument('individuos', type=int, help="Numero de individuos del algoritmo. Ej. 5 o 10.")
 parser.add_argument('--pintaImagen', type=bool, default=False,help="Argumento para saber si se dibuja la imagen cuantizada al final del algoritmo (depuracion); Si viene se pinta.")
 args = parser.parse_args()
 
