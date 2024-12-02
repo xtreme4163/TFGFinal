@@ -2,6 +2,7 @@ import os
 import numpy as np
 from . import intelligence
 from . import misfunciones as fn
+import copy
 
 class woa(intelligence.sw):
 
@@ -40,7 +41,7 @@ class woa(intelligence.sw):
         self.__agents = np.random.uniform(lb, ub, (n, numeroColores, dimension))
         
         # Inicializar la mejor solución encontrada
-        self.Gbest = self.__agents[0]
+        self.Gbest = copy.deepcopy(self.__agents[0]) 
         self.mejorFitness = float("inf")
         
         # Evaluar el fitness inicial de cada ballena

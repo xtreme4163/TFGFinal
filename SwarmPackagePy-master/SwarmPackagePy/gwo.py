@@ -3,6 +3,7 @@ import numpy as np
 
 from . import intelligence
 from . import misfunciones as fn
+import copy
 
 
 
@@ -36,7 +37,7 @@ class gwo(intelligence.sw):
         alpha, beta, delta, fitActual = self.getABD(n, fitnessA)
         #Seteamos el valor del mejor fitnes con el valor de fitActual (valor del fitness del lobo alpha)
         fitMejor = fitActual
-        Gbest = alpha
+        Gbest = copy.deepcopy(alpha)
 
         #print("GWO // Particulas: ",n, "Colores: ", numeroColores,"Iteraciones: ", iteration, "Imagen: ", os.path.basename(imagen))
         for t in range(iteraciones):
@@ -87,7 +88,7 @@ class gwo(intelligence.sw):
 
             #Cálculo de Gbest (Mejor solucion) y actualizacion del valor del mejor fitness
             if fitActual < fitMejor:
-                Gbest = alpha
+                Gbest = copy.deepcopy(alpha)
                 fitMejor = fitActual
                 
             #Conseguimos el mejor fitness y lo mostramos en pantalla

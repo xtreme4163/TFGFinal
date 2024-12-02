@@ -49,12 +49,12 @@ class pso(intelligence.sw):
         # primeras halladas.
         Pbest = copy.deepcopy(self.__agents)
         #Calculamos el fitness actual y lo guardamos
-        fitnessP = [funcion(x,numeroColores,imagen) for x in self.__agents]
-        fitnessA = fitnessP # Lo igualamos al de la posicion ACTUAL
+        fitnessActual = [funcion(x,numeroColores,imagen) for x in self.__agents]
+        fitnessMejor = fitnessActual # Lo igualamos al de la posicion ACTUAL
         
         # Iniciamos Gbest con el valor de la particula con menor fitness 
 
-        Gbest=copy.deepcopy(Pbest[np.array([fitnessA]).argmin()])
+        Gbest=copy.deepcopy(Pbest[np.array([fitnessActual]).argmin()])
         # hasta aqui hemos inicializado el PSO
 
 
@@ -78,20 +78,20 @@ class pso(intelligence.sw):
            self.__agents = np.clip(self.__agents, lb, ub)
 
            #Se calcula el fitness actual de cada individuo
-           fitnessA= [funcion(x,numeroColores,imagen) for x in self.__agents]
+           fitnessActual= [funcion(x,numeroColores,imagen) for x in self.__agents]
            #Actualizar mejor solucion particular
            #Para todas las particulas ...
            for i in range(n):
               # Si el fitness actual del individuo i es menor que su mejor fitness se actualiza
-              if(fitnessA[i] < fitnessP[i]):
+              if(fitnessActual[i] < fitnessMejor[i]):
                  Pbest[i] = copy.deepcopy(self.__agents[i])
-                 fitnessP[i] = fitnessA[i]
+                 fitnessMejor[i] = fitnessActual[i]
               
            # Actualizar mejor solucion global
            #Gbest pasa a ser la mejor solucion particular de aquel individuo que tenga un menor fitness
-           Gbest=copy.deepcopy(Pbest[np.array([fitnessP]).argmin()])
+           Gbest=copy.deepcopy(Pbest[np.array([fitnessMejor]).argmin()])
            
-           self.setMejorFitness(fitnessP[np.array([fitnessP]).argmin()])
+           self.setMejorFitness(fitnessMejor[np.array([fitnessMejor]).argmin()])
            print(self.getMejorFitness(), end= ' ')
 
        ##########################################################################################################

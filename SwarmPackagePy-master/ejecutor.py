@@ -33,7 +33,7 @@ parser= argparse.ArgumentParser()
 #Agrego argumento de la imagen
 parser.add_argument('imagen', type=str, help="Nombre de la imagen a procesar. Debe estar dentro de la carpeta images en el proyecto.")
 parser.add_argument('numeroColores', type=int, help="Numero de colores de la imagen cuantizada. No puede ser menor que 1. Ej. 32")
-parser.add_argument('algoritmo', type=str, help="Algoritmo a procesar. Opciones: PSO,FA,BA,GWO,ABA,WOA")
+parser.add_argument('algoritmo', type=str, help="Algoritmo a procesar. Opciones: PSO,FA,GWO,ABA,WOA")
 parser.add_argument('funcion', type=str, help="Funcion a usar por algoritmo. Opciones: MSE,MAE,SSIM,MSSIM")
 parser.add_argument('iteraciones', type=int, help="Numero de iteraciones que realizara el algoritmo. Debe ser mayor que 0.")
 parser.add_argument('individuos', type=int, help="Numero de individuos del algoritmo. Ej. 5 o 10.")
@@ -54,7 +54,6 @@ funcionesObjetivo = {
 algoritmos = {
     "PSO": lambda indiv, func, col, img, it: SwarmPackagePy.pso(indiv, func, 0, 255, 3, it, col, args.pintaImagen,-15,15, w=0.729, c1=2.05, c2=2.05, imagen=img),
     "FA": lambda indiv, func, col, img, it: SwarmPackagePy.fa(indiv, func, 0, 255, 3, it, col, args.pintaImagen, beta0=1, gamma=1, norm0=0, norm1=0.1, imagen=img),
-    "BA": lambda indiv, func, col, img, it: SwarmPackagePy.ballena(indiv, func, 0, 255, 3, it, col, args.pintaImagen, ro0=2, eta=0.005, imagen=img),
     "GWO": lambda indiv, func, col, img, it: SwarmPackagePy.gwo(indiv, func, 0, 255, 3, it, col, args.pintaImagen, imagen=img),
     "ABA": lambda indiv, func, col, img, it: SwarmPackagePy.abejas(indiv, func, 0, 255, 3, it, col, args.pintaImagen, imagen=img),
     "WOA": lambda indiv, func, col, img, it: SwarmPackagePy.woa(indiv, func, 0, 255, 3, it, col, args.pintaImagen, imagen=img)

@@ -1,6 +1,7 @@
 import numpy as np
 from . import intelligence
 from . import misfunciones as fn
+import copy
 
 # Clase para abejas (hereda de intelligence)
 class abejas(intelligence.sw):
@@ -46,7 +47,6 @@ class abejas(intelligence.sw):
             self.imagen = imagen  # ruta de la imagen a procesar
 
             #Se inicializan 
-            #self.__agents =  np.random.uniform(lb, ub, (n,numeroColores, dimension))
             self.__agents = np.zeros((n, numeroColores, dimension))
 
             for i in range(n):  # Para cada fuente
@@ -57,8 +57,8 @@ class abejas(intelligence.sw):
 
             # Inicializar Pbest, es decir, inicialmente las mejores posiciones de las particulas son las
             # primeras halladas.
-            Pbest = self.__agents
-            self.Pbest = Pbest
+            Pbest = copy.deepcopy(self.__agents)
+            self.Pbest = copy.deepcopy(Pbest)
             #Calculamos el fitness actual y lo guardamos
             fitActual = [funcion(x,numeroColores,imagen) for x in self.__agents]
             fitMejor = fitActual # Lo igualamos al de la posicion ACTUAL
@@ -82,12 +82,12 @@ class abejas(intelligence.sw):
                 for i in range(n):
                     # Si el fitness actual del individuo i es menor que su mejor fitness se actualiza
                     if(self.fitActual[i] < fitMejor[i]):
-                        Pbest[i] = self.__agents[i]
+                        Pbest[i] = copy.deepcopy(self.__agents[i])
                         fitMejor[i] = self.fitActual[i]
 
                 # Actualizar mejor solucion global
                 #Gbest pasa a ser la mejor solucion particular de aquel individuo que tenga un menor fitness
-                Gbest=Pbest[np.array([fitMejor]).argmin()]
+                Gbest=copy.deepcopy(Pbest[np.array([fitMejor]).argmin()])
             
                 self.setMejorFitness(fitMejor[np.array([fitMejor]).argmin()])
                 print(self.getMejorFitness(), end= ' ')
@@ -127,7 +127,7 @@ class abejas(intelligence.sw):
             
             # Si mejora la solución actual, la reemplazamos
             if fitNuevo < self.fitActual[i]:
-                self.__agents[i] = nuevaFuente
+                self.__agents[i] = copy.deepcopy(nuevaFuente)
                 self.fitActual[i] = fitNuevo
                 self.limit[i] = 0  # Resetear el contador de intentos fallidos
             else:
