@@ -101,7 +101,7 @@ def preparaImagen(nombreImagen):
 
        return z,img
 
-#Funcion que genera una imagen cuantizada usando KMeans
+#Funcion que genera una imagen cuantizada
 def generaCuantizada(gbest,tam_paleta,nombreImagen):
        #Preparamos imagen
        z,img=preparaImagen(nombreImagen)

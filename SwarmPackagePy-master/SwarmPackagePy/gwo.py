@@ -15,15 +15,14 @@ class gwo(intelligence.sw):
     def __init__(self, n, funcion, lb, ub, dimension, iteraciones, numeroColores ,pintor,imagen=""):
         """
         :param n: numero de individuos
-        :param function: funcion del algoritmo
+        :param funcion: funcion objetivo del algoritmo
         :param lb: limite inferior del espacio de busqueda
         :param ub: limite superior del espacio de busqueda
-        :param dimension: dimension del espacio
-        :param iteraciones: numero de iteraciones
-        :param iteraciones (int): Número de iteraciones que debe ejecutar el algoritmo.
-        :param numeroColores (int): Número de colores en la imagen.
-        :param pintor (bool): Control booleano para pintar o no la imagen al final.
-        :param imagen (str): Ruta a la imagen que debe procesarse.
+        :param dimension: dimension del espacio de solucion
+        :param iteraciones: Número de iteraciones que debe ejecutar el algoritmo.
+        :param numeroColores: numero de colores de la imagen cuantizada
+        :param pintor: booleano que se usa para saber si pintamos las imagenes al final.
+        :param imagen: ruta de la imagen a procesar por el algoritmo
         """
 
         super(gwo, self).__init__()
@@ -96,19 +95,21 @@ class gwo(intelligence.sw):
             print(self.getMejorFitness(), end= ' ')
 
   
-        #Generamos la cuantizada para imprimirla junto al valor final del algoritmo.
+        #Generamos la imagen cuantizada
         reducida = fn.generaCuantizada(Gbest,  numeroColores,imagen)
         #print("Fitness final --> ", self.getMejorFitness())
         fn.pintaImagen(reducida, imagen,pintor,"GWO",numeroColores)
 
 
-    """ Funcion que devuelve los lobos alfa beta y delta y el fitnes del mejor lobo"""
+    """ Funcion que devuelve los lobos alfa beta y delta y el fitnes del mejor lobo
+        Añadir los parametros y lo que se devuelve
+    """
     def getABD(self, n,fitnessA):
 
         result = []
         # Calcula el fitness de cada agente y los guarda junto con su índice en una lista de tuplas
         fitness = [(fitnessA[i], i) for i in range(n)]
-        # Ordena la lista de fitness en orden ascendente (menor fitness es mejor)
+        # Ordena la lista por valor creciente de fitness
         fitness.sort()
         # Selecciona los tres agentes con mejor fitness
         for i in range(3):

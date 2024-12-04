@@ -12,10 +12,7 @@ class fa(intelligence.sw):
     """
     Firefly Algorithm
     
-    OBSERVACION:
-    Este algoritmo puede dar un mayor valor de fitness en una iteracion, haciendolo peor, creo que es debido a que la primera luciernaga se meuve libremente y no he limitado ese movimiento
-
-    Se considera un conjunto de N luciernagas (aqui n), aqui el fitness es el brillo 
+    Se considera un conjunto de n luciernagas, aqui el fitness es el brillo 
     (solucion al problema).
     Las luciernagas se atraen unas a otras, el atractivo de cada luciernada es proporcional a su brillo
     y disminuye con la distancia. La luciernaga mas brillante se mueve al azar y el resto se mueven 
@@ -35,11 +32,11 @@ class fa(intelligence.sw):
 
     def __init__(self, n, funcion, lb, ub, dimension, iteraciones,numeroColores,pintor, beta0=1, gamma=1, norm0=0, norm1=0.1,imagen=""):
         """
-        :param n: numero de particulas
-        :param funcion: funcion a optimizar
+        :param n: numero de individuos
+        :param funcion: funcion objetivo que se aplica en el algoritmo
         :param lb: limite inferior del espacio (0 para imagenes)
         :param ub: limite superior del espacio (255 para imagenes)
-        :param dimension: dimensiones del espacio
+        :param dimension: dimensiones del espacio de solucion
         :param iteraciones: numero de iteraciones
         :param numeroColores: numero de colores de la nueva imagen
         :param pintor: booleano que se usa para saber si pintamos imagen al final o no.
@@ -53,43 +50,46 @@ class fa(intelligence.sw):
 
         super(fa, self).__init__()
         
-        # Inicia la poblacion de luciernagas
+        # Inicia la poblacion de individuos
         self.__agents = np.random.uniform(lb, ub, (n,numeroColores, dimension))
         
-        # Calculamos el fitness de las mejores posiciones encontradas por las luciernagas
+        # Calculamos el fitness de las posiciones iniciales de los individuos
         fitnessActual = [funcion(x,numeroColores,imagen) for x in self.__agents]
-        
+        #Creas pares de fitness y posicion
+        #y luego ordenas
+        #Esto es lo de marisa para ordenar
+        fitnessACtuak=[(funcion(self.__agents[k]), k) for k in range n]
+        fitnessACtuak.sort()
 
-        # Ordenar las luciérnagas por su fitness antes de empezar las iteraciones
+        # Ordenar los individuos por su fitness antes de empezar las iteraciones
         indicesOrdenados = np.argsort(fitnessActual)
         self.__agents = self.__agents[indicesOrdenados]
         fitnessActual = [fitnessActual[i] for i in indicesOrdenados]
 
-        #Calculo del mejor fitness de cada iteracion y de la mejor posicion encontrada.
-        fitnessMejor = funcion(self.__agents[0], numeroColores, imagen)
+        #Copiar el valor del mejor fitness y su mejor posicion
+        fitnessMejor = copy.deepcopy(fitnessActual[0])
+
         Gbest =  copy.deepcopy(self.__agents[0])
 
 
         # BUCLE DEL ALGORITMO
         for t in range(iteraciones):
 
-            # Mover la luciérnaga más brillante al azar
-            self.__agents[0] += np.random.normal(norm0, norm1, (numeroColores, dimension))
-            self.__agents[0] = np.clip(self.__agents[0], lb, ub)
-
-            # Recalcular fitness para la luciérnaga que se movió al azar
-            fitnessActual[0] = funcion(self.__agents[0], numeroColores, imagen)
-
             for i in range(1, n):
                 # PARA CADA LUCIERNAGA...
                 for j in range(0, i): #Se tienen en cuenta solo los individuos mas brillantes que i
                 # Para cada luciernaga ...
                     if(i != j): #Comprobacion para que ningun individuo se mueva hacia si mismo
-                        if fitnessActual[j] < fitnessActual[i]:
-                        #Si el individuo j es mas brillante (menor fitness) que el i, se mueve i hacia j
-                            self.moverLuciernaga(i, j, beta0, gamma, dimension,
-                                        norm0, norm1, numeroColores)
-                            self.__agents[i] = np.clip(self.__agents[i], lb, ub) #Acotar posiciones
+                        self.moverLuciernaga(i, j, beta0, gamma, dimension,
+                                    numeroColores)
+                
+                self.__agents[i] += np.random.normal(norm0, norm1, (numeroColores, dimension))
+                self.__agents[i] = np.clip(self.__agents[i], lb, ub) #Acotar posiciones. SACAR ESTO DE ESTE FOR
+
+            
+            # Mover la luciérnaga más brillante al azar
+            self.__agents[0] += np.random.normal(norm0, norm1, (numeroColores, dimension))
+            self.__agents[0] = np.clip(self.__agents[0], lb, ub)
 
             # Luciernagas movidas hasta aqui
 
@@ -122,7 +122,7 @@ class fa(intelligence.sw):
         
 
     # Esta funcion mueve luciernagas ...
-    def moverLuciernaga(self, i, j, beta0, gamma, dimension, norm0, norm1, numeroColores):
+    def moverLuciernaga(self, i, j, beta0, gamma, dimension, numeroColores):
 
         # Calculo de la distancia entre dos luciernagas
         r = np.linalg.norm(self.__agents[i] - self.__agents[j]) 
@@ -131,9 +131,9 @@ class fa(intelligence.sw):
         beta = beta0 * np.exp(-gamma * r**2)  # atractivo de la luciernaga i sobre k
         
         # Calculamos la nueva posicion aplicando esta formula 
-        # fi(t+1) = fi(t) + beta(rik) * (fj(t) - fi(t)) +  aleatorio
+        # fi(t+1) = fi(t) + beta(rik) * (fj(t) - fi(t))  
         #Donde beta(rik) es la atraccion mutua calculada antes
         # el aleatorio se calcula usando una distribucion normal Gaussiana, entre los limites propuestos y con la 
         # dimension dicha
         self.__agents[i] = self.__agents[i] + beta * (
-            self.__agents[j] - self.__agents[i]) + np.random.normal(norm0, norm1, (numeroColores, dimension))
+            self.__agents[j] - self.__agents[i])

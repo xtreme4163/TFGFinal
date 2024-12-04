@@ -20,15 +20,15 @@ class pso(intelligence.sw):
         :param funcion: funcion objetivo que se aplica en el algoritmo
         :param lb: limite inferior del espacio de busqueda
         :param ub: limite superior del espacio de busqueda
-        :param dimension: dimension del espacio de solucion (r)
+        :param dimension: dimension del espacio de solucion
         :param iteraciones: numero de iteraciones
-        :param numeroColores: numero de colores de la nueva imagen
-        :param pintor: booleano que se usa para saber si pintamos imagen al final o no.
+        :param numeroColores: numero de colores de la imagen cuantizada
+        :param pintor: booleano que se usa para saber si pintamos las imagenes al final.
         :param vMin: velocidad mínima del individuo
         :param vMax: velocidad máxima del individuo
         :param w: parametro inercia
-        :param c1: parametro cognitivo (f1)
-        :param c2: parametro social (f2)
+        :param c1: parametro cognitivo
+        :param c2: parametro social
         :param imagen: ruta de la imagen a procesar por el algoritmo
        
         """
@@ -43,16 +43,18 @@ class pso(intelligence.sw):
 	# Generamos un total de n*dimension numeros
         self.__agents = np.random.uniform(lb, ub, (n,numeroColores, dimension))
     
-        velocity = np.zeros((n,numeroColores, dimension)) #Llenamos el vector de velocidad con 0
+        #Llenamos el vector de velocidad de cada individuo con 0
+        velocity = np.zeros((n,numeroColores, dimension)) 
         
         # Inicializar Pbest, es decir, inicialmente las mejores posiciones de las particulas son las
         # primeras halladas.
         Pbest = copy.deepcopy(self.__agents)
-        #Calculamos el fitness actual y lo guardamos
+        #Calculamos el fitness de la mejor posicion actual de todos los individuos y lo guardamos
         fitnessActual = [funcion(x,numeroColores,imagen) for x in self.__agents]
-        fitnessMejor = fitnessActual # Lo igualamos al de la posicion ACTUAL
+        #Inicialmente el fitnees de la mejor posicion personal de cada individuo es igual al fitness de su posicion actual
+        fitnessMejor = fitnessActual 
         
-        # Iniciamos Gbest con el valor de la particula con menor fitness 
+        # Iniciamos Gbest con la posicion de la particula con menor fitness 
 
         Gbest=copy.deepcopy(Pbest[np.array([fitnessActual]).argmin()])
         # hasta aqui hemos inicializado el PSO
@@ -62,12 +64,12 @@ class pso(intelligence.sw):
         for t in range(iteraciones):
            """
 	   ESQUEMA PSO
-	   1.1- evaluar fitness de cada particula
-	   1.2 - actualizar mejor solucion personal de cada particula
-	   1.3 - actualizar la mejor solucion global
+                 - Actualizar velocidad y posicion de cada particula
+
+	  - evaluar fitness de cada particula
+	    - actualizar mejor solucion personal de cada particula
+	    - actualizar la mejor solucion global
 	   
-	   2 - Actualizar velocidad y posicion de cada particula
-	   3 - mostrar resultado al acabar bucle 
 	   """
            # Cálculo de la nueva velocidad
            velocity = self.calcularNuevaVelocidad(n, dimension, numeroColores, w, c1, c2, velocity, Pbest, Gbest,vMin,vMax)
@@ -77,12 +79,12 @@ class pso(intelligence.sw):
            # Ajusta esta posicion a los limites del espacio
            self.__agents = np.clip(self.__agents, lb, ub)
 
-           #Se calcula el fitness actual de cada individuo
+           #Se calcula el fitness de la posicion actual de cada individuo
            fitnessActual= [funcion(x,numeroColores,imagen) for x in self.__agents]
-           #Actualizar mejor solucion particular
+           #Actualizar mejor solucion personal
            #Para todas las particulas ...
            for i in range(n):
-              # Si el fitness actual del individuo i es menor que su mejor fitness se actualiza
+              # Si el fitness de la posicion actual del individuo i es menor que el fitness de su posicion personal se actualiza
               if(fitnessActual[i] < fitnessMejor[i]):
                  Pbest[i] = copy.deepcopy(self.__agents[i])
                  fitnessMejor[i] = fitnessActual[i]
@@ -105,11 +107,15 @@ class pso(intelligence.sw):
         #Pintamos imagen
         fn.pintaImagen(reducida, imagen,pintor,"PSO", numeroColores)
 
+""" 
+Incluir comentario de lo que se ahce aqui
+"""
     def calcularNuevaVelocidad(self, n, dimension, numeroColores, w, c1, c2, velocity, Pbest, Gbest,vMin,vMax):
+
         r1 = np.random.rand(n,numeroColores,dimension)
         r2 = np.random.rand(n,numeroColores,dimension)
            
-           #  Calculamos la nueva velocidad
+        #  Calculamos la nueva velocidad
         velocity = w * velocity + c1 * r1 * (
                 Pbest - self.__agents) + c2 * r2 * (
                 Gbest - self.__agents)

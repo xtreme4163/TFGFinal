@@ -23,7 +23,7 @@ class woa(intelligence.sw):
     def __init__(self, n, funcion, lb, ub, dimension, iteraciones,numeroColores,pintor, imagen=""):
 
         """     
-        :param n: numero de individuos (Particulas)
+        :param n: numero de individuos
         :param funcion: funcion objetivo que se aplica en el algoritmo
         :param lb: limite inferior del espacio de busqueda
         :param ub: limite superior del espacio de busqueda
