@@ -58,8 +58,8 @@ class fa(intelligence.sw):
         #Creas pares de fitness y posicion
         #y luego ordenas
         #Esto es lo de marisa para ordenar
-        fitnessACtuak=[(funcion(self.__agents[k]), k) for k in range n]
-        fitnessACtuak.sort()
+        #fitnessACtuak=[(funcion(self.__agents[k]), k) for k in range n]
+        #fitnessACtuak.sort()
 
         # Ordenar los individuos por su fitness antes de empezar las iteraciones
         indicesOrdenados = np.argsort(fitnessActual)

@@ -9,11 +9,11 @@
             "console": "integratedTerminal",
             "args": [
                 "maya_beach.ppm", 
-                "32",
+                "320",
                 "PSO",
                 "MSE",
-                "10",
-                "10",
+                "15",
+                "20",
                 "--pintaImagen", "True"]
         }
     ]
