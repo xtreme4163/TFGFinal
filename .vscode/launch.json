@@ -10,7 +10,7 @@
             "args": [
                 "maya_beach.ppm", 
                 "16",
-                "FA",
+                "PSO",
                 "MSE",
                 "10",
                 "10",

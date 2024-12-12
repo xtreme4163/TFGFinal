@@ -66,20 +66,19 @@ class pso(intelligence.sw):
 	   ESQUEMA PSO
                  - Actualizar velocidad y posicion de cada particula
 
-	  - evaluar fitness de cada particula
+        - evaluar fitness de cada particula
 	    - actualizar mejor solucion personal de cada particula
 	    - actualizar la mejor solucion global
 	   
 	   """
            # Cálculo de la nueva velocidad
-           velocity = calcularNuevaVelocidad(self.__agents, n, dimension, numeroColores, w, f1, f2, velocity, Pbest, Gbest,vMin,vMax)
+           velocity = calcularNuevaVelocidad(self.__agents, n, dimension, numeroColores, w, f1, f2,velocity, Pbest, Gbest,vMin,vMax)
            
            #Ajustamos la posicion de las particulas sumando la velocidad
-           for i in range(n):
-                #Se suma la velocidad nueva de i al individuo i
-                self.__agents[i] += velocity[i]
-                # Ajusta esta posicion a los limites del espacio
-                self.__agents[i] = np.clip(self.__agents[i], lb, ub)
+           self.__agents += velocity
+           # Ajusta esta posicion a los limites del espacio
+           self.__agents = np.clip(self.__agents, lb, ub)
+           
 
 
            #Se calcula el fitness de la posicion actual de cada individuo
@@ -115,21 +114,16 @@ Funcion que calcula la nueva velocidad del individuo aplicando la fórmula:
         w * velocidad + f1 * r1 * (Pbest(i) - x(i)) + f2 * r2 * (Gbest(i) - x(i))
 Retorna la nueva velocidad de cada particula en un array.
 """
-def calcularNuevaVelocidad(agents, n, dimension, numeroColores, w, f1, f2, velocidad, Pbest, Gbest,vMin,vMax):
+def calcularNuevaVelocidad(agents, n, dimension, numeroColores, w, f1, f2,velocity, Pbest, Gbest,vMin,vMax):
 
         r1 = np.random.rand(n,numeroColores,dimension)
         r2 = np.random.rand(n,numeroColores,dimension)
-        #Se incializa la nueva velocidad
-        nuevaVelocidad = np.zeros_like(velocidad) 
-                
-        for i in range (n):
-                #Calculo de la velocidad para cada individuo
-                nuevaVelocidad[i] = w * velocidad[i] + f1 * r1[i] * (
-                        Pbest[i] - agents[i]) + f2 * r2[i] * (
-                        Gbest - agents[i])
-                # Se ajusta la velocidad para que no se salga de los limites. 
-                nuevaVelocidad[i] = np.clip(nuevaVelocidad[i], vMin, vMax)
-
-        return nuevaVelocidad
+        #  Calculamos la nueva velocidad
+        velocity = w * velocity + f1 * r1 * (
+                Pbest - agents) + f2 * r2 * (
+                Gbest - agents)
+        # Ajustamos la velocidad para que no se salga de los limites. 
+        velocity= np.clip(velocity, vMin, vMax)
+        return velocity
         
         
