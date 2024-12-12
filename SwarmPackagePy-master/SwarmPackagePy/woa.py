@@ -57,28 +57,26 @@ class woa(intelligence.sw):
         
         # Iteraciones del algoritmo
         for t in range(iteraciones):
-            a = 2 - t * (2 / iteraciones)  # Decrecimiento lineal de "a"
+            a = 2 - 2 * (t / iteraciones)
+            A = 2 * a * np.random.rand(numeroColores, dimension) - a
+            C = 2 * np.random.rand(numeroColores, dimension)
             
-            # Para cada ballena
             for i in range(n):
-                p = np.random.rand()  # Número aleatorio para decidir el comportamiento
-                
+                p = np.random.rand()
                 if p < 0.5:
-                    A = 2 * a * np.random.rand() - a
-                    C = 2 * np.random.rand()
-                    if np.abs(A) < 1:
+                    if np.linalg.norm(A) < 1:
                         # Movimiento alrededor de la mejor solución (X*)
-                        D = np.abs(C * self.Gbest - self.__agents[i])
+                        D = np.abs(C * (self.Gbest - self.__agents[i]))
                         self.__agents[i] = self.Gbest - A * D
                     else:
-                        # Exploración: seleccionamos una ballena aleatoria
+                         # Exploración: seleccionamos una ballena aleatoria
                         ballenaAleatoria = self.__agents[np.random.randint(0, n)]
-                        D = np.abs(C * ballenaAleatoria - self.__agents[i])
+                        D = np.abs(C * (ballenaAleatoria - self.__agents[i]))
                         self.__agents[i] = ballenaAleatoria - A * D
                 else:
                     # Movimiento en espiral
-                    D = np.abs(self.Gbest - self.__agents[i])
                     l = np.random.uniform(-1, 1)
+                    D = np.abs(C * (self.Gbest - self.__agents[i]))
                     self.__agents[i] = D * np.exp(b * l) * np.cos(2 * np.pi * l) + self.Gbest
 
                 # Limitar las posiciones dentro del espacio de búsqueda
@@ -89,7 +87,7 @@ class woa(intelligence.sw):
                 if fitnessNuevo < self.fitness[i]:
                     self.fitness[i] = fitnessNuevo
                     if fitnessNuevo < self.mejorFitness:
-                        self.Gbest = self.__agents[i]
+                        self.Gbest = copy.deepcopy(self.__agents[i])
                         self.mejorFitness = fitnessNuevo
 
             # Mostrar el mejor fitness de la iteración
