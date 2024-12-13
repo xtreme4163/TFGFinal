@@ -30,7 +30,7 @@ class fa(intelligence.sw):
     
     """
 
-    def __init__(self, n, funcion, lb, ub, dimension, iteraciones,numeroColores,pintor, beta0=1, gamma=1, norm0=0, norm1=0.1,imagen=""):
+    def __init__(self, n, funcion, lb, ub, dimension, iteraciones,numeroColores,pintor, beta0=0,1, gamma=1, norm0=0, norm1=0.1,imagen=""):
         """
         :param n: numero de individuos
         :param funcion: funcion objetivo que se aplica en el algoritmo
@@ -38,8 +38,8 @@ class fa(intelligence.sw):
         :param ub: limite superior del espacio (255 para imagenes)
         :param dimension: dimensiones del espacio de solucion
         :param iteraciones: numero de iteraciones
-        :param numeroColores: numero de colores de la nueva imagen
-        :param pintor: booleano que se usa para saber si pintamos imagen al final o no.
+        :param numeroColores: numero de colores de la imagen cuantizada
+        :param pintor: booleano que se usa para saber si pintamos las imagenes al final.
         :param beta0: atraccion mutua (Valor por defecto es 1)
         :param gamma: Coeficiente de absorcion de la luz del medio (valor por defecto 1)
         :param norm0: primer parametro para una distribucion normal (Gaussiana) (Valor por defecto 0)
@@ -70,16 +70,15 @@ class fa(intelligence.sw):
         # BUCLE DEL ALGORITMO
         for t in range(iteraciones):
 
-            for i in range(1, n):
+            for i in range(n-1, 0, -1):
                 # PARA CADA LUCIERNAGA...
                 for j in range(0, i): #Se tienen en cuenta solo los individuos mas brillantes que i
                 # Para cada luciernaga ...
-                    if(i != j): #Comprobacion para que ningun individuo se mueva hacia si mismo
-                        self.moverLuciernaga(i, j, beta0, gamma, dimension,
+                    self.moverLuciernaga(i, j, beta0, gamma, dimension,
                                     numeroColores)
                 
                 self.__agents[i] += np.random.normal(norm0, norm1, (numeroColores, dimension))
-                self.__agents[i] = np.clip(self.__agents[i], lb, ub) #Acotar posiciones. SACAR ESTO DE ESTE FOR
+                self.__agents[i] = np.clip(self.__agents[i], lb, ub) #Acotar posiciones.
 
             
             # Mover la luciérnaga más brillante al azar
@@ -128,7 +127,5 @@ class fa(intelligence.sw):
         # Calculamos la nueva posicion aplicando esta formula 
         # fi(t+1) = fi(t) + beta(rik) * (fj(t) - fi(t))  
         #Donde beta(rik) es la atraccion mutua calculada antes
-        # el aleatorio se calcula usando una distribucion normal Gaussiana, entre los limites propuestos y con la 
-        # dimension dicha
         self.__agents[i] = self.__agents[i] + beta * (
             self.__agents[j] - self.__agents[i])

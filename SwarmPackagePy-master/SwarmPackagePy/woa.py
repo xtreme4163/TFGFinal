@@ -27,11 +27,12 @@ class woa(intelligence.sw):
         :param funcion: funcion objetivo que se aplica en el algoritmo
         :param lb: limite inferior del espacio de busqueda
         :param ub: limite superior del espacio de busqueda
-        :param dimension: dimension del espacio de solucion (r)
+        :param dimension: dimension del espacio de solucion
         :param iteraciones: numero de iteraciones
         :param numeroColores: numero de colores de la nueva imagen
-        :param pintor: booleano que se usa para saber si pintamos imagen al final o no.
-        
+        :param pintor: booleano que se usa para saber si pintamos las imagenes al final.
+        :param imagen: ruta de la imagen a procesar por el algoritmo
+
         """
          
         # Empezamos a inicializar la poblacion de individuos
@@ -46,6 +47,8 @@ class woa(intelligence.sw):
         
         # Evaluar el fitness inicial de cada ballena
         self.fitness = [funcion(x, numeroColores, imagen) for x in self.__agents]
+        # cambiar esto self.Gbest=copy.deepcopy(Pbest[np.array([fitnessActual]).argmin()])
+
         for i in range(n):
             if self.fitness[i] < self.mejorFitness:
                 self.Gbest = self.__agents[i]
@@ -61,34 +64,42 @@ class woa(intelligence.sw):
             A = 2 * a * np.random.rand(numeroColores, dimension) - a
             C = 2 * np.random.rand(numeroColores, dimension)
             
+
+            new_agents = copy.deepcopy(self.__agents)
             for i in range(n):
                 p = np.random.rand()
                 if p < 0.5:
                     if np.linalg.norm(A) < 1:
                         # Movimiento alrededor de la mejor solución (X*)
                         D = np.abs(C * (self.Gbest - self.__agents[i]))
-                        self.__agents[i] = self.Gbest - A * D
+                        new_agents[i] = self.Gbest - A * D
                     else:
-                         # Exploración: seleccionamos una ballena aleatoria
-                        ballenaAleatoria = self.__agents[np.random.randint(0, n)]
+                        # Exploración: seleccionamos una ballena aleatoria
+                        ind = np.random.randint(0, n-1)
+                        while(ind == i)
+                            ind = np.random.randint(0, n-1)
+                        ballenaAleatoria = self.__agents[ind]
                         D = np.abs(C * (ballenaAleatoria - self.__agents[i]))
-                        self.__agents[i] = ballenaAleatoria - A * D
+                        new_agents[i] = ballenaAleatoria - A * D
                 else:
                     # Movimiento en espiral
                     l = np.random.uniform(-1, 1)
                     D = np.abs(C * (self.Gbest - self.__agents[i]))
-                    self.__agents[i] = D * np.exp(b * l) * np.cos(2 * np.pi * l) + self.Gbest
+                    new_agents[i] = D * np.exp(b * l) * np.cos(2 * np.pi * l) + self.Gbest
 
                 # Limitar las posiciones dentro del espacio de búsqueda
-                self.__agents[i] = np.clip(self.__agents[i], lb, ub)
+                new_agents[i] = np.clip(new_agents[i], lb, ub)
 
-                # Calcular el fitness de la nueva posición
-                fitnessNuevo = funcion(self.__agents[i], numeroColores, imagen)
-                if fitnessNuevo < self.fitness[i]:
-                    self.fitness[i] = fitnessNuevo
-                    if fitnessNuevo < self.mejorFitness:
-                        self.Gbest = copy.deepcopy(self.__agents[i])
-                        self.mejorFitness = fitnessNuevo
+            
+            self.__agents = copy.deepcopy(new_agents)
+            # Calcular el fitness de la nueva posición
+            fitnessNuevo = funcion(self.__agents[i], numeroColores, imagen)
+            #Usar lo mismo del pso, para coger el mejor aqui la i ya no tiene sentido
+            if fitnessNuevo < self.fitness[i]:
+                self.fitness[i] = fitnessNuevo
+                if fitnessNuevo < self.mejorFitness:
+                    self.Gbest = copy.deepcopy(self.__agents[i])
+                    self.mejorFitness = fitnessNuevo
 
             # Mostrar el mejor fitness de la iteración
             self.setMejorFitness(self.mejorFitness)

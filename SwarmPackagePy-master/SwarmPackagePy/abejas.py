@@ -8,14 +8,14 @@ class abejas(intelligence.sw):
 
         def __init__(self, n, funcion, lb, ub, dimension, iteraciones,numeroColores,pintor, imagen=""):
             """ 
-                :param n (int): Número de abejas (fuentes de alimento) en la población.
-                :param funcion: Función objetivo que queremos optimizar.
-                :param lb (list): Límite inferior del espacio de búsqueda para cada dimensión.
-                :param ub (list): Límite superior del espacio de búsqueda para cada dimensión.
-                :param dimension (int): Dimensiones del espacio de búsqueda.
-                :param iteraciones (int): Número de iteraciones que debe ejecutar el algoritmo.
-                :param numeroColores (int): Número de colores en la imagen.
-                :param pintor (bool): Control booleano para pintar o no la imagen al final.
+                :param n: numero de individuos (Particulas)
+                :param funcion: funcion objetivo que se aplica en el algoritmo
+                :param lb: limite inferior del espacio de busqueda
+                :param ub: limite superior del espacio de busqueda
+                :param dimension: dimension del espacio de solucion
+                :param iteraciones: numero de iteraciones
+                :param numeroColores: numero de colores de la imagen cuantizada
+                :param pintor: booleano que se usa para saber si pintamos las imagenes al final.
                 :param imagen (str): Ruta a la imagen que debe procesarse.
 
                 PSEUDOCODIGO
@@ -100,21 +100,7 @@ class abejas(intelligence.sw):
             #Pintamos imagen
             fn.pintaImagen(reducida, imagen,pintor,"ABA",numeroColores)
 
-
-        def buildFuentes(self):
-            """
-            Inicializa las fuentes de alimento (soluciones) utilizando la fórmula
-            x_ij = x_j_min + γ * (x_j_max - x_j_min)
-            """
-            # Número aleatorio γ en [0, 1]
-            gamma = np.random.rand(self.n, self.dimension)
-
-            # Inicialización utilizando la fórmula: lb + γ * (ub - lb)
-            sources = self.lb + gamma * (self.ub - self.lb)
-
-            return sources
         
-
         def abejaEmpleada(self, i):
             """
             Fase de abejas empleadas: Exploran alrededor de sus fuentes de alimento actuales buscando una mejor solución.
@@ -174,6 +160,8 @@ class abejas(intelligence.sw):
             Fase de abejas exploradoras: Abandonan las fuentes de alimento que no mejoran durante un número determinado de ciclos y buscan nuevas soluciones aleatorias.
             """
             abandono = 15  # número de intentos fallidos antes de abandonar una fuente
+            #Con esto vale para quitar el bucle siguiente
+            self.__agents = copy.deepcopy(np.random.uniform(lb,ub,(self.numeroColores, self.dimension)))
             for i in range(self.n):
                 if self.limit[i] > abandono:
                     # Reemplazar con una nueva solución aleatoria

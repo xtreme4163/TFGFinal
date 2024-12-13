@@ -105,14 +105,14 @@ def preparaImagen(nombreImagen):
 def generaCuantizada(gbest,tam_paleta,nombreImagen):
        #Preparamos imagen
        z,img=preparaImagen(nombreImagen)
-       
-       # Guardamos el valor de los centroides y de las etiquetas de cada pixel
-       label = pairwise_distances_argmin(gbest, z, axis=0) 
 
        # Obtiene los centroides de los clusters (los colores representativos)
        paleta = copy.deepcopy(gbest)		
        # con np.uint8 los convertimos a enteros de 8 bits
        paleta = np.uint8(paleta)
+
+       # Guardamos el valor de los centroides y de las etiquetas de cada pixel
+       label = pairwise_distances_argmin(paleta, z, axis=0) 
                
        # se generan los pixels de la imagen cuantizada
        res = paleta[label.flatten()]   
