@@ -60,8 +60,28 @@ algoritmos = {
 }
 
 
+
+# Construir la ruta completa del directorio 'imagenes'
+rutaDirectorioImagenes = os.path.join(os.path.dirname(__file__), 'imagenes')
+
+rutaDirectorioCuantizadas=os.path.join(os.path.dirname(__file__), 'imagenesCuantizadas')
+
 # Obtener la ruta completa de la imagen
 ruta_imagen = os.path.join(os.path.dirname(__file__), 'imagenes', args.imagen)
+
+
+
+# Verificar si el directorio imagenes existe
+if not os.path.exists(rutaDirectorioImagenes):
+    print(f"Error: No se puede encontrar el directorio 'imagenes'. Creandolo ...")
+    os.makedirs(rutaDirectorioImagenes)  # Crear el directorio 'imagenes'
+    print(f"Directorio creado. Añada imagenes.")
+    quit()
+
+# Verificar si el directorio imagenesCuantizadas existe
+if not os.path.exists(rutaDirectorioCuantizadas):
+    print(f"Error: No se puede encontrar el directorio 'imagenesCuantizadas'. Creandolo ...")
+    os.makedirs(rutaDirectorioCuantizadas)  # Crear el directorio 'imagenes'
 
 
 # Verificar si el archivo existe
