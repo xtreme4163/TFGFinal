@@ -69,7 +69,7 @@ class fa(intelligence.sw):
 
         # BUCLE DEL ALGORITMO
         for t in range(iteraciones):
-
+            #Se recorren las luciernagas desde la MENOS brillante (n-1) hasta la mas brillante (Excluyendo esta)
             for i in range(n-1, 0, -1):
                 # PARA CADA LUCIERNAGA...
                 for j in range(0, i): #Se tienen en cuenta solo los individuos mas brillantes que i
