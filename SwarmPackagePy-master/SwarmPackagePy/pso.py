@@ -112,7 +112,21 @@ class pso(intelligence.sw):
 """ 
 Funcion que calcula la nueva velocidad del individuo aplicando la fórmula:
         w * velocidad + f1 * r1 * (Pbest(i) - x(i)) + f2 * r2 * (Gbest(i) - x(i))
+Parametros:
+        agents: lista de individuos
+        n: numero de individuos
+        dimension: dimension del espacio de solucion
+        numeroColores: numero de colores de la imagen cuantizada
+        w: parametro inercia
+        f1: parametro cognitivo
+        f2: parametro social
+        velocity: velocidad actual del individuo
+        Pbest: lista de las mejores soluciones individuales
+        Gbest: mejor resultado obtenido por el algoritmo
+        vMin: velocidad minima
+        vMax: velocidad máxima
 Retorna la nueva velocidad de cada particula en un array.
+
 """
 def calcularNuevaVelocidad(agents, n, dimension, numeroColores, w, f1, f2,velocity, Pbest, Gbest,vMin,vMax):
 

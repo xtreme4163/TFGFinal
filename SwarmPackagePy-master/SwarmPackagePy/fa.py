@@ -30,7 +30,7 @@ class fa(intelligence.sw):
     
     """
 
-    def __init__(self, n, funcion, lb, ub, dimension, iteraciones,numeroColores,pintor, beta0=0,1, gamma=1, norm0=0, norm1=0.1,imagen=""):
+    def __init__(self, n, funcion, lb, ub, dimension, iteraciones,numeroColores,pintor, beta0=0.1, gamma=1, norm0=0, norm1=0.1,imagen=""):
         """
         :param n: numero de individuos
         :param funcion: funcion objetivo que se aplica en el algoritmo

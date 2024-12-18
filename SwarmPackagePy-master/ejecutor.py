@@ -53,7 +53,7 @@ funcionesObjetivo = {
 # Definir los algoritmos disponibles
 algoritmos = {
     "PSO": lambda indiv, func, col, img, it: SwarmPackagePy.pso(indiv, func, 0, 255, 3, it, col, args.pintaImagen,-14,14, w=0.729, f1=2.05, f2=2.05, imagen=img),
-    "FA": lambda indiv, func, col, img, it: SwarmPackagePy.fa(indiv, func, 0, 255, 3, it, col, args.pintaImagen, beta0=1, gamma=1, norm0=0, norm1=0.1, imagen=img),
+    "FA": lambda indiv, func, col, img, it: SwarmPackagePy.fa(indiv, func, 0, 255, 3, it, col, args.pintaImagen, beta0=0.1, gamma=1, norm0=0, norm1=0.1, imagen=img),
     "GWO": lambda indiv, func, col, img, it: SwarmPackagePy.gwo(indiv, func, 0, 255, 3, it, col, args.pintaImagen, imagen=img),
     "ABA": lambda indiv, func, col, img, it: SwarmPackagePy.abejas(indiv, func, 0, 255, 3, it, col, args.pintaImagen, imagen=img),
     "WOA": lambda indiv, func, col, img, it: SwarmPackagePy.woa(indiv, func, 0, 255, 3, it, col, args.pintaImagen, imagen=img)

@@ -76,7 +76,7 @@ class woa(intelligence.sw):
                     else:
                         # Exploración: seleccionamos una ballena aleatoria
                         ind = np.random.randint(0, n-1)
-                        while(ind == i)
+                        while(ind == i):
                             ind = np.random.randint(0, n-1)
                         ballenaAleatoria = self.__agents[ind]
                         D = np.abs(C * (ballenaAleatoria - self.__agents[i]))
