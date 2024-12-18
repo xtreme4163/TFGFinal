@@ -1,0 +1,101 @@
+#Funcion que prepara una imagen para su posterior uso
+def preparaImagenMARISA(nombreImagen):
+       # Leemos la imagen
+       img=cv2.imread(nombreImagen, cv2.IMREAD_COLOR)
+
+       # Si la imagen es un archivo JPEG, redimensionarla
+       if nombreImagen.lower().endswith('.jpg') or nombreImagen.lower().endswith('.jpeg'):
+              img = redimensionar_imagen(img, 800, 800)
+
+       # Redimensiona la imagen a una matriz 2D de pixeles (cada fila es un pixel, cada columna es una de las componentes RGB)
+       # Modificamos img para ir de punto en punto
+       z= img.reshape((-1,3))
+       z = np.float32(z)
+
+       return z, img.shape
+       
+       
+#Funcion que genera una imagen cuantizada
+#   gbest: una paleta cuantizada
+#   tam_paleta: número de colores de la paleta cuantizada
+#   z: pixels de la imagen original
+#   shapeimg: tamaño de z [para las imágenes de prueba es (512, 768, 3)], para dárselo
+#     también a la imagen cuantizada
+
+def generaCuantizadaMARISA(gbest,tam_paleta,z, shapeimg):  #nombreImagen):
+       ajustar = 1   # esto debería ser un parámetro de la función.
+                     # De momento lo dejo como variable local con el
+                     # valor que hace que se ajuste la paleta cuantizada
+                     
+         
+       #  MARISA: se hace una copia de la paleta cuantizada, convirtiendo los
+       # reales al enteros más próximo
+       paleta = np.round(gbest)	 
+             
+       
+       # MARISA: para cada pixel de la imagen original, se identifica 
+       # el número del color de la paleta cuantizada más similar 
+       #label = pairwise_distances_argmin(gbest, z, axis=0)  ANGEL
+       label = pairwise_distances_argmin(paleta, z, axis=0)   #MARISA
+       
+       
+
+       # MARISA: Si la variable ajustar está a 1 => ajustar la paleta cuantizada.
+       # Se calculan los centroides de los clusters definidos al asociar
+       # los pixels de la imagen original con los colores de la paleta cuantizada.
+       # Esa información se usa para definir una nueva paleta cuantizada más ajustada
+       # a la imagen original (lo que puede mejorar el resultado).
+
+       if (ajustar == 1):       
+          # número de pixels de la imagen original ( igual al de elementos de label). CREO QUE NO FUNCIONA BIEN
+          npixels = len(label)  
+          
+          # Calculamos la media de los puntos en la imagen original que corresponden a cada punto de la paleta.
+          #    Si algún color de la paleta no tiene ningún pixel asociado, se producirá un error. Si se va a producir
+          #    ese error, asigno un pixel aletorio de la imagen original.
+          medias = np.array([z[label == i].mean(axis=0) if z[label == i].size > 0 else z[np.random.randint(0, npixels-1)] for i in range(paleta.shape[0])])    
+          
+
+          # tomo los valores calculados como nueva paleta cuantizada, redondean los reales al entero más próximo
+          paleta = np.round(medias)
+
+          # se copia la nueva paleta en el parámetro, para que la use la función llamante.
+          # Hay que poner los dos puntos para que se mofique realmente el contenido del parámetro.
+          gbest[:] = medias 
+          
+
+
+	       
+       
+       # con np.uint8 los valores se convierten a enteros de 8 bits
+       # MARISA: con uint8 se truncan los valores reales (no ajusta al más próximo)
+       paleta = np.uint8(paleta)
+               
+       # por si algún valor se sale del rango válido para RGB, podemos recortarlo
+       paleta = np.clip(paleta, 0, 255)
+       
+       # se generan los pixels de la imagen cuantizada
+       res = paleta[label.flatten()]   
+
+       # se redimensiona el array de pixeles para que su tamaño coincida con el de la imagen original
+       res2 = res.reshape(shapeimg)  
+       
+              
+       return res2
+       
+"""
+       Funcion que calcula el fitness de una posicion dada. Aplicado a imagenes, lee una imagen, extrae
+       sus datos, y la redimensiona para poder calcular el MSE y retornar el fitness.
+       ARGUMENTOS:
+              x -> Paleta de colores a usar. (Posicion de particula)
+              tam_paleta -> nº de colores a usar.
+"""
+def getMse(x,tam_paleta,nombreImagen):
+       z,shapeimg =preparaImagenMARISA(nombreImagen)
+       img_cuantizada2 = generaCuantizadaMARISA(x,tam_paleta, z, shapeimg)  
+       
+       # Aplanar img_cuantizada2 para que coincida con la forma de z
+       img_cuantizada2_flat = img_cuantizada2.reshape((-1, 3))
+
+       # Calcula el error cuadrático medio entre la imagen original y la imagen cuantizada
+       return mean_squared_error(z, img_cuantizada2_flat)       
