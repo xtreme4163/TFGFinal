@@ -102,7 +102,9 @@ class gwo(intelligence.sw):
 
 
     """ Funcion que devuelve los lobos alfa beta y delta y el fitnes del mejor lobo
-        Añadir los parametros y lo que se devuelve
+        PArametros:
+        n: numero de individuos
+        fitnessA: fitness actual de cada individuo
     """
     def getABD(self, n,fitnessA):
 

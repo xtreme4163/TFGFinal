@@ -41,18 +41,16 @@ class woa(intelligence.sw):
         # Inicializamos la población de ballenas
         self.__agents = np.random.uniform(lb, ub, (n, numeroColores, dimension))
         
-        # Inicializar la mejor solución encontrada
-        self.Gbest = copy.deepcopy(self.__agents[0]) 
-        self.mejorFitness = float("inf")
-        
-        # Evaluar el fitness inicial de cada ballena
-        self.fitness = [funcion(x, numeroColores, imagen) for x in self.__agents]
-        # cambiar esto self.Gbest=copy.deepcopy(Pbest[np.array([fitnessActual]).argmin()])
+        # Inicializar Pbest, es decir, inicialmente las mejores posiciones de las particulas son las
+        # primeras halladas.
+        Pbest = copy.deepcopy(self.__agents)
+        # Evaluar el fitness actual de cada ballena
+        fitnessActual = [funcion(x, numeroColores, imagen) for x in self.__agents]
+        #Inicialmente el fitnees de la mejor posicion personal de cada individuo es igual al fitness de su posicion actual
+        fitnessMejor = fitnessActual
 
-        for i in range(n):
-            if self.fitness[i] < self.mejorFitness:
-                self.Gbest = self.__agents[i]
-                self.mejorFitness = self.fitness[i]
+        #Inicializar la mejor solución encontrada
+        Gbest = copy.deepcopy(Pbest[np.array([fitnessActual]).argmin()])
         
         # Parámetros del WOA
         a = 2  # Inicializamos a
@@ -71,8 +69,8 @@ class woa(intelligence.sw):
                 if p < 0.5:
                     if np.linalg.norm(A) < 1:
                         # Movimiento alrededor de la mejor solución (X*)
-                        D = np.abs(C * (self.Gbest - self.__agents[i]))
-                        new_agents[i] = self.Gbest - A * D
+                        D = np.abs(C * (Gbest - self.__agents[i]))
+                        new_agents[i] = Gbest - A * D
                     else:
                         # Exploración: seleccionamos una ballena aleatoria
                         ind = np.random.randint(0, n-1)
@@ -84,28 +82,33 @@ class woa(intelligence.sw):
                 else:
                     # Movimiento en espiral
                     l = np.random.uniform(-1, 1)
-                    D = np.abs(C * (self.Gbest - self.__agents[i]))
-                    new_agents[i] = D * np.exp(b * l) * np.cos(2 * np.pi * l) + self.Gbest
+                    D = np.abs(C * (Gbest - self.__agents[i]))
+                    new_agents[i] = D * np.exp(b * l) * np.cos(2 * np.pi * l) + Gbest
 
                 # Limitar las posiciones dentro del espacio de búsqueda
                 new_agents[i] = np.clip(new_agents[i], lb, ub)
 
             
             self.__agents = copy.deepcopy(new_agents)
-            # Calcular el fitness de la nueva posición
-            fitnessNuevo = funcion(self.__agents[i], numeroColores, imagen)
-            #Usar lo mismo del pso, para coger el mejor aqui la i ya no tiene sentido
-            if fitnessNuevo < self.fitness[i]:
-                self.fitness[i] = fitnessNuevo
-                if fitnessNuevo < self.mejorFitness:
-                    self.Gbest = copy.deepcopy(self.__agents[i])
-                    self.mejorFitness = fitnessNuevo
+            #Se calcula el fitness de la posicion actual de cada individuo
+            fitnessActual= [funcion(x,numeroColores,imagen) for x in self.__agents]
+            #Actualizar mejor solucion personal
+            #Para todas las particulas ...
+            for i in range(n):
+              # Si el fitness de la posicion actual del individuo i es menor que el fitness de su posicion personal se actualiza
+              if(fitnessActual[i] < fitnessMejor[i]):
+                 Pbest[i] = copy.deepcopy(self.__agents[i])
+                 fitnessMejor[i] = fitnessActual[i]
+
+            # Actualizar mejor solucion global
+            #Gbest pasa a ser la mejor solucion particular de aquel individuo que tenga un menor fitness
+            Gbest=copy.deepcopy(Pbest[np.array([fitnessMejor]).argmin()])
 
             # Mostrar el mejor fitness de la iteración
-            self.setMejorFitness(self.mejorFitness)
+            self.setMejorFitness(fitnessMejor[np.array([fitnessMejor]).argmin()])
             print(self.getMejorFitness(), end=' ')
 
         # Guardamos la mejor solución encontrada y generamos la imagen cuantizada
-        Gbest = np.int_(self.Gbest)
+        Gbest = np.int_(Gbest)
         reducida = fn.generaCuantizada(Gbest, numeroColores, imagen)
         fn.pintaImagen(reducida, imagen, pintor, "WOA", numeroColores)
