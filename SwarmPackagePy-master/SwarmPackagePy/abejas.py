@@ -46,23 +46,16 @@ class abejas(intelligence.sw):
             self.pintor = pintor  # bandera para pintar la imagen al final
             self.imagen = imagen  # ruta de la imagen a procesar
 
-            #Se inicializan 
-            self.__agents = np.zeros((n, numeroColores, dimension))
+            
+            # Generamos numeros aletaorios uniformemente distribuidos.
+	        # Generamos entre lb y ub (limite inferior y limite superior)
+	        # Generamos un total de n*dimension numeros
+            self.__agents = np.random.uniform(lb, ub, (n,numeroColores, dimension))
 
-            for i in range(n):  # Para cada fuente
-                for j in range(numeroColores):  # Para cada color
-                    for d in range(dimension):  # Para cada componente (R, G, B, etc.)
-                        # Inicializa la componente j de la fuente i
-                        self.__agents[i, j, d] = lb + np.random.uniform(0, 1) * (ub - lb)
-
-            # Inicializar Pbest, es decir, inicialmente las mejores posiciones de las particulas son las
-            # primeras halladas.
-            Pbest = copy.deepcopy(self.__agents)
-            self.Pbest = copy.deepcopy(Pbest)
             #Calculamos el fitness actual y lo guardamos
-            fitActual = [funcion(x,numeroColores,imagen) for x in self.__agents]
-            fitMejor = fitActual # Lo igualamos al de la posicion ACTUAL
-            self.fitActual = fitActual
+            self.fitnessActual = [funcion(x,numeroColores,imagen) for x in self.__agents]
+            fitnessMejor = self.fitnessActual # Lo igualamos al de la posicion ACTUAL
+           
 
             #Se incializa también el "agotamiento" de las fuentes de alimento a 0
             limit = np.zeros(n)  
@@ -81,15 +74,14 @@ class abejas(intelligence.sw):
                 #Para todas las fuentes  ...
                 for i in range(n):
                     # Si el fitness actual del individuo i es menor que su mejor fitness se actualiza
-                    if(self.fitActual[i] < fitMejor[i]):
-                        Pbest[i] = copy.deepcopy(self.__agents[i])
-                        fitMejor[i] = self.fitActual[i]
+                    if(self.fitnessActual[i] < fitnessMejor[i]):
+                        fitnessMejor[i] = self.fitnessActual[i]
 
                 # Actualizar mejor solucion global
                 #Gbest pasa a ser la mejor solucion particular de aquel individuo que tenga un menor fitness
-                Gbest=copy.deepcopy(Pbest[np.array([fitMejor]).argmin()])
+                Gbest=copy.deepcopy(self.__agents[np.array([fitnessMejor]).argmin()])
             
-                self.setMejorFitness(fitMejor[np.array([fitMejor]).argmin()])
+                self.setMejorFitness(fitnessMejor[np.array([fitnessMejor]).argmin()])
                 print(self.getMejorFitness(), end= ' ')
             ##################################################################################################### Fin bucle
 
@@ -112,9 +104,9 @@ class abejas(intelligence.sw):
             fitNuevo = self.function(nuevaFuente, self.numeroColores, self.imagen)
             
             # Si mejora la solución actual, la reemplazamos
-            if fitNuevo < self.fitActual[i]:
+            if fitNuevo < self.fitnessActual[i]:
                 self.__agents[i] = copy.deepcopy(nuevaFuente)
-                self.fitActual[i] = fitNuevo
+                self.fitnessActual[i] = fitNuevo
                 self.limit[i] = 0  # Resetear el contador de intentos fallidos
             else:
                 #Si no se mejora la solucion se incrementa el "agotamiento" de la fuente
@@ -124,10 +116,10 @@ class abejas(intelligence.sw):
             """
             Fase de abejas observadoras: Seleccionan soluciones basadas en su calidad y exploran alrededor de ellas.
             """
-            fitness_total = sum(self.fitActual)
+            fitness_total = sum(self.fitnessActual)
 
             #Se calculan las probabilidades de todas las fuentes
-            probabilidades = [fit / fitness_total for fit in self.fitActual]
+            probabilidades = [fit / fitness_total for fit in self.fitnessActual]
             #Se coge el índice de la fuente con mayor probabilidad
             fuenteSeleccionada = np.argmax(probabilidades)
             
@@ -159,17 +151,12 @@ class abejas(intelligence.sw):
             """
             Fase de abejas exploradoras: Abandonan las fuentes de alimento que no mejoran durante un número determinado de ciclos y buscan nuevas soluciones aleatorias.
             """
-            abandono = 15  # número de intentos fallidos antes de abandonar una fuente
-            #Con esto vale para quitar el bucle siguiente
-            self.__agents = copy.deepcopy(np.random.uniform(lb,ub,(self.numeroColores, self.dimension)))
+            abandono = self.iteration / 0.2  # número de intentos fallidos antes de abandonar una fuente. Proporcionar al numero de iteraciones            
             for i in range(self.n):
                 if self.limit[i] > abandono:
                     # Reemplazar con una nueva solución aleatoria
-                    for j in range(self.numeroColores):  # Para cada color
-                        for d in range(self.dimension):  # Para cada componente (R, G, B, etc.)
-                            # Inicializa la componente j de la fuente i
-                            self.__agents[i, j, d] = self.lb + np.random.uniform(0, 1) * (self.ub - self.lb)
+                    self.__agents[i] = copy.deepcopy(np.random.uniform(self.lb,self.ub,(self.numeroColores, self.dimension)))
                     #Se calcula su fitnes actual y se resetea el contador de "agotamiento"
-                    self.fitActual[i] = self.function(self.__agents[i], self.numeroColores, self.imagen)
+                    self.fitnessActual[i] = self.function(self.__agents[i], self.numeroColores, self.imagen)
                     self.limit[i] = 0  # Resetear el contador de intentos
                     
