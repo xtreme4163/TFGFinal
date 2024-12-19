@@ -14,7 +14,7 @@ class pso(intelligence.sw):
 
     # Constructor para el pso
     def __init__(self, n, funcion, lb, ub, dimension, iteraciones,numeroColores,pintor,vMin, vMax, w=0.5, f1=1,
-                 f2=1, imagen=""):
+                 f2=1, imagen="", ajuste=0):
         """
         :param n: numero de individuos (Particulas)
         :param funcion: funcion objetivo que se aplica en el algoritmo
@@ -30,7 +30,7 @@ class pso(intelligence.sw):
         :param f1: parametro cognitivo
         :param f2: parametro social
         :param imagen: ruta de la imagen a procesar por el algoritmo
-       
+        :param ajuste: parametro para decidir si se ajusta la paleta cuantizada a la imagen original       
         """
 	
 
@@ -50,7 +50,7 @@ class pso(intelligence.sw):
         # primeras halladas.
         Pbest = copy.deepcopy(self.__agents)
         #Calculamos el fitness de la mejor posicion actual de todos los individuos y lo guardamos
-        fitnessActual = [funcion(x,numeroColores,imagen) for x in self.__agents]
+        fitnessActual = [funcion(x,numeroColores,imagen, ajuste) for x in self.__agents]
         #Inicialmente el fitnees de la mejor posicion personal de cada individuo es igual al fitness de su posicion actual
         fitnessMejor = fitnessActual 
         
@@ -82,7 +82,7 @@ class pso(intelligence.sw):
 
 
            #Se calcula el fitness de la posicion actual de cada individuo
-           fitnessActual= [funcion(x,numeroColores,imagen) for x in self.__agents]
+           fitnessActual= [funcion(x,numeroColores,imagen, ajuste) for x in self.__agents]
            #Actualizar mejor solucion personal
            #Para todas las particulas ...
            for i in range(n):
@@ -104,7 +104,7 @@ class pso(intelligence.sw):
         #Si se tiene que pintar la imagen generamos una cuantizada para su impresion.
         Gbest = np.int_(Gbest)
         # Generamos la imagen cuantizada para imprimirla con el mejor valor final global.
-        reducida = fn.generaCuantizada(Gbest,numeroColores,imagen)
+        reducida = fn.generaCuantizada(Gbest, numeroColores, imagen, ajuste)
 
         #Pintamos imagen
         fn.pintaImagen(reducida, imagen,pintor,"PSO", numeroColores)

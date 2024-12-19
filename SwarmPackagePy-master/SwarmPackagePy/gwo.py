@@ -12,7 +12,7 @@ class gwo(intelligence.sw):
     Grey Wolf Optimizer
     """
 
-    def __init__(self, n, funcion, lb, ub, dimension, iteraciones, numeroColores ,pintor,imagen=""):
+    def __init__(self, n, funcion, lb, ub, dimension, iteraciones, numeroColores ,pintor,imagen="", ajuste=0):
         """
         :param n: numero de individuos
         :param funcion: funcion objetivo del algoritmo
@@ -23,6 +23,8 @@ class gwo(intelligence.sw):
         :param numeroColores: numero de colores de la imagen cuantizada
         :param pintor: booleano que se usa para saber si pintamos las imagenes al final.
         :param imagen: ruta de la imagen a procesar por el algoritmo
+        :param ajuste: parametro para decidir si se ajusta la paleta cuantizada a la imagen original       
+
         """
 
         super(gwo, self).__init__()
@@ -31,7 +33,7 @@ class gwo(intelligence.sw):
         self.__agents = np.random.uniform(lb, ub, (n,numeroColores, dimension))
 
         #Calculo de los valores de fitness de los individuos
-        fitnessA= [funcion(x,numeroColores,imagen) for x in self.__agents]
+        fitnessA= [funcion(x,numeroColores,imagen, ajuste) for x in self.__agents]
         #Buscamos los mejores lobos
         alpha, beta, delta, fitActual = self.getABD(n, fitnessA)
         #Seteamos el valor del mejor fitnes con el valor de fitActual (valor del fitness del lobo alpha)
@@ -81,7 +83,7 @@ class gwo(intelligence.sw):
 
             
             #Se calcula el fitness actual de cada individuo
-            fitnessA= [funcion(x,numeroColores,imagen) for x in self.__agents]
+            fitnessA= [funcion(x,numeroColores,imagen, ajuste) for x in self.__agents]
             #Cálculo de los lobos alfa, beta y delta
             alpha, beta, delta, fitActual = self.getABD(n, fitnessA)
 
@@ -96,7 +98,7 @@ class gwo(intelligence.sw):
 
   
         #Generamos la imagen cuantizada
-        reducida = fn.generaCuantizada(Gbest,  numeroColores,imagen)
+        reducida = fn.generaCuantizada(Gbest,  numeroColores,imagen, ajuste)
         #print("Fitness final --> ", self.getMejorFitness())
         fn.pintaImagen(reducida, imagen,pintor,"GWO",numeroColores)
 

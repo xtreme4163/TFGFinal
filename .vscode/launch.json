@@ -10,11 +10,12 @@
             "args": [
                 "maya_beach.ppm", 
                 "100",
-                "ABA",
+                "FA",
                 "MSE",
                 "15",
                 "15",
-                "--pintaImagen", "True"]
+                "--pintaImagen", "True",
+                "-a", "1"]
         }
     ]
 }

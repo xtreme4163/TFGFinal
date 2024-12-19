@@ -20,7 +20,7 @@ class woa(intelligence.sw):
     11. Actualizar la mejor solución global si se encuentra una mejor."""
 
 
-    def __init__(self, n, funcion, lb, ub, dimension, iteraciones,numeroColores,pintor, imagen=""):
+    def __init__(self, n, funcion, lb, ub, dimension, iteraciones,numeroColores,pintor, imagen="", ajuste=0):
 
         """     
         :param n: numero de individuos
@@ -32,6 +32,7 @@ class woa(intelligence.sw):
         :param numeroColores: numero de colores de la nueva imagen
         :param pintor: booleano que se usa para saber si pintamos las imagenes al final.
         :param imagen: ruta de la imagen a procesar por el algoritmo
+        :param ajuste: parametro para decidir si se ajusta la paleta cuantizada a la imagen original       
 
         """
          
@@ -45,7 +46,7 @@ class woa(intelligence.sw):
         # primeras halladas.
         Pbest = copy.deepcopy(self.__agents)
         # Evaluar el fitness actual de cada ballena
-        fitnessActual = [funcion(x, numeroColores, imagen) for x in self.__agents]
+        fitnessActual = [funcion(x, numeroColores, imagen, ajuste) for x in self.__agents]
         #Inicialmente el fitnees de la mejor posicion personal de cada individuo es igual al fitness de su posicion actual
         fitnessMejor = fitnessActual
 
@@ -91,7 +92,7 @@ class woa(intelligence.sw):
             
             self.__agents = copy.deepcopy(new_agents)
             #Se calcula el fitness de la posicion actual de cada individuo
-            fitnessActual= [funcion(x,numeroColores,imagen) for x in self.__agents]
+            fitnessActual= [funcion(x,numeroColores,imagen, ajuste) for x in self.__agents]
             #Actualizar mejor solucion personal
             #Para todas las particulas ...
             for i in range(n):
@@ -110,5 +111,5 @@ class woa(intelligence.sw):
 
         # Guardamos la mejor solución encontrada y generamos la imagen cuantizada
         Gbest = np.int_(Gbest)
-        reducida = fn.generaCuantizada(Gbest, numeroColores, imagen)
+        reducida = fn.generaCuantizada(Gbest, numeroColores, imagen, ajuste)
         fn.pintaImagen(reducida, imagen, pintor, "WOA", numeroColores)

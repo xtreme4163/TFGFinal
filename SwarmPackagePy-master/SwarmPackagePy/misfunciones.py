@@ -102,10 +102,9 @@ def preparaImagen(nombreImagen):
        return z,img
 
 #Funcion que genera una imagen cuantizada
-def generaCuantizada(gbest,tam_paleta,nombreImagen):
+def generaCuantizada(gbest,tam_paleta,nombreImagen,ajuste):
        #Preparamos imagen
        z,img=preparaImagen(nombreImagen)
-
        # Obtiene los centroides de los clusters (los colores representativos)
        paleta = copy.deepcopy(gbest)		
        # con np.uint8 los convertimos a enteros de 8 bits
@@ -128,9 +127,9 @@ def generaCuantizada(gbest,tam_paleta,nombreImagen):
               x -> Paleta de colores a usar. (Posicion de particula)
               tam_paleta -> nº de colores a usar.
 """
-def getMse(x,tam_paleta,nombreImagen):
+def getMse(x,tam_paleta,nombreImagen, ajuste):
        z,img =preparaImagen(nombreImagen)
-       img_cuantizada2 = generaCuantizada(x,tam_paleta,nombreImagen)
+       img_cuantizada2 = generaCuantizada(x,tam_paleta,nombreImagen, ajuste)
 
        # Aplanar img_cuantizada2 para que coincida con la forma de z
        img_cuantizada2_flat = img_cuantizada2.reshape((-1, 3))
@@ -142,12 +141,12 @@ def getMse(x,tam_paleta,nombreImagen):
 """ Igual que la anterior funciçon pero con el Mae (Da menor fitness)
     ERROR ABSOLUTO MEDIO
 """
-def getMae(x, tam_paleta,nombreImagen):
+def getMae(x, tam_paleta,nombreImagen, ajuste):
     # Prepara la imagen, devolviendo tanto la imagen aplanada (z) como la original (img)
     z, img = preparaImagen(nombreImagen)
     
     # Genera la imagen cuantizada
-    img_cuantizada2 = generaCuantizada(x, tam_paleta,nombreImagen)
+    img_cuantizada2 = generaCuantizada(x, tam_paleta,nombreImagen, ajuste)
     
     # Aplanar img_cuantizada2 para que coincida con la forma de z
     img_cuantizada2_flat = img_cuantizada2.reshape((-1, 3))
@@ -160,12 +159,12 @@ def getMae(x, tam_paleta,nombreImagen):
 """    SSIM índice de similitud estructural
        Devuelve el fitness
 """
-def getSsim(x, tam_paleta,nombreImagen):
+def getSsim(x, tam_paleta,nombreImagen, ajuste):
     # Prepara la imagen, devolviendo tanto la imagen aplanada (z) como la original (img)
     z, img = preparaImagen(nombreImagen)
     
     # Genera la imagen cuantizada
-    img_cuantizada2 = generaCuantizada(x, tam_paleta,nombreImagen)
+    img_cuantizada2 = generaCuantizada(x, tam_paleta,nombreImagen, ajuste)
     
     # Redimensiona la imagen cuantizada a una matriz 2D de píxeles
     img_cuantizada2_plana = img_cuantizada2.reshape((-1, 3))
@@ -181,13 +180,13 @@ def getSsim(x, tam_paleta,nombreImagen):
        Devuelve el fitness.
 """
 # Función de fitness basada en MS-SSIM
-def getMsSsim(x, tam_paleta,nombreImagen):
+def getMsSsim(x, tam_paleta,nombreImagen, ajuste):
         
     # Prepara la imagen, devolviendo tanto la imagen aplanada (z) como la original (img)
     z, img = preparaImagen(nombreImagen)
 
     # Genera la imagen cuantizada usando la paleta de colores (x)
-    img_cuantizada2 = generaCuantizada(x, tam_paleta,nombreImagen)
+    img_cuantizada2 = generaCuantizada(x, tam_paleta,nombreImagen, ajuste)
 
     # Redimensiona la imagen cuantizada a una matriz 2D de píxeles
     img_cuantizada2_flat = img_cuantizada2.reshape((-1, 3))

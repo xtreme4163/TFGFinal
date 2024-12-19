@@ -30,7 +30,7 @@ class fa(intelligence.sw):
     
     """
 
-    def __init__(self, n, funcion, lb, ub, dimension, iteraciones,numeroColores,pintor, beta0=0.1, gamma=1, norm0=0, norm1=0.1,imagen=""):
+    def __init__(self, n, funcion, lb, ub, dimension, iteraciones,numeroColores,pintor, beta0=0.1, gamma=1, norm0=0, norm1=0.1,imagen="", ajuste=0):
         """
         :param n: numero de individuos
         :param funcion: funcion objetivo que se aplica en el algoritmo
@@ -45,7 +45,8 @@ class fa(intelligence.sw):
         :param norm0: primer parametro para una distribucion normal (Gaussiana) (Valor por defecto 0)
         :param norm1: segundo parametro para una distribucion normal (Gaussiana) (Valor por defecto 0.1)
         :param imagen: ruta de la imagen a procesar por el algoritmo
-  
+        :param ajuste: parametro para decidir si se ajusta la paleta cuantizada a la imagen original       
+
         """
 
         super(fa, self).__init__()
@@ -54,7 +55,7 @@ class fa(intelligence.sw):
         self.__agents = np.random.uniform(lb, ub, (n,numeroColores, dimension))
         
         # Calculamos el fitness de las posiciones iniciales de los individuos
-        fitnessActual = [funcion(x,numeroColores,imagen) for x in self.__agents]
+        fitnessActual = [funcion(x,numeroColores,imagen, ajuste) for x in self.__agents]
 
         # Ordenar los individuos por su fitness antes de empezar las iteraciones
         indicesOrdenados = np.argsort(fitnessActual)
@@ -89,7 +90,7 @@ class fa(intelligence.sw):
 
 
             #Calculamos el fitness actual de cada luciernaga
-            fitnessActual = [funcion(x,numeroColores,imagen) for x in self.__agents]
+            fitnessActual = [funcion(x,numeroColores,imagen, ajuste) for x in self.__agents]
 
 
             # Ordenar las luciérnagas por su nuevo fitness
@@ -109,7 +110,7 @@ class fa(intelligence.sw):
             
         Gbest = np.int_(Gbest)
         #Generamos la imagen cuantizada para imprimirla
-        reducida = fn.generaCuantizada(Gbest,numeroColores,imagen)
+        reducida = fn.generaCuantizada(Gbest, numeroColores, imagen, ajuste)
         
         fn.pintaImagen(reducida, imagen,pintor, "FA", numeroColores)
 

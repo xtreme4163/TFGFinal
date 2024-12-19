@@ -13,7 +13,7 @@ import time
 
 
 # Función que ejecuta el algoritmo correspondiente
-def ejecutar_algoritmo(algoritmo, funcion, individuos, iteraciones, numero_colores, imagen):
+def ejecutar_algoritmo(algoritmo, funcion, individuos, iteraciones, numero_colores, imagen, ajuste):
     if algoritmo not in algoritmos:
         print(f"Error: Algoritmo '{algoritmo}' no reconocido")
         quit()
@@ -25,7 +25,7 @@ def ejecutar_algoritmo(algoritmo, funcion, individuos, iteraciones, numero_color
     # Ejecutar el algoritmo
     alg_func = algoritmos[algoritmo]
     func_fitness = funcionesObjetivo[funcion]
-    alg_func(individuos, func_fitness, numero_colores, imagen, iteraciones)
+    alg_func(individuos, func_fitness, numero_colores, imagen, iteraciones, ajuste)
 
 
 parser= argparse.ArgumentParser()
@@ -38,6 +38,7 @@ parser.add_argument('funcion', type=str, help="Funcion a usar por algoritmo. Opc
 parser.add_argument('iteraciones', type=int, help="Numero de iteraciones que realizara el algoritmo. Debe ser mayor que 0.")
 parser.add_argument('individuos', type=int, help="Numero de individuos del algoritmo. Ej. 5 o 10.")
 parser.add_argument('--pintaImagen', type=bool, default=False,help="Argumento para saber si se dibuja la imagen cuantizada al final del algoritmo (depuracion); Si viene se pinta.")
+parser.add_argument('-a', type=int,default=0, help="Número para saber si se ajusta la paleta generada nuevamente. Si es 1 se ajusta.")
 args = parser.parse_args()
 
 #DICCIONARIOS FUNCIONES ALGORITMOS
@@ -52,24 +53,22 @@ funcionesObjetivo = {
 
 # Definir los algoritmos disponibles
 algoritmos = {
-    "PSO": lambda indiv, func, col, img, it: SwarmPackagePy.pso(indiv, func, 0, 255, 3, it, col, args.pintaImagen,-14,14, w=0.729, f1=2.05, f2=2.05, imagen=img),
-    "FA": lambda indiv, func, col, img, it: SwarmPackagePy.fa(indiv, func, 0, 255, 3, it, col, args.pintaImagen, beta0=0.1, gamma=1, norm0=0, norm1=0.1, imagen=img),
-    "GWO": lambda indiv, func, col, img, it: SwarmPackagePy.gwo(indiv, func, 0, 255, 3, it, col, args.pintaImagen, imagen=img),
-    "ABA": lambda indiv, func, col, img, it: SwarmPackagePy.abejas(indiv, func, 0, 255, 3, it, col, args.pintaImagen, imagen=img),
-    "WOA": lambda indiv, func, col, img, it: SwarmPackagePy.woa(indiv, func, 0, 255, 3, it, col, args.pintaImagen, imagen=img)
+    "PSO": lambda indiv, func, col, img, it, ajuste: SwarmPackagePy.pso(indiv, func, 0, 255, 3, it, col, args.pintaImagen,-14,14, w=0.729, f1=2.05, f2=2.05, imagen=img ,ajuste=ajuste),
+    "FA": lambda indiv, func, col, img, it, ajuste: SwarmPackagePy.fa(indiv, func, 0, 255, 3, it, col, args.pintaImagen, beta0=0.1, gamma=1, norm0=0, norm1=0.1, imagen=img,ajuste=ajuste),
+    "GWO": lambda indiv, func, col, img, it, ajuste: SwarmPackagePy.gwo(indiv, func, 0, 255, 3, it, col, args.pintaImagen, imagen=img,ajuste=ajuste),
+    "ABA": lambda indiv, func, col, img, it, ajuste: SwarmPackagePy.abejas(indiv, func, 0, 255, 3, it, col, args.pintaImagen, imagen=img,ajuste=ajuste),
+    "WOA": lambda indiv, func, col, img, it, ajuste: SwarmPackagePy.woa(indiv, func, 0, 255, 3, it, col, args.pintaImagen, imagen=img,ajuste=ajuste)
 }
 
 
 
-# Construir la ruta completa del directorio 'imagenes'
+# Construir la ruta completa del directorio 'imagenes' y 'imagenesCuantizadas'
 rutaDirectorioImagenes = os.path.join(os.path.dirname(__file__), 'imagenes')
 
 rutaDirectorioCuantizadas=os.path.join(os.path.dirname(__file__), 'imagenesCuantizadas')
 
 # Obtener la ruta completa de la imagen
 ruta_imagen = os.path.join(os.path.dirname(__file__), 'imagenes', args.imagen)
-
-
 
 # Verificar si el directorio imagenes existe
 if not os.path.exists(rutaDirectorioImagenes):
@@ -128,4 +127,4 @@ if (args.individuos < 1):
 
 
 # Ejecutar el algoritmo solicitado
-ejecutar_algoritmo(args.algoritmo, args.funcion, args.individuos, args.iteraciones, args.numeroColores, ruta_imagen)
+ejecutar_algoritmo(args.algoritmo, args.funcion, args.individuos, args.iteraciones, args.numeroColores, ruta_imagen, args.a)

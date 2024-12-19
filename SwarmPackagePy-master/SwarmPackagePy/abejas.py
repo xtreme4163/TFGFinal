@@ -6,7 +6,7 @@ import copy
 # Clase para abejas (hereda de intelligence)
 class abejas(intelligence.sw):
 
-        def __init__(self, n, funcion, lb, ub, dimension, iteraciones,numeroColores,pintor, imagen=""):
+        def __init__(self, n, funcion, lb, ub, dimension, iteraciones,numeroColores,pintor, imagen="", ajuste=0):
             """ 
                 :param n: numero de individuos (Particulas)
                 :param funcion: funcion objetivo que se aplica en el algoritmo
@@ -17,6 +17,7 @@ class abejas(intelligence.sw):
                 :param numeroColores: numero de colores de la imagen cuantizada
                 :param pintor: booleano que se usa para saber si pintamos las imagenes al final.
                 :param imagen (str): Ruta a la imagen que debe procesarse.
+                :param ajuste: parametro para decidir si se ajusta la paleta cuantizada a la imagen original       
 
                 PSEUDOCODIGO
                 Inicializar el conjunto de fuentes de alimento
@@ -45,6 +46,7 @@ class abejas(intelligence.sw):
             self.numeroColores = numeroColores  # colores para la cuantificación
             self.pintor = pintor  # bandera para pintar la imagen al final
             self.imagen = imagen  # ruta de la imagen a procesar
+            self.ajuste=ajuste #ajuste
 
             
             # Generamos numeros aletaorios uniformemente distribuidos.
@@ -53,7 +55,7 @@ class abejas(intelligence.sw):
             self.__agents = np.random.uniform(lb, ub, (n,numeroColores, dimension))
 
             #Calculamos el fitness actual y lo guardamos
-            self.fitnessActual = [funcion(x,numeroColores,imagen) for x in self.__agents]
+            self.fitnessActual = [funcion(x,numeroColores,imagen, ajuste) for x in self.__agents]
             fitnessMejor = self.fitnessActual # Lo igualamos al de la posicion ACTUAL
            
 
@@ -86,7 +88,7 @@ class abejas(intelligence.sw):
             ##################################################################################################### Fin bucle
 
             # Generamos la imagen cuantizada para imprimirla con el mejor valor final global.
-            reducida = fn.generaCuantizada(Gbest,numeroColores, imagen)
+            reducida = fn.generaCuantizada(Gbest,numeroColores, imagen, ajuste)
 
             #print("Su fitness es: ", self.getMejorFitness())
             #Pintamos imagen
@@ -101,7 +103,7 @@ class abejas(intelligence.sw):
             nuevaFuente = self.buscarFuenteVecina(i)
             
             # Evaluar la nueva solución
-            fitNuevo = self.function(nuevaFuente, self.numeroColores, self.imagen)
+            fitNuevo = self.function(nuevaFuente, self.numeroColores, self.imagen, self.ajuste)
             
             # Si mejora la solución actual, la reemplazamos
             if fitNuevo < self.fitnessActual[i]:
@@ -157,6 +159,6 @@ class abejas(intelligence.sw):
                     # Reemplazar con una nueva solución aleatoria
                     self.__agents[i] = copy.deepcopy(np.random.uniform(self.lb,self.ub,(self.numeroColores, self.dimension)))
                     #Se calcula su fitnes actual y se resetea el contador de "agotamiento"
-                    self.fitnessActual[i] = self.function(self.__agents[i], self.numeroColores, self.imagen)
+                    self.fitnessActual[i] = self.function(self.__agents[i], self.numeroColores, self.imagen,self.ajuste)
                     self.limit[i] = 0  # Resetear el contador de intentos
                     
