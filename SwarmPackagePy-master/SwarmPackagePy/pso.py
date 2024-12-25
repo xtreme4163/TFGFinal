@@ -55,9 +55,9 @@ class pso(intelligence.sw):
         fitnessMejor = fitnessActual 
         
         # Iniciamos Gbest con la posicion de la particula con menor fitness 
-
-        Gbest=copy.deepcopy(Pbest[np.array([fitnessActual]).argmin()])
-        # hasta aqui hemos inicializado el PSO
+        indice_mejor = np.array([fitnessMejor]).argmin()
+        Gbest=copy.deepcopy( Pbest[indice_mejor] )
+        self.setMejorFitness( fitnessMejor[indice_mejor] )
 
 
 	# Este bucle se repite hasta que nos salimos del rango iteraciones 
@@ -93,9 +93,11 @@ class pso(intelligence.sw):
               
            # Actualizar mejor solucion global
            #Gbest pasa a ser la mejor solucion particular de aquel individuo que tenga un menor fitness
-           Gbest=copy.deepcopy(Pbest[np.array([fitnessMejor]).argmin()])
+           indice_mejor = np.array([fitnessMejor]).argmin()
+           if fitnessMejor[indice_mejor]< self.getMejorFitness():
+                Gbest=copy.deepcopy(Pbest[indice_mejor])
+                self.setMejorFitness(fitnessMejor[indice_mejor])           
            
-           self.setMejorFitness(fitnessMejor[np.array([fitnessMejor]).argmin()])
            print(self.getMejorFitness(), end= ' ')
 
        ##########################################################################################################
