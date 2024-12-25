@@ -42,16 +42,15 @@ class woa(intelligence.sw):
         # Inicializamos la población de ballenas
         self.__agents = np.random.uniform(lb, ub, (n, numeroColores, dimension))
         
-        # Inicializar Pbest, es decir, inicialmente las mejores posiciones de los individuos son las
-        # primeras halladas.
-        Pbest = copy.deepcopy(self.__agents)
         # Evaluar el fitness actual de cada ballena
         fitnessActual = [funcion(x, numeroColores, imagen, ajuste) for x in self.__agents]
         #Inicialmente el fitnees de la mejor posicion personal de cada individuo es igual al fitness de su posicion actual
         fitnessMejor = fitnessActual
 
         #Inicializar la mejor solución encontrada
-        Gbest = copy.deepcopy(Pbest[np.array([fitnessActual]).argmin()])
+        indice_mejor = np.array([fitnessMejor]).argmin()
+        Gbest=copy.deepcopy(self.__agents[indice_mejor])
+        self.setMejorFitness(fitnessMejor[indice_mejor])  
         
         # Parámetros del WOA
         a = 2  # Inicializamos a
@@ -70,20 +69,19 @@ class woa(intelligence.sw):
                 if p < 0.5:
                     if np.linalg.norm(A) < 1:
                         # Movimiento alrededor de la mejor solución (X*)
-                        D = np.abs(C * (Gbest - self.__agents[i]))
+                        D = np.abs(C * Gbest - self.__agents[i])
                         new_agents[i] = Gbest - A * D
                     else:
                         # Exploración: seleccionamos una ballena aleatoria
-                        ind = np.random.randint(0, n-1)
-                        while(ind == i):
-                            ind = np.random.randint(0, n-1)
-                        ballenaAleatoria = self.__agents[ind]
-                        D = np.abs(C * (ballenaAleatoria - self.__agents[i]))
-                        new_agents[i] = ballenaAleatoria - A * D
+                        ballenaAleatoria = np.random.randint(0, n-1)
+                        while(ballenaAleatoria == i):
+                            ballenaAleatoria = np.random.randint(0, n-1)
+                        D = np.abs(C * ( self.__agents[ballenaAleatoria] - self.__agents[i]))
+                        new_agents[i] = self.__agents[ballenaAleatoria] - A * D
                 else:
                     # Movimiento en espiral
                     l = np.random.uniform(-1, 1)
-                    D = np.abs(C * (Gbest - self.__agents[i]))
+                    D = np.abs(Gbest - self.__agents[i])
                     new_agents[i] = D * np.exp(b * l) * np.cos(2 * np.pi * l) + Gbest
 
                 # Limitar las posiciones dentro del espacio de búsqueda
@@ -93,17 +91,20 @@ class woa(intelligence.sw):
             self.__agents = copy.deepcopy(new_agents)
             #Se calcula el fitness de la posicion actual de cada individuo
             fitnessActual= [funcion(x,numeroColores,imagen, ajuste) for x in self.__agents]
+            
             #Actualizar mejor solucion personal
             #Para todas los individuos ...
             for i in range(n):
-              # Si el fitness de la posicion actual del individuo i es menor que el fitness de su posicion personal se actualiza
-              if(fitnessActual[i] < fitnessMejor[i]):
-                 Pbest[i] = copy.deepcopy(self.__agents[i])
-                 fitnessMejor[i] = fitnessActual[i]
+                # Si el fitness de la posicion actual del individuo i es menor que el fitness de su posicion personal se actualiza
+                if(fitnessActual[i] < fitnessMejor[i]):
+                    fitnessMejor[i] = fitnessActual[i]
 
-            # Actualizar mejor solucion global
-            #Gbest pasa a ser la mejor solucion particular de aquel individuo que tenga un menor fitness
-            Gbest=copy.deepcopy(Pbest[np.array([fitnessMejor]).argmin()])
+
+            #Actualizar mejor solucion personal
+            indice_mejor = np.array([fitnessMejor]).argmin()
+            if fitnessMejor[indice_mejor] < self.getMejorFitness():
+                Gbest=copy.deepcopy(self.__agents[indice_mejor])
+                self.setMejorFitness(fitnessMejor[indice_mejor])    
 
             # Mostrar el mejor fitness de la iteración
             self.setMejorFitness(fitnessMejor[np.array([fitnessMejor]).argmin()])
