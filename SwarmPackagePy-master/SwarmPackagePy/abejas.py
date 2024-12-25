@@ -153,7 +153,7 @@ class abejas(intelligence.sw):
             """
             Fase de abejas exploradoras: Abandonan las fuentes de alimento que no mejoran durante un número determinado de ciclos y buscan nuevas soluciones aleatorias.
             """
-            abandono = self.iteration / 0.2  # número de intentos fallidos antes de abandonar una fuente. Proporcionar al numero de iteraciones            
+            abandono = self.iteration * 0.2  # número de intentos fallidos antes de abandonar una fuente. Proporcionar al numero de iteraciones            
             for i in range(self.n):
                 if self.limit[i] > abandono:
                     # Reemplazar con una nueva solución aleatoria

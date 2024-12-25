@@ -42,7 +42,7 @@ class woa(intelligence.sw):
         # Inicializamos la población de ballenas
         self.__agents = np.random.uniform(lb, ub, (n, numeroColores, dimension))
         
-        # Inicializar Pbest, es decir, inicialmente las mejores posiciones de las particulas son las
+        # Inicializar Pbest, es decir, inicialmente las mejores posiciones de los individuos son las
         # primeras halladas.
         Pbest = copy.deepcopy(self.__agents)
         # Evaluar el fitness actual de cada ballena
@@ -94,7 +94,7 @@ class woa(intelligence.sw):
             #Se calcula el fitness de la posicion actual de cada individuo
             fitnessActual= [funcion(x,numeroColores,imagen, ajuste) for x in self.__agents]
             #Actualizar mejor solucion personal
-            #Para todas las particulas ...
+            #Para todas los individuos ...
             for i in range(n):
               # Si el fitness de la posicion actual del individuo i es menor que el fitness de su posicion personal se actualiza
               if(fitnessActual[i] < fitnessMejor[i]):
