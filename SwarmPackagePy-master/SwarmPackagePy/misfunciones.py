@@ -107,17 +107,53 @@ def generaCuantizada(gbest,tam_paleta,nombreImagen,ajuste):
        z,img=preparaImagen(nombreImagen)
        # Obtiene los centroides de los clusters (los colores representativos)
        paleta = copy.deepcopy(gbest)		
-       # con np.uint8 los convertimos a enteros de 8 bits
-       paleta = np.uint8(paleta)
 
-       # Guardamos el valor de los centroides y de las etiquetas de cada pixel
+
+       # para cada pixel de la imagen original, se identifica 
+       # el número del color de la paleta cuantizada más similar 
        label = pairwise_distances_argmin(paleta, z, axis=0) 
+       
+       # Se calculan los centroides de los clusters definidos al asociar
+       # los pixels de la imagen original con los colores de la paleta cuantizada.
+       # Esa información se usa para definir una nueva paleta cuantizada más ajustada
+       # a la imagen original (lo que puede mejorar el resultado).
+       #
+       # promedios -> tantos elementos como colores incluye la paleta cuantizada
+       #   Cada elemento será la suma de los colores de los pixels de la imagen
+       #   original que se han asociado al mismo elemento de la paleta
+       # contadores -> tantos elementos como colores incluye la paleta cuantizada
+       #   Cada elemento es el número de sumando almacenados en la posición paralela
+       #   de promedios 
+       if (ajuste == 1):       
+         # Calculamos la media de los puntos en X que corresponden a cada punto en Y.
+         #    Si se va a producir ese error, asigno un pixel aletorio de la imagen original 
+          # número de pixels de la imagen original ( igual al de elementos de label). CREO QUE NO FUNCIONA BIEN
+          npixels = len(label)          
+          medias = np.array([z[label == i].mean(axis=0) if z[label == i].size > 0 else z[np.random.randint(0, npixels-1)] for i in range(paleta.shape[0])])    
+          
+          paleta = copy.deepcopy(medias)
+
+          #poner los dos puntos para que se mofique realmente el contenido del parámetro
+          gbest[:] = np.round(medias) # copy.deepcopy(medias)
+          	
+       
+       # antes de convertir a enteros, aplicamos round, para aproximar al entero más próximo
+       paleta = np.round(paleta)
+       
+       # con np.uint8 los convertimos a enteros de 8 bits
+       #  con uint8 se truncan los valores reales. Por tanto, quizás sea mejor
+       #         primero truncarlos y luego aplicar pairwise
+       paleta = np.uint8(paleta)
                
+       # por si algún valor se sale del rango válido para RGB, podemos recortarlo
+       paleta = np.clip(paleta, 0, 255)
+       
        # se generan los pixels de la imagen cuantizada
        res = paleta[label.flatten()]   
 
-       #Se redimensiona el array de pixzeles para que coincida con la imagen original
+       #Se redimensiona el array de pixeles para que coincida con la imagen original
        res2 = res.reshape((img.shape))
+     
        return res2
 
 """
