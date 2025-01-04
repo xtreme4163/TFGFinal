@@ -48,6 +48,9 @@ funcionesObjetivo = {
     "MSE": func.getMse,
     "MAE": func.getMae,
     "SSIM": func.getSsim,
+    "UQI": func.getUqi,
+    "FSIM": func.getFsim,
+    "VIF": func.getVifp,
     "MSSIM": func.getMsSsim
 }
 

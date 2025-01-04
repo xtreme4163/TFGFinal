@@ -11,3 +11,4 @@ scikit-learn==1.5.1
 scipy==1.14.1
 threadpoolctl==3.5.0
 tifffile==2024.8.30
+pyfftw

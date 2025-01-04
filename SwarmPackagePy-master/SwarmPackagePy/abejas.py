@@ -96,7 +96,7 @@ class abejas(intelligence.sw):
             ##################################################################################################### Fin bucle
 
             # Generamos la imagen cuantizada para imprimirla con el mejor valor final global.
-            reducida = fn.generaCuantizada(Gbest,numeroColores, imagen, ajuste)
+            reducida = fn.generaCuantizada(Gbest, imagen, ajuste)
 
             #print("Su fitness es: ", self.getMejorFitness())
             #Pintamos imagen

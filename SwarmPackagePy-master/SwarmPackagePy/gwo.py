@@ -98,7 +98,7 @@ class gwo(intelligence.sw):
 
   
         #Generamos la imagen cuantizada
-        reducida = fn.generaCuantizada(Gbest,  numeroColores,imagen, ajuste)
+        reducida = fn.generaCuantizada(Gbest, imagen, ajuste)
         #print("Fitness final --> ", self.getMejorFitness())
         fn.pintaImagen(reducida, imagen,pintor,"GWO",numeroColores)
 

@@ -112,5 +112,5 @@ class woa(intelligence.sw):
 
         # Guardamos la mejor solución encontrada y generamos la imagen cuantizada
         Gbest = np.int_(Gbest)
-        reducida = fn.generaCuantizada(Gbest, numeroColores, imagen, ajuste)
+        reducida = fn.generaCuantizada(Gbest, imagen, ajuste)
         fn.pintaImagen(reducida, imagen, pintor, "WOA", numeroColores)
