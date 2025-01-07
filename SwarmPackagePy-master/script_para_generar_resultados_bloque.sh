@@ -122,12 +122,12 @@ echo $duration >> salida_${ALGO}_${FUNC}_${C}.txt
 echo >> salida_${ALGO}_${FUNC}_${C}.txt
 
 
+
 # Calculo múltiples medidas de error sobre la imagen cuantizada que acabo de generar
 python3 errores_cq.py ${F} ${ALGO}_${C}_${F} >> IQI_${ALGO}_${FUNC}_${C}.txt
 #A los indices de error generados en una linea le añado el tiempo de ejecucion de un algoritmo enterno
 echo $duration >> IQI_${ALGO}_${FUNC}_${C}.txt
-#Salto de linea para la siguiente imagen
-echo >> IQI_${ALGO}_${FUNC}_${C}.txt
+
 
 
 

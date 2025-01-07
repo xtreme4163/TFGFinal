@@ -334,5 +334,5 @@ resul_ssim, resul_cs =ssim(FIG1, FIG2)
 
 #escribo todos los errores en una sola linea para facilitar el procesamiento de múltiples imágenes
 # .real en el último dato evita que aparezca con el formato (0.9786+0j)
-print(figura1, mse_yo, mae_yo, resul_ssim,  end= ' ')
+print(mse_yo, mae_yo, resul_ssim,  end= ' ')
 

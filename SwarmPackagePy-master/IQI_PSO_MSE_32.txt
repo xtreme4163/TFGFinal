@@ -1,6 +1,0 @@
-Ajuste: 0
-adirondack_chairs.ppm adirondack_chairs.ppm 2009.4828592936196 62.336919148763016 0.7095857204739758 9
-
-Ajuste: 1:
-adirondack_chairs.ppm adirondack_chairs.ppm 1611.0525258382163 54.09840901692708 0.7316479046106177 9
-
