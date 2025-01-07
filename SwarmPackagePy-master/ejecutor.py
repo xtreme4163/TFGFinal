@@ -10,7 +10,7 @@ import os
 import time
 
 #Para instalar librerias -> pip install -r requirements.txt
-
+#ejemplo de ejecucion: python3 ejecutor.py maya_beach.ppm 64 PSO FSIM 15 15 --pintaImagen True -a 0
 
 # Función que ejecuta el algoritmo correspondiente
 def ejecutar_algoritmo(algoritmo, funcion, individuos, iteraciones, numero_colores, imagen, ajuste):
