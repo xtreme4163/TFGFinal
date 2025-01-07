@@ -27,7 +27,7 @@ for ALGO in "PSO" "WOA" "GWO" "FA" "ABA"
 do
 
 # Bucle para recorrer todas las funciones que acepta el programa
-# MSE, MAE, SSIM, MSSIM
+# MSE, MAE, SSIM,
 for FUNC in "MSE" "MAE" "SSIM"  
 do
 
