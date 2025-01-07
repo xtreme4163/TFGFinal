@@ -300,8 +300,7 @@ else:
 # o reutilizar el código.
    
 # errores mostrados como salida del programa:
-print("Errores calculados: MSE PSNR MAE SSIM MS-SSIM")
-
+#print("Errores calculados: MSE MAE SSIM")
 
 # ------------------- calculo el MSE -------------------
 resul_mse = mse (FIG1, FIG2)
@@ -330,10 +329,10 @@ resul_ssim, resul_cs =ssim(FIG1, FIG2)
 
 
 # ------------------- calculo el error MS-SSIM -------------------
-resul_msssim = msssim(FIG1, FIG2)  
+#resul_msssim = msssim(FIG1, FIG2)  
 
 
 #escribo todos los errores en una sola linea para facilitar el procesamiento de múltiples imágenes
 # .real en el último dato evita que aparezca con el formato (0.9786+0j)
-print( mse_yo, psnr_yo, mae_yo, resul_ssim, resul_msssim.real)
+print(figura1, mse_yo, mae_yo, resul_ssim,  end= ' ')
 

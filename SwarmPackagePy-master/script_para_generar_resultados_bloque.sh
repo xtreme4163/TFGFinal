@@ -22,13 +22,13 @@
 iteraciones=15
 individuos=20
 
-#for ALGO in "PSO" "FA" "WOA" "GWO" "ABA"
-for ALGO in "PSO"
+for ALGO in "PSO" "WOA" "GWO" "FA" "ABA"
+#for ALGO in "PSO"
 do
 
 # Bucle para recorrer todas las funciones que acepta el programa
 # MSE, MAE, SSIM, MSSIM
-for FUNC in "MSE" "MAE" "SSIM" "MSSIM" 
+for FUNC in "MSE" "MAE" "SSIM"  
 do
 
         
@@ -53,11 +53,12 @@ fi
 # TODO ESTO ESTA COMENTADO
 fi
 
+#Bucle para decidir el ajuste o no ajuste de la paleta
+for AJUSTE in 0 1:
+do
 
-echo "MSE PSNR MAE SSIM MS-SSIM" >> IQI_${ALGO}_${FUNC}_${C}.txt
- 
-
-
+#Escribo si es con sjute o no
+echo "Ajuste": $AJUSTE >> IQI_${ALGO}_${FUNC}_${C}.txt
 # Bucle que recorre desde 1 hasta el número de iteraciones y los imprime en una sola línea para formar la cabecera 
 for (( i=1; i<=iteraciones; i++ ))
 do
@@ -86,12 +87,12 @@ echo "algoritmo->$ALGO Cuantizada->$C Funcion-> $FUNC Imagen -> $F"
 #   IQI_PSO_256.txt  -> errores para el método PSO que usa una paleta de 256 colores
 
 #Escribo el nombre de la imagen original como rótulo del bloque de pruebas consecutivas
-echo  -n "$F" >> IQI_${ALGO}_${FUNC}_${C}.txt
+#echo  -n "$F" >> IQI_${ALGO}_${FUNC}_${C}.txt
 
 
 # NÚMERO DE TEST INDEPENDIENTES EJECUTADOS PARA UNA MISMA CONFIGURACIÓN (5, DE MOMENTO) POR AHORA LO QUITO PARA QUE SOLO SE LLAME UNA VEZ (poner 20)
-#for TEST_INDEPEN in {1..5} 
-#do 
+for TEST_INDEPEN in {1..1} 
+do 
  
 #Antes de ejecutar el programa capturo el tiempo del inicio de la ejecucion para luego saber lo que tardo en ejecutarse el algoritmo
 tiempoIni=$(date +%s)
@@ -123,6 +124,11 @@ echo >> salida_${ALGO}_${FUNC}_${C}.txt
 
 # Calculo múltiples medidas de error sobre la imagen cuantizada que acabo de generar
 python3 errores_cq.py ${F} ${ALGO}_${C}_${F} >> IQI_${ALGO}_${FUNC}_${C}.txt
+#A los indices de error generados en una linea le añado el tiempo de ejecucion de un algoritmo enterno
+echo $duration >> IQI_${ALGO}_${FUNC}_${C}.txt
+#Salto de linea para la siguiente imagen
+echo >> IQI_${ALGO}_${FUNC}_${C}.txt
+
 
 
 # NOTA: aquí tendrías que ver la información que se vuelca a los TXT desde cada programa,
@@ -138,8 +144,9 @@ cd imagenesCuantizadas
 rm ${ALGO}_${C}_${F}
 cd ..
   
-#done #tests sucesivos
+done #tests sucesivos
 done  #imagen original
+done  #Ajuste de la paleta
 done  # colores de la paleta cuantizada
 done # Funcion
 done # ALgoritmo
