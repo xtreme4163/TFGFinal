@@ -49,7 +49,7 @@ for C in 32 64 128 256; # para cada tamaño de paleta cuantizada
 do 
 
 #Bucle para decidir el ajuste o no ajuste de la paleta
-for AJUSTE in 0 1;
+for AJUSTE in 0;
 do
 
  # Archivo de checkpoint para esta configuración
@@ -126,7 +126,7 @@ if [[ "$found_last_image" == true ]]; then
     # Los resultados de la ejecución del programa se vuelcan en un fichero con un
     # nombre de la forma:
     #   salida_PSO_32.txt   salida_PSO_64.txt   salida_PSO_128.txt   o salida_PSO_256.txt , en este ejemplo
-    python3 ejecutor.py ${F} ${C} ${ALGO} ${FUNC} ${iteraciones} ${individuos} >> salida_${ALGO}_${FUNC}_${C}.txt
+    python3 ejecutor.py ${F} ${C} ${ALGO} ${FUNC} ${iteraciones} ${individuos} -a ${AJUSTE} >> salida_${ALGO}_${FUNC}_${C}.txt
 
     # Capturar el tiempo de fin
     tiempoFin=$(date +%s)
