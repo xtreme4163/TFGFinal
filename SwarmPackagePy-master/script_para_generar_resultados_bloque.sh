@@ -131,7 +131,7 @@ if [[ "$found_last_image" == true ]]; then
     # Capturar el tiempo de fin
     tiempoFin=$(date +%s%N)
     # Calcular la duración en milisegundos
-    duration=duration=$((($tiempoFin - $tiempoIni)/1000000)) # Dividir por 1,000,000 para convertir nanosegundos a milisegundos
+    duration=$((($tiempoFin - $tiempoIni)/1000000)) # Dividir por 1,000,000 para convertir nanosegundos a milisegundos
 
     #Escribo en el txt correspondiente la duracion de la ejecucion en milisegundos
     echo $duration >> salida_${ALGO}_${FUNC}_${C}.txt 
