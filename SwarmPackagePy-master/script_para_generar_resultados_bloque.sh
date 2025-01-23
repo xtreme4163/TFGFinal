@@ -112,7 +112,7 @@ if [[ "$found_last_image" == true ]]; then
     do 
     
     #Antes de ejecutar el programa capturo el tiempo del inicio de la ejecucion para luego saber lo que tardo en ejecutarse el algoritmo
-    tiempoIni=$(date +%s)
+    tiempoIni=$(date +%s%N)
 
 
     # Ejecuto el código python que aplica un algoritmo de enjambre.
@@ -129,11 +129,11 @@ if [[ "$found_last_image" == true ]]; then
     python3 ejecutor.py ${F} ${C} ${ALGO} ${FUNC} ${iteraciones} ${individuos} -a ${AJUSTE} >> salida_${ALGO}_${FUNC}_${C}.txt
 
     # Capturar el tiempo de fin
-    tiempoFin=$(date +%s)
-    # Calcular la duración en segundos
-    duration=$(($tiempoFin - $tiempoIni))
+    tiempoFin=$(date +%s%N)
+    # Calcular la duración en milisegundos
+    duration=duration=$((($tiempoFin - $tiempoIni)/1000000)) # Dividir por 1,000,000 para convertir nanosegundos a milisegundos
 
-    #Escribo en el txt correspondiente la duracion de la ejecucion en segundos
+    #Escribo en el txt correspondiente la duracion de la ejecucion en milisegundos
     echo $duration >> salida_${ALGO}_${FUNC}_${C}.txt 
     #y un salto de linea para la siguiente ejecucion
     echo >> salida_${ALGO}_${FUNC}_${C}.txt
