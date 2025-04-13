@@ -39,7 +39,7 @@ do
 
 # Bucle para recorrer todas las funciones que acepta el programa
 # MSE, MAE, SSIM,
-for FUNC in "MSE" "MAE" "SSIM"  
+for FUNC in "MSE" "MAE" "SSIM" "UQI"
 do
 
         
@@ -77,10 +77,10 @@ found_last_image=false
 echo "Ajuste": $AJUSTE >> IQI_${ALGO}_${FUNC}_${C}.txt
 #Cabecera
 echo "Imagen MSE MAE SSIM FSIM VIF" >> IQI_${ALGO}_${FUNC}_${C}.txt
-# Bucle que recorre desde 1 hasta el número de iteraciones y los imprime en una sola línea para formar la cabecera 
+# Bucle que recorre desde 1 hasta el número de iteraciones y los imprime en una sola línea para formar la cabecera
 for (( i=1; i<=iteraciones; i++ ))
 do
-    echo -n "$i " >> salida_${ALGO}_${FUNC}_${C}.txt #lo escribo en mi txt 
+    echo -n "$i " >> salida_${ALGO}_${FUNC}_${C}.txt #lo escribo en mi txt
 done
 echo "Tiempo" >> salida_${ALGO}_${FUNC}_${C}.txt
 echo >> salida_${ALGO}_${FUNC}_${C}.txt # Añade un salto de linea
@@ -112,7 +112,7 @@ if [[ "$found_last_image" == true ]]; then
     do 
     
     #Antes de ejecutar el programa capturo el tiempo del inicio de la ejecucion para luego saber lo que tardo en ejecutarse el algoritmo
-    tiempoIni=$(date +%s%N)
+    tiempoIni=$(date +%s)
 
 
     # Ejecuto el código python que aplica un algoritmo de enjambre.
@@ -129,9 +129,9 @@ if [[ "$found_last_image" == true ]]; then
     python3 ejecutor.py ${F} ${C} ${ALGO} ${FUNC} ${iteraciones} ${individuos} -a ${AJUSTE} >> salida_${ALGO}_${FUNC}_${C}.txt
 
     # Capturar el tiempo de fin
-    tiempoFin=$(date +%s%N)
+    tiempoFin=$(date +%s)
     # Calcular la duración en milisegundos
-    duration=$((($tiempoFin - $tiempoIni)/1000000)) # Dividir por 1,000,000 para convertir nanosegundos a milisegundos
+    duration=$(($tiempoFin - $tiempoIni)) # Dividir por 1,000,000 para convertir nanosegundos a milisegundos
 
     #Escribo en el txt correspondiente la duracion de la ejecucion en milisegundos
     echo $duration >> salida_${ALGO}_${FUNC}_${C}.txt 
