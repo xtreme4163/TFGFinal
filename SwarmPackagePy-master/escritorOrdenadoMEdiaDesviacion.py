@@ -4,7 +4,7 @@ import re, io, sys
 import pandas as pd
 
 ROOT   = Path(".")
-OUT_XL = "resumen_IQI.xlsx"
+OUT_XL = "resumenGrandeMediaDesviacion.xlsx"
 
 ALG_OK   = {"PSO","WOA","GWO","FA","ABA"}
 FUNC_OK  = {"MSE","MAE","SSIM","UQI"}
