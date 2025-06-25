@@ -56,20 +56,18 @@ class pso(intelligence.sw):
         
         # Iniciamos Gbest con la posicion de la particula con menor fitness 
         indice_mejor = np.array([fitnessMejor]).argmin()
-        Gbest=copy.deepcopy( Pbest[indice_mejor] )
-        self.setMejorFitness( fitnessMejor[indice_mejor] )
+        Gbest=copy.deepcopy(Pbest[indice_mejor] )
+        self.setMejorFitness(fitnessMejor[indice_mejor] )
 
 
 	# Este bucle se repite hasta que nos salimos del rango iteraciones 
         for t in range(iteraciones):
            """
 	   ESQUEMA PSO
-                 - Actualizar velocidad y posicion de cada particula
-
-        - evaluar fitness de cada particula
-	    - actualizar mejor solucion personal de cada particula
-	    - actualizar la mejor solucion global
-	   
+                - Actualizar velocidad y posicion de cada particula
+                - evaluar fitness de cada particula
+	        - actualizar mejor solucion personal de cada particula
+	        - actualizar la mejor solucion global
 	   """
            # Cálculo de la nueva velocidad
            velocity = calcularNuevaVelocidad(self.__agents, n, dimension, numeroColores, w, f1, f2,velocity, Pbest, Gbest,vMin,vMax)

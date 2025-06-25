@@ -11,7 +11,7 @@
                 "maya_beach.ppm", 
                 "100",
                 "PSO",
-                "VIF",
+                "MSE",
                 "15",
                 "15",
                 "--pintaImagen", "True",
